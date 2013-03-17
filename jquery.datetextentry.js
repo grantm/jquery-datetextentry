@@ -164,6 +164,14 @@
             return 2000 + year;
         }
 
+        ,focus_in: function() {
+            this.wrapper.addClass('focus');
+        }
+
+        ,focus_out: function() {
+            this.wrapper.removeClass('focus');
+        }
+
         ,show_input_tip: function(input) {
             var opt = this.options;
             if(!opt.show_tooltips) { return; }
@@ -448,6 +456,7 @@
 
         ,focus: function(e) {
             this.has_focus = true;
+            this.dte.focus_in();
             if( this.$input.hasClass('hint') ) {
                 this.$input.val('').removeClass('hint');
             }
@@ -457,6 +466,7 @@
 
         ,blur: function(e) {
             this.has_focus = false;
+            this.dte.focus_out();
             this.dte.hide_input_tip();
             this.show_hint();
             this.dte.validate(this);
