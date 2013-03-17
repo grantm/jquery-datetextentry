@@ -43,6 +43,10 @@
             this.add_entry_fields();
             this.tooltip = $('<span class="jq-dte-tooltip" />').hide();
             this.errorbox = $('<span class="jq-dte-errorbox" />').hide();
+            this.inner.on('paste', 'input', function(e) {
+                var input = this;
+                setTimeout(function() { dte.after_paste(input, e);}, 2);
+            });
             this.wrapper.append( this.inner, this.tooltip, this.errorbox );
             this.set_field_widths();
             this.$element.hide();
@@ -111,6 +115,12 @@
         ,clear: function() {
             this.clear_error('');
             this.set_date('');
+        }
+
+        ,after_paste: function(target, event) {
+            if(this.parse_date( $(target).val() ) ) {
+                this.set_date( $(target).val() );
+            }
         }
 
         ,parse_date: function(text) {
