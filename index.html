@@ -5,7 +5,7 @@
   <title>jQuery datetextentry Plugin</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/site.css">
-  <link rel="stylesheet" type="text/css" href="examples/intro-demo.css">
+  <link rel="stylesheet" type="text/css" href="jquery.datetextentry.css">
 </head>
 <body>
 
@@ -51,11 +51,33 @@
             year.</p>
 
             <p>The plugin uses progressive enhancement to upgrade and replace a
-            plain <tt>&lt;input type="text"&gt;</tt> form element.  When the
+            plain <code>&lt;input type="text"&gt;</code> form element.  When the
             form is submitted, a single value will be posted to the backend.
             Dates are translated to and from ISO standard YYYY-MM-DD format.
             The order of the input fields can be customised for your local
             conventions.</p>
+
+            <p>A typical text entry box might look like this:</p>
+
+            <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="dob1">Date of Birth</label>
+                <div class="controls">
+                  <input type="text" id="dob1" style="width: 9em;">
+                </div>
+              </div>
+            </form>
+
+            <p>With the datetextentry plugin applied, it might look like this:</p>
+
+            <form class="form-horizontal">
+              <div class="control-group">
+                <label id="lbl2" class="control-label" for="dob2">Date of Birth</label>
+                <div class="controls">
+                  <input type="text" id="dob2" style="width: 9em;">
+                </div>
+              </div>
+            </form>
 
             <p>The <a href="#examples">examples</a> directory includes some demos to get you started.</p>
 
@@ -97,5 +119,6 @@
   <script src="examples/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="jquery.datetextentry.js"></script>
+  <script src="examples/intro-demo.js"></script>
 </body>
 </html>
