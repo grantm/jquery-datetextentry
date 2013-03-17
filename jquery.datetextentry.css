@@ -15,8 +15,7 @@ span.jq-dte-inner {
   background-color: #ffffff;
 }
 
-span.jq-dte input,
-span.jq-dte input:focus {
+span.jq-dte input {
   border: none;
   outline-none;
   box-shadow: none;
@@ -63,5 +62,28 @@ span.jq-dte span.jq-dte-errorbox {
   padding: 1px 3px;
   line-height: 125%;
   white-space: nowrap;
+}
+
+
+/* Customisations for default boostrap theme */
+
+span.jq-dte input:focus {
+  border: none;
+  outline-none;
+  box-shadow: none;
+}
+
+body span.jq-dte {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  padding: 4px 2px 3px 2px;
+}
+
+body span.jq-dte.focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+  outline: 0 none;
 }
 
