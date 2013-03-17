@@ -30,6 +30,7 @@
         this.custom_validation = this.options.custom_validation;
         this.build_ui();
         this.set_date( this.$element.attr('value') );
+        this.proxy_label_clicks();
     };
 
     DateTextEntry.prototype = {
@@ -110,6 +111,15 @@
                     dte.validate(input);
                 });
             }
+        }
+
+        ,proxy_label_clicks: function() {
+            var dte = this;
+            var id = this.$element.attr('id');
+            if(!id) { return; } 
+            $('label[for=' + id + ']').click(function() {
+                dte.focus();
+            });
         }
 
         ,clear: function() {
