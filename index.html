@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>jQuery datetextentry Plugin</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/site.css">
+  <link rel="stylesheet" type="text/css" href="examples/intro-demo.css">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span2"></div>
+      <div class="span8">
+
+        <div class="hero-unit">
+          <h1>jquery.datetextentry.js</h1>
+          <p>This plugin provides a widget for date entry and validation.
+          Unlike a 'date picker' the widget is well suited to keyboard-only
+          data entry tasks.</p>
+          <div class="btn-group">
+            <a class="btn btn-info" title="Download a Zip file of source and examples" href="https://github.com/grantm/jquery-datetextentry/zipball/master">Zip</a>
+            <a class="btn btn-info" title="Download a Tar file of source and examples" href="https://github.com/grantm/jquery-datetextentry/tarball/master">Tar</a>
+            <a class="btn btn-info" title="Fork this project on GitHub" href="https://github.com/grantm/jquery-datetextentry/">Git</a>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="span12">
+            <ul>
+              <li><a href="#introduction">Introduction</a></li>
+              <li><a href="#reference">Reference Documentation</a></li>
+              <li><a href="#examples">Examples</a></li>
+            </ul>
+
+            <h1 id="introduction">Introduction</h1>
+
+            <p>The 'datetextentry' widget allows a user to enter dates without
+            having to use a date-picker.  While convenient for selecting dates
+            close to 'today' (e.g.: setting up an appointment for next
+            Tuesday), date-pickers are not suitable for all date entry tasks.
+            For example, when entering your date of birth, a date-picker
+            requires you to page through months or years of dates - the older
+            you are, the more times you'll have to click.  This can be very
+            frustrating since you <em>know</em> your date of birth - you just
+            want to type it in.  The datetextentry widget allows you to do
+            exactly that, while removing any ambiguity about expected field
+            order and separators.  It will also alert you immediately if you
+            make an error such as entering the 29th of February in a non-leap
+            year.</p>
+
+            <p>The plugin uses progressive enhancement to upgrade and replace a
+            plain <tt>&lt;input type="text"&gt;</tt> form element.  When the
+            form is submitted, a single value will be posted to the backend.
+            Dates are translated to and from ISO standard YYYY-MM-DD format.
+            The order of the input fields can be customised for your local
+            conventions.</p>
+
+            <p>The <a href="#examples">examples</a> directory includes some demos to get you started.</p>
+
+            <p>The plugin is dual-licensed under the MIT and GPL licences.</p>
+
+            <h1 id="reference">Reference Documentation</h1>
+
+            <p>To be provided.</p>
+
+
+            <h1 id="examples">Examples</h1>
+
+            <p>To be provided.</p>
+
+<!--
+            <dl>
+
+              <dt><a href="examples/01-simple.html">Example 1 - Simple</a></dt>
+
+              <dd>A very simple sequence with one piece of text fading in and
+              another wiping in.</dd>
+
+            </dl>
+-->
+
+
+            <hr>
+
+            <p>Copyright &copy; 2010-2013 Grant McLean</p>
+
+          </div><!--/span-->
+        </div><!--/row-->
+
+      </div><!--/span-->
+    </div><!--/row-->
+
+  </div><!--/.fluid-container-->
+
+  <script src="examples/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="jquery.datetextentry.js"></script>
+</body>
+</html>
