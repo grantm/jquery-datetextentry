@@ -43,6 +43,10 @@
             this.add_entry_fields();
             this.tooltip = $('<span class="jq-dte-tooltip" />').hide();
             this.errorbox = $('<span class="jq-dte-errorbox" />').hide();
+            this.inner.on('paste', 'input', function(e) {
+                var input = this;
+                setTimeout(function() { dte.after_paste(input, e);}, 2);
+            });
             this.wrapper.append( this.inner, this.tooltip, this.errorbox );
             this.set_field_widths();
             this.$element.hide();
@@ -113,6 +117,12 @@
             this.set_date('');
         }
 
+        ,after_paste: function(target, event) {
+            if(this.parse_date( $(target).val() ) ) {
+                this.set_date( $(target).val() );
+            }
+        }
+
         ,parse_date: function(text) {
             return this.parse_iso_date(text);
         }
@@ -152,6 +162,14 @@
 
         ,add_century: function (year) {
             return 2000 + year;
+        }
+
+        ,focus_in: function() {
+            this.wrapper.addClass('focus');
+        }
+
+        ,focus_out: function() {
+            this.wrapper.removeClass('focus');
         }
 
         ,show_input_tip: function(input) {
@@ -438,6 +456,7 @@
 
         ,focus: function(e) {
             this.has_focus = true;
+            this.dte.focus_in();
             if( this.$input.hasClass('hint') ) {
                 this.$input.val('').removeClass('hint');
             }
@@ -447,6 +466,7 @@
 
         ,blur: function(e) {
             this.has_focus = false;
+            this.dte.focus_out();
             this.dte.hide_input_tip();
             this.show_hint();
             this.dte.validate(this);
