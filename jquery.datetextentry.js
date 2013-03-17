@@ -232,7 +232,7 @@
         }
 
         ,focus: function() {
-            this.fields[0].set_focus();
+            this.fields[0].set_focus(true);
         }
 
         ,focus_field_before: function(input) {
@@ -240,13 +240,13 @@
             if(index < 1) { return };
             var next = this.fields[index - 1];
             var val = next.get();
-            next.set_focus().set( '' ).set( val );  // cursor to end + no selection
+            next.set_focus(false);
         }
 
         ,focus_field_after: function(input) {
             var index = input.index;
             if(index > 1) { return };
-            this.fields[index + 1].set_focus();
+            this.fields[index + 1].set_focus(true);
         }
 
         ,validate: function( current_input ) {
@@ -448,8 +448,15 @@
             return this;
         }
 
-        ,set_focus: function() {
-            this.$input.focus().select();
+        ,set_focus: function(select_all) {
+            var $input = this.$input;
+            $input.focus();
+            if(select_all) {
+                $input.select();
+            }
+            else {
+                $input.val( $input.val() );
+            }
             return this;
         }
 
