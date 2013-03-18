@@ -35,8 +35,7 @@
 
   <div class="container-fluid">
     <div class="row-fluid">
-      <div class="span2"></div>
-      <div class="span8">
+      <div class="span8 offset2">
 
         <div class="hero-unit">
           <h1>jquery.datetextentry.js</h1>
@@ -122,7 +121,313 @@
 
             <h1 id="reference">Reference Documentation</h1>
 
-            <p>To be provided.</p>
+            <p>When the <code>datetextentry</code> function is called, you can
+            provide option name/value pairs as an object literal like this:</p>
+
+            <pre>$(selector).datetextentry({opt1: value1, opt2: value2});</pre>
+
+            <p>The text of the error messages can be customised by providing
+            alternative message text as options.</p>
+
+            <p>After the widget has been initialised, you can reference it
+            again using the same selector and call a method like this:</p>
+
+            <pre>$(selector).datetextentry('method-name', args);</pre>
+
+            <div class="row-fluid">
+
+              <div class="span3">
+                <h3>Options</h3>
+                <ul>
+                  <li><a href="#errorbox_x">errorbox_x</a></li>
+                  <li><a href="#errorbox_y">errorbox_y</a></li>
+                  <li><a href="#field_hint_text_day">field_hint_text_day</a></li>
+                  <li><a href="#field_hint_text_month">field_hint_text_month</a></li>
+                  <li><a href="#field_hint_text_year">field_hint_text_year</a></li>
+                  <li><a href="#field_order">field_order</a></li>
+                  <li><a href="#field_tip_text_day">field_tip_text_day</a></li>
+                  <li><a href="#field_tip_text_month">field_tip_text_month</a></li>
+                  <li><a href="#field_tip_text_year">field_tip_text_year</a></li>
+                  <li><a href="#field_width_day">field_width_day</a></li>
+                  <li><a href="#field_width_month">field_width_month</a></li>
+                  <li><a href="#field_width_sep">field_width_sep</a></li>
+                  <li><a href="#field_width_year">field_width_year</a></li>
+                  <li><a href="#format_date">format_date</a></li>
+                  <li><a href="#human_format_date">human_format_date</a></li>
+                  <li><a href="#max_date">max_date</a></li>
+                  <li><a href="#max_year">max_year</a></li>
+                  <li><a href="#min_date">min_date</a></li>
+                  <li><a href="#min_year">min_year</a></li>
+                  <li><a href="#parse_date">parse_date</a></li>
+                  <li><a href="#separator">separator</a></li>
+                  <li><a href="#show_hints">show_hints</a></li>
+                  <li><a href="#show_tooltips">show_tooltips</a></li>
+                  <li><a href="#tooltip_x">tooltip_x</a></li>
+                  <li><a href="#tooltip_y">tooltip_y</a></li>
+                </ul>
+              </div>
+
+              <div class="span4">
+                <h3>Messages</h3>
+                <ul>
+                  <li><a href="#e_bad_day_for_month">E_BAD_DAY_FOR_MONTH</a></li>
+                  <li><a href="#e_day_nan">E_DAY_NAN</a></li>
+                  <li><a href="#e_day_too_big">E_DAY_TOO_BIG</a></li>
+                  <li><a href="#e_day_too_small">E_DAY_TOO_SMALL</a></li>
+                  <li><a href="#e_max_date">E_MAX_DATE</a></li>
+                  <li><a href="#e_min_date">E_MIN_DATE</a></li>
+                  <li><a href="#e_month_nan">E_MONTH_NAN</a></li>
+                  <li><a href="#e_month_too_big">E_MONTH_TOO_BIG</a></li>
+                  <li><a href="#e_month_too_small">E_MONTH_TOO_SMALL</a></li>
+                  <li><a href="#e_year_length">E_YEAR_LENGTH</a></li>
+                  <li><a href="#e_year_nan">E_YEAR_NAN</a></li>
+                  <li><a href="#e_year_too_big">E_YEAR_TOO_BIG</a></li>
+                  <li><a href="#e_year_too_small">E_YEAR_TOO_SMALL</a></li>
+                </ul>
+              </div>
+
+              <div class="span3">
+                <h3>Methods</h3>
+                <ul>
+                  <li><a href="#clear">clear</a></li>
+                  <li><a href="#focus">focus</a></li>
+                  <li><a href="#get_date">get_date</a></li>
+                  <li><a href="#set_date">set_date</a></li>
+                </ul>
+              </div>
+
+            </div>
+
+            <h2>Options</h2>
+
+            <table class="table bordered">
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><a name="errorbox_x"></a><code>errorbox_x</code></td>
+                <td>
+                  When an invalid value is entered, a message will be displayed
+                  in an 'error box' to the right of the widget.  Use the
+                  <code>errorbox_x</code> and <code>errorbox_y</code> options to
+                  specify an alternative position for the error box, relative to
+                  the top right corner of the widget.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="errorbox_y"></a><code>errorbox_y</code></td>
+                <td>
+                  See <a href="#errorbox_x">errorbox_x</a>.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_hint_text_day"></a><code>field_hint_text_day</code></td>
+                <td>
+                  Hint text to display in an empty day field. Default: 'DD'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_hint_text_month"></a><code>field_hint_text_month</code></td>
+                <td>
+                  Hint text to display in an empty month field. Default: 'MM'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_hint_text_year"></a><code>field_hint_text_year</code></td>
+                <td>
+                  Hint text to display in an empty year field. Default: 'YYYY'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_order"></a><code>field_order</code></td>
+                <td>
+                  A string comprising the letter 'D', 'M' and 'Y' in the order
+                  you wish the day, month and year fields to be displayed.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_tip_text_day"></a><code>field_tip_text_day</code></td>
+                  Tooltip text to display beneath the day field when it has the
+                  focus. Default: 'Day'
+                <td>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_tip_text_month"></a><code>field_tip_text_month</code></td>
+                <td>
+                  Tooltip text to display beneath the month field when it has the
+                  focus. Default: 'Month'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_tip_text_year"></a><code>field_tip_text_year</code></td>
+                <td>
+                  Tooltip text to display beneath the year field when it has the
+                  focus. Default: 'Year'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_day"></a><code>field_width_day</code></td>
+                <td>
+                  <p>Proportion of the overall width of the widget that should be
+                  used for the day field.  Default: 40.</p>
+                  <p>The values specified are not absolute pixel values.  Instead,
+                  the widget size is organised to take up the same space as the
+                  input box it replaces.  Inside the widget, the field sizes are
+                  allocated based on the relative proportions specified.</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_month"></a><code>field_width_month</code></td>
+                <td>
+                  Proportion of the overall width of the widget that should be
+                  used for the month field.  Default: 40.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_sep"></a><code>field_width_sep</code></td>
+                <td>
+                  Proportion of the overall width of the widget that should be
+                  used for each of the separators.  Default: 4.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_year"></a><code>field_width_year</code></td>
+                <td>
+                  Proportion of the overall width of the widget that should be
+                  used for the year field.  Default: 60.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="format_date"></a><code>format_date</code></td>
+                <td>
+                  <p>When a valid date is entered into the three fields, a formatted
+                  date string will be saved in the original text field, to be
+                  submitted to the backend server.  By default the date will be
+                  in ISO-standard YYYY-MM-DD format.</p>
+                  <p>Using this option, you can provide a function that accepts
+                  an object of the form <code>{ day: '02', month: '06', year: '2012' }</code>
+                  and returns a string.</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="human_format_date"></a><code>human_format_date</code></td>
+                <td>
+                  This option is similar to <a href="#format_date">format_date</a>
+                  but allows you to override the default format (DD/MM/YYYY) used
+                  to display dates in the error box.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="max_date"></a><code>max_date</code></td>
+                <td>
+                  <p>If this option is provided, a date greater than the
+                  supplied value will be rejected.<p>
+                  <p>The value can be supplied as an ISO date string (which
+                  will be parsed using the <a href="#parse_date">parse_date</a>
+                  function; or as a function which returns an object literal
+                  of the form expected by <a href="#format_date">format_date</a>.</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="max_year"></a><code>max_year</code></td>
+                <td>
+                  If this option is provided, a year value greater than the
+                  supplied value will be rejected.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="min_date"></a><code>min_date</code></td>
+                <td>
+                  <p>If this option is provided, a date less than the
+                  supplied value will be rejected.<p>
+                  <p>The value can be supplied as an ISO date string (which
+                  will be parsed using the <a href="#parse_date">parse_date</a>
+                  function; or as a function which returns an object literal
+                  of the form expected by <a href="#format_date">format_date</a>.</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="min_year"></a><code>min_year</code></td>
+                <td>
+                  If this option is provided, a year value less than the
+                  supplied value will be rejected.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="parse_date"></a><code>parse_date</code></td>
+                <td>
+                  You can override the default date parsing function which is
+                  used to parse the default value in the base <code>&lt;input&gt;</code>
+                  element's <code>value</code> attribute.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="separator"></a><code>separator</code></td>
+                <td>
+                  The character which should be displayed in the widget between the
+                  input fields,  Default: '/'.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="show_hints"></a><code>show_hints</code></td>
+                <td>
+                  A boolean value controlling whether hint text will be displayed
+                  in empty fields which do not have the input focus.  Default: true.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="show_tooltips"></a><code>show_tooltips</code></td>
+                <td>
+                  A boolean value controlling whether a field name tooltip will
+                  be displayed beneath the fields with the current input focus.
+                  Default: true.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tooltip_x"></a><code>tooltip_x</code></td>
+                <td>
+                  Horizontal offset in pixels for the tooltip relative to the
+                  current input field.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tooltip_y"></a><code>tooltip_y</code></td>
+                <td>
+                  Vertical offset in pixels for the tooltip relative to the
+                  current input field.
+                </td>
+              </tr>
+
+            </table>
+
+            <p><i>Detail on messages and methods to be provided.</i></p>
 
 
             <h1 id="examples">Examples</h1>
