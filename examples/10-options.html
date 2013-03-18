@@ -281,7 +281,8 @@ $('#btn-focus').click(function() {
 
     $('#date10').datetextentry({
         on_change : function(date_str) {
-            $('#valid-date10').text(date_str);
+            $('#valid-date10').text(date_str)
+                .css({opacity: 0}).animate({opacity: 1}, 500);
         }
     });
 
