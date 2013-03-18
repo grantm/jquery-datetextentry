@@ -150,6 +150,7 @@
                   <li><a href="#max_year">max_year</a></li>
                   <li><a href="#min_date">min_date</a></li>
                   <li><a href="#min_year">min_year</a></li>
+                  <li><a href="#on_change">on_change</a></li>
                   <li><a href="#parse_date">parse_date</a></li>
                   <li><a href="#separator">separator</a></li>
                   <li><a href="#show_hints">show_hints</a></li>
@@ -368,6 +369,17 @@
                 <td>
                   If this option is provided, a year value less than the
                   supplied value will be rejected.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="on_change"></a><code>on_change</code></td>
+                <td>
+                  <p>If you supply a function reference, it will be called when the
+                  contents of the date entry boxes pass validation.</p>
+                  <p><em>Note: this is quite a 'noisy' function - it will be called
+                  for every keypress when a valid date results.  Also note, it will
+                  not be called when the date is changed to an invalid value.</p>
                 </td>
               </tr>
 
