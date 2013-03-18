@@ -370,6 +370,7 @@
 
         ,validate_complete_date: function() {
             var opt = this.options;
+
             var max_date = opt.max_date
                 ? typeof opt.max_date === 'function'
                     ? opt.max_date.call(this)
@@ -383,10 +384,25 @@
                         throw(msg.replace(/%DATE/, this.human_format_date( max_date )));
                     }
                 }
+            }
 
-                if(this.custom_validation) {
-                    this.custom_validation(this_date);
+            var min_date = opt.min_date
+                ? typeof opt.min_date === 'function'
+                    ? opt.min_date.call(this)
+                    : this.parse_date( opt.min_date )
+                : null;
+            if(min_date) {
+                var this_date = this.iso_format_date( this.get_date() );
+                if( this_date < this.iso_format_date( min_date ) ) {
+                    var msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
+                    if(msg) {
+                        throw(msg.replace(/%DATE/, this.human_format_date( min_date )));
+                    }
                 }
+            }
+
+            if(this.custom_validation) {
+                this.custom_validation(this_date);
             }
         }
 
@@ -571,6 +587,7 @@
         E_YEAR_LENGTH         : 'Year must be 4 digits',
         E_YEAR_TOO_SMALL      : 'Year must not be before %y',
         E_YEAR_TOO_BIG        : 'Year must not be after %y',
+        E_MIN_DATE            : 'Date must not be earlier than %DATE',
         E_MAX_DATE            : 'Date must not be later than %DATE',
         month_name            : [
                                   'January', 'February', 'March', 'April',
