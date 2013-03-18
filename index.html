@@ -6,6 +6,30 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/site.css">
   <link rel="stylesheet" type="text/css" href="jquery.datetextentry.css">
+  <style type="text/css">
+
+    /* Date format customisations for default boostrap theme */
+
+    span.jq-dte input:focus {
+      border: none;
+      outline-none;
+      box-shadow: none;
+    }
+
+    body span.jq-dte {
+      background-color: #ffffff;
+      border: 1px solid #cccccc;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+      transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+      padding: 4px 2px 3px 2px;
+    }
+
+    body span.jq-dte.focus {
+      border-color: rgba(82, 168, 236, 0.8);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+      outline: 0 none;
+    }
+  </style>
 </head>
 <body>
 
@@ -90,18 +114,25 @@
 
             <h1 id="examples">Examples</h1>
 
-            <p>To be provided.</p>
-
-<!--
             <dl>
 
-              <dt><a href="examples/01-simple.html">Example 1 - Simple</a></dt>
+              <dt><a href="examples/01-defaults.html">Example 1 - Defaults</a></dt>
 
-              <dd>A very simple sequence with one piece of text fading in and
-              another wiping in.</dd>
+              <dd>A minimal example demonstrating the default widget behaviour.</dd>
+
+              <dt><a href="examples/02-field-order.html">Example 2 - Field Order</a></dt>
+
+              <dd>Override the default field order for USA-style Month, Day,
+              Year.</dd>
+
+              <dt><a href="examples/10-options.html">Example 3 - Options</a></dt>
+
+              <dd>Various examples demonstrating a range of different option
+              settings to change separators, hints, tooltips, date ranges and
+              custom validation.  Also a demo of interacting with the widget
+              programatically after initialisation.</dd>
 
             </dl>
--->
 
 
             <hr>
