@@ -566,9 +566,6 @@
     };
 
     $.fn.datetextentry.defaults = {
-        day                   : '',
-        month                 : '',
-        year                  : '',
         field_order           : 'DMY',
         separator             : '/',
         show_tooltips         : true,
