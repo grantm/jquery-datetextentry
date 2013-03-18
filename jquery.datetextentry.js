@@ -370,6 +370,8 @@
 
         ,validate_complete_date: function() {
             var opt = this.options;
+            var date_obj = this.get_date();
+            var date_iso = this.iso_format_date( date_obj );
 
             var max_date = opt.max_date
                 ? typeof opt.max_date === 'function'
@@ -377,8 +379,7 @@
                     : this.parse_date( opt.max_date )
                 : null;
             if(max_date) {
-                var this_date = this.iso_format_date( this.get_date() );
-                if( this_date > this.iso_format_date( max_date ) ) {
+                if( date_iso > this.iso_format_date( max_date ) ) {
                     var msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
                     if(msg) {
                         throw(msg.replace(/%DATE/, this.human_format_date( max_date )));
@@ -392,8 +393,7 @@
                     : this.parse_date( opt.min_date )
                 : null;
             if(min_date) {
-                var this_date = this.iso_format_date( this.get_date() );
-                if( this_date < this.iso_format_date( min_date ) ) {
+                if( date_iso < this.iso_format_date( min_date ) ) {
                     var msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
                     if(msg) {
                         throw(msg.replace(/%DATE/, this.human_format_date( min_date )));
@@ -402,7 +402,12 @@
             }
 
             if(this.custom_validation) {
-                this.custom_validation(this_date);
+                date_obj.date = new Date(
+                    parseInt(date_obj.year, 10),
+                    parseInt(date_obj.month, 10) - 1,
+                    parseInt(date_obj.day, 10)
+                );
+                this.custom_validation(date_obj);
             }
         }
 
