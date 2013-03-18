@@ -138,7 +138,7 @@
         }
 
         ,parse_iso_date: function(text) {
-            return text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/)
+            return text && text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/)
                 ? { day: RegExp.$3, month: RegExp.$2, year: RegExp.$1 }
                 : null;
         }
