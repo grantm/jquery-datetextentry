@@ -27,6 +27,7 @@
         this.parse_date = this.options.parse_date || this.parse_date;
         this.format_date = this.options.format_date || this.format_date;
         this.human_format_date = this.options.human_format_date || this.human_format_date;
+        this.on_change = this.options.on_change || this.on_change;
         this.custom_validation = this.options.custom_validation;
         this.build_ui();
         this.set_date( this.$element.attr('value') );
