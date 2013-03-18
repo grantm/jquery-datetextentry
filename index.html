@@ -60,26 +60,24 @@
 
             <h1 id="introduction">Introduction</h1>
 
-            <p>The 'datetextentry' widget allows a user to enter dates without
-            having to use a date-picker.  While convenient for selecting dates
-            close to 'today' (e.g.: setting up an appointment for next
-            Tuesday), date-pickers are not suitable for all date entry tasks.
-            For example, when entering your date of birth, a date-picker
-            requires you to page through months or years of dates - the older
-            you are, the more times you'll have to click.  This can be very
-            frustrating since you <em>know</em> your date of birth - you just
-            want to type it in.  The datetextentry widget allows you to do
-            exactly that, while removing any ambiguity about expected field
-            order and separators.  It will also alert you immediately if you
-            make an error such as entering the 29th of February in a non-leap
-            year.</p>
+            <p>The <code>datetextentry</code> widget provides for reliable date
+            entry without the need for a date-picker.  While convenient for
+            selecting dates close to 'today' (e.g.: setting up an appointment
+            for next Tuesday), date-pickers are not suitable for all date entry
+            tasks.  For example, when entering your date of birth, a
+            date-picker requires you to page through months and years of dates
+            - the older you are, the more times you'll have to click.  This can
+            be very frustrating since you <em>know</em> your date of birth -
+            you just want to type it in.  The <code>datetextentry</code>
+            widget allows you to do exactly that, while removing any
+            ambiguity about expected field order and separators.</p>
 
-            <p>The plugin uses progressive enhancement to upgrade and replace a
-            plain <code>&lt;input type="text"&gt;</code> form element.  When the
-            form is submitted, a single value will be posted to the backend.
-            Dates are translated to and from ISO standard YYYY-MM-DD format.
-            The order of the input fields can be customised for your local
-            conventions.</p>
+            <p>You provide a plain <code>&lt;input type="text"&gt;</code> form
+            element and the plugin will replace it with a 3-field widget. When
+            the form is submitted, a single value will be posted to the
+            backend.  Dates are translated to and from ISO standard YYYY-MM-DD
+            format.  The order of the input fields can be customised for your
+            local conventions.</p>
 
             <p>A typical text entry box might look like this:</p>
 
@@ -92,7 +90,8 @@
               </div>
             </form>
 
-            <p>With the datetextentry plugin applied, it might look like this:</p>
+            <p>With the <code>datetextentry</code> plugin applied, it might
+            look like this:</p>
 
             <form class="form-horizontal">
               <div class="control-group">
@@ -102,6 +101,20 @@
                 </div>
               </div>
             </form>
+
+            <p>The widget provides the following functionality (try out the example above):</p>
+
+            <ul>
+              <li>Separate fields for day, month and year (configurable order)</li>
+              <li>Tooltips and hint text to guide the user through each field</li>
+              <li>Auto-advance when a field is 'full'</li>
+              <li>Backspacing through an empty field to the preceding field</li>
+              <li>Custom handling for mapping 2-digit years to 4 digits</li>
+              <li>Immediate feedback for invalid data (e.g.: day 32 or month 13)</li>
+              <li>More advanced validation on complete dates (e.g.: to reject February 29th in a non-leap year)</li>
+              <li>Custom validation for application-specific date range checking</li>
+              <li>Linking the input field with its label (e.g.: click label to focus)</li>
+            </ul>
 
             <p>The <a href="#examples">examples</a> directory includes some demos to get you started.</p>
 
