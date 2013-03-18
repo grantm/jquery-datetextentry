@@ -200,6 +200,23 @@ $('#btn-focus').click(function() {
       </td>
     </tr>
 
+    <tr>
+      <td>
+        <p>Supply a callback function to be run when a valid date is entered.</p>
+        <pre class="code">$('#date10').datetextentry({
+    on_change : function(date_str) {
+        $('#valid-date10').text(date_str);
+    }
+});</pre>
+      </td>
+      <td>
+        <form>
+          <input id="date10" class="text" value="">
+        </form>
+        <div>Validated date: <span id="valid-date10"></span></div>
+      </td>
+    </tr>
+
   </table>
 
   <script type="text/javascript">
@@ -260,6 +277,12 @@ $('#btn-focus').click(function() {
     $('#btn-focus').click(function() {
         $('#date9').datetextentry('focus');
         return false;
+    });
+
+    $('#date10').datetextentry({
+        on_change : function(date_str) {
+            $('#valid-date10').text(date_str);
+        }
     });
 
   </script>
