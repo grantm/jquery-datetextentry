@@ -267,6 +267,9 @@
                     this.validate_days_in_month();
                     if(this.year_value.length === 4) {
                         this.validate_complete_date();
+                        var date_obj = this.get_date();
+                        var date_str = this.format_date( date_obj );
+                        this.$element.val( date_str );
                     }
                 }
                 catch(e) {
