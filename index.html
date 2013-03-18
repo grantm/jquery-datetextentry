@@ -54,6 +54,11 @@
             <ul>
               <li><a href="#introduction">Introduction</a></li>
               <li><a href="#reference">Reference Documentation</a></li>
+              <ul>
+                <li><a href="#options">Options</a></li>
+                <li><a href="#messages">Messages</a></li>
+                <li><a href="#methods">Methods</a></li>
+              </ul>
               <li><a href="#examples">Examples</a></li>
             </ul>
 
@@ -121,19 +126,6 @@
 
             <h1 id="reference">Reference Documentation</h1>
 
-            <p>When the <code>datetextentry</code> function is called, you can
-            provide option name/value pairs as an object literal like this:</p>
-
-            <pre>$(selector).datetextentry({opt1: value1, opt2: value2});</pre>
-
-            <p>The text of the error messages can be customised by providing
-            alternative message text as options.</p>
-
-            <p>After the widget has been initialised, you can reference it
-            again using the same selector and call a method like this:</p>
-
-            <pre>$(selector).datetextentry('method-name', args);</pre>
-
             <div class="row-fluid">
 
               <div class="span3">
@@ -191,14 +183,18 @@
                 <ul>
                   <li><a href="#clear">clear</a></li>
                   <li><a href="#focus">focus</a></li>
-                  <li><a href="#get_date">get_date</a></li>
                   <li><a href="#set_date">set_date</a></li>
                 </ul>
               </div>
 
             </div>
 
-            <h2>Options</h2>
+            <h2><a name="options"></a>Options</h2>
+
+            <p>When the <code>datetextentry</code> function is called, you can
+            provide option name/value pairs as an object literal like this:</p>
+
+            <pre>$(selector).datetextentry({opt1: value1, opt2: value2});</pre>
 
             <table class="table bordered">
               <tr>
@@ -427,7 +423,10 @@
 
             </table>
 
-            <h2>Messages</h2>
+            <h2><a name="messages"></a>Messages</h2>
+
+            <p>The text of the error messages can be customised by providing
+            alternative message text as options.</p>
 
             <table class="table bordered">
 
@@ -503,7 +502,47 @@
 
             </table>
 
-            <p><i>Detail on methods to be provided.</i></p>
+            <h2><a name="messages"></a>Methods</h2>
+
+            <p>After the widget has been initialised, you can reference it
+            again using the same selector and call a method like this:</p>
+
+            <pre>$(selector).datetextentry('method-name', args);</pre>
+
+            <table class="table bordered">
+
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><a name="clear"></a><code>clear</code></td>
+                <td>
+                  <p>Discard the current contents of all the fields, e.g.:</p>
+                  <pre>$(selector).datetextentry('clear');</pre>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="focus"></a><code>focus</code></td>
+                <td>
+                  <p>Move the input focus to the first field, e.g.:</p>
+                  <pre>$(selector).datetextentry('focus');</pre>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="set_date"></a><code>set_date</code></td>
+                <td>
+                  <p>Provide a new date value, which will be parsed by
+                  <a href="#parse_date">parse_date</a> and used to populate
+                  the three date entry fields, e.g.:</p>
+                  <pre>$(selector).datetextentry('set_date', '2005-12-31');</pre>
+                </td>
+              </tr>
+
+            </table>
 
 
             <h1 id="examples">Examples</h1>
