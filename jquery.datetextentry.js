@@ -30,6 +30,7 @@
         this.custom_validation = this.options.custom_validation;
         this.build_ui();
         this.set_date( this.$element.attr('value') );
+        this.proxy_label_clicks();
     };
 
     DateTextEntry.prototype = {
@@ -112,6 +113,15 @@
             }
         }
 
+        ,proxy_label_clicks: function() {
+            var dte = this;
+            var id = this.$element.attr('id');
+            if(!id) { return; } 
+            $('label[for=' + id + ']').click(function() {
+                dte.focus();
+            });
+        }
+
         ,clear: function() {
             this.clear_error('');
             this.set_date('');
@@ -128,7 +138,7 @@
         }
 
         ,parse_iso_date: function(text) {
-            return text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/)
+            return text && text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/)
                 ? { day: RegExp.$3, month: RegExp.$2, year: RegExp.$1 }
                 : null;
         }
@@ -222,7 +232,7 @@
         }
 
         ,focus: function() {
-            this.fields[0].set_focus();
+            this.fields[0].set_focus(true);
         }
 
         ,focus_field_before: function(input) {
@@ -230,13 +240,13 @@
             if(index < 1) { return };
             var next = this.fields[index - 1];
             var val = next.get();
-            next.set_focus().set( '' ).set( val );  // cursor to end + no selection
+            next.set_focus(false);
         }
 
         ,focus_field_after: function(input) {
             var index = input.index;
             if(index > 1) { return };
-            this.fields[index + 1].set_focus();
+            this.fields[index + 1].set_focus(true);
         }
 
         ,validate: function( current_input ) {
@@ -360,23 +370,44 @@
 
         ,validate_complete_date: function() {
             var opt = this.options;
+            var date_obj = this.get_date();
+            var date_iso = this.iso_format_date( date_obj );
+
             var max_date = opt.max_date
                 ? typeof opt.max_date === 'function'
                     ? opt.max_date.call(this)
                     : this.parse_date( opt.max_date )
                 : null;
             if(max_date) {
-                var this_date = this.iso_format_date( this.get_date() );
-                if( this_date > this.iso_format_date( max_date ) ) {
+                if( date_iso > this.iso_format_date( max_date ) ) {
                     var msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
                     if(msg) {
                         throw(msg.replace(/%DATE/, this.human_format_date( max_date )));
                     }
                 }
+            }
 
-                if(this.custom_validation) {
-                    this.custom_validation(this_date);
+            var min_date = opt.min_date
+                ? typeof opt.min_date === 'function'
+                    ? opt.min_date.call(this)
+                    : this.parse_date( opt.min_date )
+                : null;
+            if(min_date) {
+                if( date_iso < this.iso_format_date( min_date ) ) {
+                    var msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
+                    if(msg) {
+                        throw(msg.replace(/%DATE/, this.human_format_date( min_date )));
+                    }
                 }
+            }
+
+            if(this.custom_validation) {
+                date_obj.date = new Date(
+                    parseInt(date_obj.year, 10),
+                    parseInt(date_obj.month, 10) - 1,
+                    parseInt(date_obj.day, 10)
+                );
+                this.custom_validation(date_obj);
             }
         }
 
@@ -438,8 +469,15 @@
             return this;
         }
 
-        ,set_focus: function() {
-            this.$input.focus().select();
+        ,set_focus: function(select_all) {
+            var $input = this.$input;
+            $input.focus();
+            if(select_all) {
+                $input.select();
+            }
+            else {
+                $input.val( $input.val() );
+            }
             return this;
         }
 
@@ -554,6 +592,7 @@
         E_YEAR_LENGTH         : 'Year must be 4 digits',
         E_YEAR_TOO_SMALL      : 'Year must not be before %y',
         E_YEAR_TOO_BIG        : 'Year must not be after %y',
+        E_MIN_DATE            : 'Date must not be earlier than %DATE',
         E_MAX_DATE            : 'Date must not be later than %DATE',
         month_name            : [
                                   'January', 'February', 'March', 'April',
