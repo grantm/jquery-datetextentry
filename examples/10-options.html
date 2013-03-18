@@ -80,12 +80,12 @@
 
     <tr>
       <td>
-        <p>Specify allowable date range using maximum and minimum dates.</p>
+        <p>Disable tooltips and re-position error box for messages below the
+        widget rather than to the right.</p>
         <pre class="code">$('#date5').datetextentry({
-    min_date         : '1970-01-01',
-    min_date_message : 'Please select a date in the 1970s',
-    max_date         : '1979-31-12',
-    max_date_message : 'Please select a date in the 1970s',
+    show_tooltips : false,
+    errorbox_x    : -135,
+    errorbox_y    : 28
 });</pre>
       </td>
       <td>
@@ -97,10 +97,27 @@
 
     <tr>
       <td>
+        <p>Specify allowable date range using maximum and minimum dates.</p>
+        <pre class="code">$('#date6').datetextentry({
+    min_date         : '1970-01-01',
+    min_date_message : 'Please select a date in the 1970s',
+    max_date         : '1979-31-12',
+    max_date_message : 'Please select a date in the 1970s',
+});</pre>
+      </td>
+      <td>
+        <form>
+          <input id="date6" class="text" value="">
+        </form>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
         <p>Specify allowable date range using a minimum <em>year</em> - with
         the default message; and using a function to calculate the maximum
         date.</p>
-        <pre class="code">$('#date6').datetextentry({
+        <pre class="code">$('#date7').datetextentry({
     min_year         : '2000',
     max_date         : function() { return this.get_today(); },
     max_date_message : 'Date must not be in the future'
@@ -114,7 +131,7 @@
       </td>
       <td>
         <form>
-          <input id="date6" class="text" value="">
+          <input id="date7" class="text" value="">
         </form>
       </td>
     </tr>
@@ -122,7 +139,7 @@
     <tr>
       <td>
         <p>Use a custom validation function to apply arbitrary rules.</p>
-        <pre class="code">$('#date7').datetextentry({
+        <pre class="code">$('#date8').datetextentry({
     custom_validation : function(valid) {
         if(valid.year === '1983'  &amp;&amp;  valid.date.getDay() === 2) {
             return;
@@ -133,7 +150,7 @@
       </td>
       <td>
         <form>
-          <input id="date7" class="text" value="">
+          <input id="date8" class="text" value="">
         </form>
       </td>
     </tr>
@@ -143,23 +160,23 @@
         <p>Your code can interact with the <code>datetextentry</code> widget
         after it has been initialised.  You can set and clear the date value
         as well as moving focus to the widget's first field:</p>
-        <pre class="code">$('#date8').datetextentry();
+        <pre class="code">$('#date9').datetextentry();
 
 $('#launch-dates li').click(function() {
-    $('#date8').datetextentry('set_date', $(this).data('date'));
+    $('#date9').datetextentry('set_date', $(this).data('date'));
 });
 
 $('#btn-clear').click(function() {
-    $('#date8').datetextentry('clear');
+    $('#date9').datetextentry('clear');
 });
 
 $('#btn-focus').click(function() {
-    $('#date8').datetextentry('focus');
+    $('#date9').datetextentry('focus');
 });</pre>
       </td>
       <td>
         <form>
-          <div><input id="date8" class="text" value=""></div>
+          <div><input id="date9" class="text" value=""></div>
           <p>Select a launch date:</p>
           <ul id="launch-dates">
             <li data-date="1967-02-21">Apollo 1</li>
@@ -180,6 +197,23 @@ $('#btn-focus').click(function() {
             <button id="btn-focus" type="button">Focus</button>
           </div>
         </form>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Supply a callback function to be run when a valid date is entered.</p>
+        <pre class="code">$('#date10').datetextentry({
+    on_change : function(date_str) {
+        $('#valid-date10').text(date_str);
+    }
+});</pre>
+      </td>
+      <td>
+        <form>
+          <input id="date10" class="text" value="">
+        </form>
+        <div>Validated date: <span id="valid-date10"></span></div>
       </td>
     </tr>
 
@@ -205,19 +239,25 @@ $('#btn-focus').click(function() {
     });
 
     $('#date5').datetextentry({
+        show_tooltips : false,
+        errorbox_x    : -135,
+        errorbox_y    : 28
+    });
+
+    $('#date6').datetextentry({
         min_date         : '1970-01-01',
         min_date_message : 'Please select a date in the 1970s',
         max_date         : '1979-31-12',
         max_date_message : 'Please select a date in the 1970s',
     });
 
-    $('#date6').datetextentry({
+    $('#date7').datetextentry({
         min_year         : '2000',
         max_date         : function() { return this.get_today(); },
         max_date_message : 'Date must not be in the future'
     });
 
-    $('#date7').datetextentry({
+    $('#date8').datetextentry({
         custom_validation : function(valid) {
             if(valid.year === '1983' && valid.date.getDay() === 2) {
                 return;
@@ -226,17 +266,23 @@ $('#btn-focus').click(function() {
         }
     });
 
-    $('#date8').datetextentry();
+    $('#date9').datetextentry();
     $('#launch-dates li').click(function() {
-        $('#date8').datetextentry('set_date', $(this).data('date'));
+        $('#date9').datetextentry('set_date', $(this).data('date'));
     });
     $('#btn-clear').click(function() {
-        $('#date8').datetextentry('clear');
+        $('#date9').datetextentry('clear');
         return false;
     });
     $('#btn-focus').click(function() {
-        $('#date8').datetextentry('focus');
+        $('#date9').datetextentry('focus');
         return false;
+    });
+
+    $('#date10').datetextentry({
+        on_change : function(date_str) {
+            $('#valid-date10').text(date_str);
+        }
     });
 
   </script>

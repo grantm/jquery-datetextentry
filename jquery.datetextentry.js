@@ -27,6 +27,7 @@
         this.parse_date = this.options.parse_date || this.parse_date;
         this.format_date = this.options.format_date || this.format_date;
         this.human_format_date = this.options.human_format_date || this.human_format_date;
+        this.on_change = this.options.on_change || this.on_change;
         this.custom_validation = this.options.custom_validation;
         this.build_ui();
         this.set_date( this.$element.attr('value') );
@@ -267,6 +268,12 @@
                     this.validate_days_in_month();
                     if(this.year_value.length === 4) {
                         this.validate_complete_date();
+                        var date_obj = this.get_date();
+                        var date_str = this.format_date( date_obj );
+                        this.$element.val( date_str );
+                        if(this.on_change) {
+                            this.on_change( date_str );
+                        }
                     }
                 }
                 catch(e) {
@@ -560,9 +567,6 @@
     };
 
     $.fn.datetextentry.defaults = {
-        day                   : '',
-        month                 : '',
-        year                  : '',
         field_order           : 'DMY',
         separator             : '/',
         show_tooltips         : true,
