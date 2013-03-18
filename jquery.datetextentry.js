@@ -270,6 +270,9 @@
                         var date_obj = this.get_date();
                         var date_str = this.format_date( date_obj );
                         this.$element.val( date_str );
+                        if(this.on_change) {
+                            this.on_change( date_str );
+                        }
                     }
                 }
                 catch(e) {
