@@ -1,11 +1,10 @@
 /*
- * datetextentry - jQuery plugin
- *
+ * jQuery datetextentry v2.0.1
  * Copyright (c) 2010-2013 Grant McLean (grant@mclean.net.nz)
  *
  * Dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
+ *   http://opensource.org/licenses/MIT
+ *   http://opensource.org/licenses/GPL-3.0
  *
  */
 
