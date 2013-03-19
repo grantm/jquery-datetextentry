@@ -6,30 +6,6 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/site.css">
   <link rel="stylesheet" type="text/css" href="jquery.datetextentry.css">
-  <style type="text/css">
-
-    /* Date format customisations for default boostrap theme */
-
-    span.jq-dte input:focus {
-      border: none;
-      outline-none;
-      box-shadow: none;
-    }
-
-    body span.jq-dte {
-      background-color: #ffffff;
-      border: 1px solid #cccccc;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-      transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
-      padding: 4px 2px 3px 2px;
-    }
-
-    body span.jq-dte.focus {
-      border-color: rgba(82, 168, 236, 0.8);
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
-      outline: 0 none;
-    }
-  </style>
 </head>
 <body>
 
@@ -153,6 +129,7 @@
                   <li><a href="#min_date">min_date</a></li>
                   <li><a href="#min_year">min_year</a></li>
                   <li><a href="#on_change">on_change</a></li>
+                  <li><a href="#on_error">on_error</a></li>
                   <li><a href="#parse_date">parse_date</a></li>
                   <li><a href="#separator">separator</a></li>
                   <li><a href="#show_hints">show_hints</a></li>
@@ -219,23 +196,25 @@
               <tr>
                 <td><a name="custom_validation"></a><code>custom_validation</code></td>
                 <td>
-                  Use this option to supply a function for applying arbitrary
+                  <p>Use this option to supply a function for applying arbitrary
                   validation rules.  The function will be passed an object literal
                   with <code>year</code>, <code>month</code>, <code>day</code> and
                   <code>date</code> properties.  If the date is deemed to be invalid,
                   the function should <code>throw</code> an appropriate error message,
-                  which will be displayed to the user.
+                  which will be displayed to the user.</p>
+                  <p class="example-link"><a href="examples/10-options.html#custom-validation">See example</a></p>
                 </td>
               </tr>
 
               <tr>
                 <td><a name="errorbox_x"></a><code>errorbox_x</code></td>
                 <td>
-                  When an invalid value is entered, a message will be displayed
+                  <p>When an invalid value is entered, a message will be displayed
                   in an 'error box' to the right of the widget.  Use the
                   <code>errorbox_x</code> and <code>errorbox_y</code> options to
                   specify an alternative position for the error box, relative to
-                  the top right corner of the widget.
+                  the top right corner of the widget.</p>
+                  <p class="example-link"><a href="examples/10-options.html#errorbox">See example</a></p>
                 </td>
               </tr>
 
@@ -270,8 +249,9 @@
               <tr>
                 <td><a name="field_order"></a><code>field_order</code></td>
                 <td>
-                  A string comprising the letter 'D', 'M' and 'Y' in the order
-                  you wish the day, month and year fields to be displayed.
+                  <p>A string comprising the letter 'D', 'M' and 'Y' in the order
+                  you wish the day, month and year fields to be displayed.</p>
+                  <p class="example-link"><a href="examples/10-options.html#order-sep">See example</a></p>
                 </td>
               </tr>
 
@@ -366,6 +346,7 @@
                   will be parsed using the <a href="#parse_date">parse_date</a>
                   function; or as a function which returns an object literal
                   of the form expected by <a href="#format_date">format_date</a>.</p>
+                  <p class="example-link"><a href="examples/10-options.html#minmax-date">See example</a></p>
                 </td>
               </tr>
 
@@ -386,14 +367,16 @@
                   will be parsed using the <a href="#parse_date">parse_date</a>
                   function); or as a function which returns an object literal
                   of the form expected by <a href="#format_date">format_date</a>.</p>
+                  <p class="example-link"><a href="examples/10-options.html#minmax-date">See example</a></p>
                 </td>
               </tr>
 
               <tr>
                 <td><a name="min_year"></a><code>min_year</code></td>
                 <td>
-                  If this option is provided, a year value less than the
-                  supplied value will be rejected.
+                  <p>If this option is provided, a year value less than the
+                  supplied value will be rejected.</p>
+                  <p class="example-link"><a href="examples/10-options.html#min-year">See example</a></p>
                 </td>
               </tr>
 
@@ -401,10 +384,24 @@
                 <td><a name="on_change"></a><code>on_change</code></td>
                 <td>
                   <p>If you supply a function reference, it will be called when the
-                  contents of the date entry boxes pass validation.</p>
+                  contents of the date entry boxes pass validation.  The function
+                  will be passed a single argument - a date string from
+                  <code>format_date</code>.</p>
                   <p><em>Note: this is quite a 'noisy' function - it will be called
                   for every keypress when a valid date results.  Also note, it will
-                  not be called when the date is changed to an invalid value.</p>
+                  not be called when the date is changed to an invalid value.</em></p>
+                  <p class="example-link"><a href="examples/10-options.html#on-change">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="on_error"></a><code>on_error</code></td>
+                <td>
+                  <p>If you supply a function reference, it will be called when the
+                  error box is updated.  A single argument will be passed to the
+                  function.  The empty string if the error condition is cleared or
+                  the text of the error otherwise.</p>
+                  <p class="example-link"><a href="examples/10-options.html#on-error">See example</a></p>
                 </td>
               </tr>
 
@@ -420,25 +417,28 @@
               <tr>
                 <td><a name="separator"></a><code>separator</code></td>
                 <td>
-                  The character which should be displayed in the widget between the
-                  input fields,  Default: '/'.
+                  <p>The character which should be displayed in the widget between the
+                  input fields,  Default: '/'.</p>
+                  <p class="example-link"><a href="examples/10-options.html#order-sep">See example</a></p>
                 </td>
               </tr>
 
               <tr>
                 <td><a name="show_hints"></a><code>show_hints</code></td>
                 <td>
-                  A boolean value controlling whether hint text will be displayed
-                  in empty fields which do not have the input focus.  Default: true.
+                  <p>A boolean value controlling whether hint text will be displayed
+                  in empty fields which do not have the input focus.  Default: true.</p>
+                  <p class="example-link"><a href="examples/10-options.html#no-hints">See example</a></p>
                 </td>
               </tr>
 
               <tr>
                 <td><a name="show_tooltips"></a><code>show_tooltips</code></td>
                 <td>
-                  A boolean value controlling whether a field name tooltip will
+                  <p>A boolean value controlling whether a field name tooltip will
                   be displayed beneath the fields with the current input focus.
-                  Default: true.
+                  Default: true.</p>
+                  <p class="example-link"><a href="examples/10-options.html#no-tooltips">See example</a></p>
                 </td>
               </tr>
 
@@ -558,6 +558,7 @@
                 <td>
                   <p>Discard the current contents of all the fields, e.g.:</p>
                   <pre>$(selector).datetextentry('clear');</pre>
+                  <p class="example-link"><a href="examples/10-options.html#methods">See example</a></p>
                 </td>
               </tr>
 
@@ -566,6 +567,7 @@
                 <td>
                   <p>Move the input focus to the first field, e.g.:</p>
                   <pre>$(selector).datetextentry('focus');</pre>
+                  <p class="example-link"><a href="examples/10-options.html#methods">See example</a></p>
                 </td>
               </tr>
 
@@ -576,6 +578,7 @@
                   <a href="#parse_date">parse_date</a> and used to populate
                   the three date entry fields, e.g.:</p>
                   <pre>$(selector).datetextentry('set_date', '2005-12-31');</pre>
+                  <p class="example-link"><a href="examples/10-options.html#methods">See example</a></p>
                 </td>
               </tr>
 
