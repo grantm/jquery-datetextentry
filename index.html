@@ -132,6 +132,7 @@
                 <h3>Options</h3>
                 <ul>
                   <li><a href="#add_century">add_century</a></li>
+                  <li><a href="#custom_validation">custom_validation</a></li>
                   <li><a href="#errorbox_x">errorbox_x</a></li>
                   <li><a href="#errorbox_y">errorbox_y</a></li>
                   <li><a href="#field_hint_text_day">field_hint_text_day</a></li>
@@ -212,6 +213,18 @@
                   can use this option to provide an alternative function, that
                   takes a number in the range 10-99 and returns a number in the
                   range 1000-9999.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="custom_validation"></a><code>custom_validation</code></td>
+                <td>
+                  Use this option to supply a function for applying arbitrary
+                  validation rules.  The function will be passed an object literal
+                  with <code>year</code>, <code>month</code>, <code>day</code> and
+                  <code>date</code> properties.  If the date is deemed to be invalid,
+                  the function should <code>throw</code> an appropriate error message,
+                  which will be displayed to the user.
                 </td>
               </tr>
 
