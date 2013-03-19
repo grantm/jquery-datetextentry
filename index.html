@@ -131,6 +131,7 @@
               <div class="span3">
                 <h3>Options</h3>
                 <ul>
+                  <li><a href="#add_century">add_century</a></li>
                   <li><a href="#errorbox_x">errorbox_x</a></li>
                   <li><a href="#errorbox_y">errorbox_y</a></li>
                   <li><a href="#field_hint_text_day">field_hint_text_day</a></li>
@@ -201,6 +202,17 @@
               <tr>
                 <th>Name</th>
                 <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><a name="add_century"></a><code>add_century</code></td>
+                <td>
+                  When a 2-digit year is entered the <code>add_century</code>
+                  function upgrades it to 4 digits by simply adding 2000.  You
+                  can use this option to provide an alternative function, that
+                  takes a number in the range 10-99 and returns a number in the
+                  range 1000-9999.
+                </td>
               </tr>
 
               <tr>
