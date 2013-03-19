@@ -26,7 +26,10 @@ label.error {
 
 input.text {
   width: 9em;
-  padding: 2px 4px;
+  padding: 4px 4px;
+  border: 1px solid #666;
+  border-radius: 3px;
+  outline: none;
 }
 
 pre.code {
