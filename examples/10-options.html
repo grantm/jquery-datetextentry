@@ -217,6 +217,24 @@ $('#btn-focus').click(function() {
       </td>
     </tr>
 
+    <tr>
+      <td>
+        <p>Supply a callback function to be run when the error status changes -
+        in this case used to put the field label in 'error' mode.</p>
+        <pre class="code">$('#date11').datetextentry({
+    on_error : function(msg) {
+        $('label[for=date11]').toggleClass('error', msg !== '');
+    }
+});</pre>
+      </td>
+      <td>
+        <form>
+          <label for="date11">Date of Birth:</label><br>
+          <input id="date11" class="text" value="">
+        </form>
+      </td>
+    </tr>
+
   </table>
 
   <script type="text/javascript">
@@ -282,6 +300,12 @@ $('#btn-focus').click(function() {
     $('#date10').datetextentry({
         on_change : function(date_str) {
             $('#valid-date10').text(date_str);
+        }
+    });
+
+    $('#date11').datetextentry({
+        on_error : function(msg) {
+            $('label[for=date11]').toggleClass('error', msg !== '');
         }
     });
 
