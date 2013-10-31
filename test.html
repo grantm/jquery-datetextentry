@@ -13,13 +13,20 @@
     input {
       font-size: 20px;
     }
+    #HTMLReporter {
+      margin-bottom: 70px;
+    }
   </style>
 </head>
 <body>
 
   <p class="p1">
-    <input id="text1" type="text" style="width: 160px;"></br>
-    <input id="date1" type="text" style="width: 160px;">
+    <input id="text1" type="text" style="width: 160px;" value=""></br>
+    <input id="date1" type="text" style="width: 160px;" value="">
+  </p>
+
+  <p class="p2">
+    <input id="date2" type="text" style="width: 160px;" value="1975-03-18">
   </p>
 
   <div id="jasmine-result"></div>
@@ -28,7 +35,11 @@
   <script type="text/javascript" src="jquery.datetextentry.js"></script>
   <script type="text/javascript" src="test/jasmine-1.3.0/jasmine.js"></script>
   <script type="text/javascript" src="test/jasmine-1.3.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="test/helpers.js"></script>
+<!--
+-->
   <script type="text/javascript" src="test/datetextentry.js"></script>
+  <script type="text/javascript" src="test/api.js"></script>
   <script type="text/javascript">
     jQuery(function($) {
         var jasmineEnv = jasmine.getEnv();
