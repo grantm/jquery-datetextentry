@@ -107,6 +107,7 @@
             this.input_month.set(new_date ? new_date.month : '');
             this.input_year.set( new_date ? new_date.year  : '');
             this.clear_error();
+            this.$element.val(new_date);
             if(new_date) {
                 $.each(this.fields, function(i, input) {
                     dte.validate(input);
@@ -289,6 +290,7 @@
         ,validate_day: function() {
             var opt = this.options;
             var input = this.input_day;
+            this.day_value = undefined;
             var text = input.get();
             if(text === ''  ||  (text === '0'  &&  input.has_focus)) {
                 return;
@@ -307,6 +309,7 @@
         ,validate_month: function() {
             var opt = this.options;
             var input = this.input_month;
+            this.month_value = undefined;
             var text = input.get();
             if(text === ''  ||  (text === '0'  &&  input.has_focus)) {
                 return;
@@ -325,6 +328,7 @@
         ,validate_year: function() {
             var opt = this.options;
             var input = this.input_year;
+            this.year_value = undefined;
             var text = input.get();
             if(text === ''  ||  (text === '0'  &&  input.has_focus)) {
                 return;
