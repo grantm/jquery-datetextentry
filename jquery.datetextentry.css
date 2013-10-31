@@ -12,6 +12,7 @@ span.jq-dte-inner {
   border: none;
   padding: 1px;
   margin: 1px;
+  white-space: nowrap;
   background-color: #ffffff;
 }
 
