@@ -1,0 +1,16 @@
+Change log for jquery.datetextentry plugin.
+
+For full commit history see:
+
+    https://github.com/grantm/jquery-udraggable/commits/master
+
+2.0.2  2013-10-31
+    * fix 'clear' api call not clearing underlying input element
+    * disable word-wrapping of sub-fields
+    * add some regression tests
+    * add a Changes file
+
+2.0.1  2013-03-19
+    * initial release on jQuery plugins site
+    * complete rewrite in cleaner object style, add support for API methods
+    * requires jQuery 1.6 or later for :focus selector support
