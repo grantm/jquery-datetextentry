@@ -1,5 +1,5 @@
 /*
- * jQuery datetextentry v2.0.2
+ * jQuery datetextentry v2.0.3
  * Copyright (c) 2010-2013 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
@@ -28,6 +28,7 @@
         this.parse_date = this.options.parse_date || this.parse_date;
         this.format_date = this.options.format_date || this.format_date;
         this.human_format_date = this.options.human_format_date || this.human_format_date;
+        this.on_blur = this.options.on_blur;
         this.on_change = this.options.on_change;
         this.on_error = this.options.on_error;
         this.custom_validation = this.options.custom_validation;
@@ -183,7 +184,17 @@
         }
 
         ,focus_out: function() {
+            if(this.on_blur) {
+                var self = this;
+                setTimeout(function() { self.widget_focus_lost(); }, 2);
+            }
             this.wrapper.removeClass('focus');
+        }
+
+        ,widget_focus_lost: function() {
+            if(this.on_blur && !this.wrapper.is('.focus')) {
+                this.on_blur();
+            }
         }
 
         ,show_input_tip: function(input) {
@@ -223,6 +234,12 @@
             if(error_text === ''  &&  this.error_text) {
                 error_text = this.error_text;
             }
+            if(this.on_error) {
+                this.on_error(error_text);
+            }
+            if(!opt.show_errors) {
+                return;
+            }
             if(error_text === '') {
                 this.errorbox.hide();
             }
@@ -232,9 +249,6 @@
                 this.errorbox.css({position: 'absolute', top: y_offset, left: x_offset});
                 this.errorbox.text(error_text);
                 this.errorbox.show();
-            }
-            if(this.on_error) {
-                this.on_error(error_text);
             }
         }
 
@@ -547,10 +561,15 @@
             // Advance focus if this field is both valid and full
             if( this.dte.validate(this) ) {
                 var want = this.name === 'year' ? 4 : 2;
-                if(keycode >= 48 && keycode <= 57 && text.length == want) {
+                if(this.is_digit_key(e) && text.length == want) {
                         this.dte.focus_field_after(this);
                 }
             }
+        }
+
+        ,is_digit_key: function(e) {
+            var keycode = e.which;
+            return keycode >= 48 && keycode <= 57 || keycode >= 96 && keycode <= 105;
         }
 
 
@@ -580,6 +599,7 @@
         separator             : '/',
         show_tooltips         : true,
         show_hints            : true,
+        show_errors           : true,
         field_width_day       : 40,
         field_width_month     : 40,
         field_width_year      : 60,
