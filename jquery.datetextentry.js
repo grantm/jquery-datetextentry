@@ -223,6 +223,12 @@
             if(error_text === ''  &&  this.error_text) {
                 error_text = this.error_text;
             }
+            if(this.on_error) {
+                this.on_error(error_text);
+            }
+            if(!opt.show_errors) {
+                return;
+            }
             if(error_text === '') {
                 this.errorbox.hide();
             }
@@ -232,9 +238,6 @@
                 this.errorbox.css({position: 'absolute', top: y_offset, left: x_offset});
                 this.errorbox.text(error_text);
                 this.errorbox.show();
-            }
-            if(this.on_error) {
-                this.on_error(error_text);
             }
         }
 
@@ -585,6 +588,7 @@
         separator             : '/',
         show_tooltips         : true,
         show_hints            : true,
+        show_errors           : true,
         field_width_day       : 40,
         field_width_month     : 40,
         field_width_year      : 60,
