@@ -547,10 +547,15 @@
             // Advance focus if this field is both valid and full
             if( this.dte.validate(this) ) {
                 var want = this.name === 'year' ? 4 : 2;
-                if(keycode >= 48 && keycode <= 57 && text.length == want) {
+                if(this.is_digit_key(e) && text.length == want) {
                         this.dte.focus_field_after(this);
                 }
             }
+        }
+
+        ,is_digit_key: function(e) {
+            var keycode = e.which;
+            return keycode >= 48 && keycode <= 57 || keycode >= 96 && keycode <= 105;
         }
 
 
