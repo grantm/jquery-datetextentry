@@ -28,6 +28,7 @@
         this.parse_date = this.options.parse_date || this.parse_date;
         this.format_date = this.options.format_date || this.format_date;
         this.human_format_date = this.options.human_format_date || this.human_format_date;
+        this.on_blur = this.options.on_blur;
         this.on_change = this.options.on_change;
         this.on_error = this.options.on_error;
         this.custom_validation = this.options.custom_validation;
@@ -183,7 +184,17 @@
         }
 
         ,focus_out: function() {
+            if(this.on_blur) {
+                var self = this;
+                setTimeout(function() { self.widget_focus_lost(); }, 2);
+            }
             this.wrapper.removeClass('focus');
+        }
+
+        ,widget_focus_lost: function() {
+            if(this.on_blur && !this.wrapper.is('.focus')) {
+                this.on_blur();
+            }
         }
 
         ,show_input_tip: function(input) {
