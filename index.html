@@ -128,10 +128,12 @@
                   <li><a href="#max_year">max_year</a></li>
                   <li><a href="#min_date">min_date</a></li>
                   <li><a href="#min_year">min_year</a></li>
+                  <li><a href="#on_blur">on_blur</a></li>
                   <li><a href="#on_change">on_change</a></li>
                   <li><a href="#on_error">on_error</a></li>
                   <li><a href="#parse_date">parse_date</a></li>
                   <li><a href="#separator">separator</a></li>
+                  <li><a href="#show_errors">show_errors</a></li>
                   <li><a href="#show_hints">show_hints</a></li>
                   <li><a href="#show_tooltips">show_tooltips</a></li>
                   <li><a href="#tooltip_x">tooltip_x</a></li>
@@ -333,7 +335,8 @@
                 <td>
                   This option is similar to <a href="#format_date">format_date</a>
                   but allows you to override the default format (DD/MM/YYYY) used
-                  to display dates in the error box.
+                  to display dates in the error box (for example in <em>"Date
+                  must not be earlier than 01/01/1970</em>").
                 </td>
               </tr>
 
@@ -381,9 +384,22 @@
               </tr>
 
               <tr>
+                <td><a name="on_blur"></a><code>on_blur</code></td>
+                <td>
+                  <p>If you supply a callback function, it will be called when
+                  the input focus leaves the date widget.</p>
+                  <p><em>Note: this function uses a delay to filter out the
+                  noise of focus-out from one date sub-field and focus-in to
+                  the next. Therefore the 'on_blur' callback will usually be
+                  called <strong>after</strong> the 'focus' event fires on the
+                  next form element.</em></p>
+                </td>
+              </tr>
+
+              <tr>
                 <td><a name="on_change"></a><code>on_change</code></td>
                 <td>
-                  <p>If you supply a function reference, it will be called when the
+                  <p>If you supply a callback function, it will be called when the
                   contents of the date entry boxes pass validation.  The function
                   will be passed a single argument - a date string from
                   <code>format_date</code>.</p>
@@ -397,7 +413,7 @@
               <tr>
                 <td><a name="on_error"></a><code>on_error</code></td>
                 <td>
-                  <p>If you supply a function reference, it will be called when the
+                  <p>If you supply a callback function, it will be called when the
                   error box is updated.  A single argument will be passed to the
                   function.  The empty string if the error condition is cleared or
                   the text of the error otherwise.</p>
@@ -420,6 +436,18 @@
                   <p>The character which should be displayed in the widget between the
                   input fields,  Default: '/'.</p>
                   <p class="example-link"><a href="examples/10-options.html#order-sep">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="show_errors"></a><code>show_errors</code></td>
+                <td>
+                  <p>A boolean value controlling whether error text will be
+                  displayed next to the date widget when invalid input is
+                  detected.  This option would typically be set to false when
+                  the <a href="#on_error">on_error</a> option is used
+                  for customised error message presentation.  Default: true.</p>
+                  <p class="example-link"><a href="examples/10-options.html#on-error">See example</a></p>
                 </td>
               </tr>
 
