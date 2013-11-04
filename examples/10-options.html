@@ -220,16 +220,21 @@ $('#btn-focus').click(function() {
     <tr>
       <td>
         <p><a name="on-error"></a>Supply a callback function to be run when the error status changes -
-        in this case used to put the field label in 'error' mode.</p>
+        in this case used to put the field label in 'error' mode and override
+        the default display of error messages.</p>
         <pre class="code">$('#date11').datetextentry({
+    show_errors: false,
     on_error : function(msg) {
-        $('label[for=date11]').toggleClass('error', msg !== '');
+        $('label[for=date11]')
+          .toggleClass('error', msg !== '')
+          .find('.error-text').text(msg);
     }
+
 });</pre>
       </td>
       <td>
-        <form>
-          <label for="date11">Date of Birth:</label><br>
+        <form id="custom-errors">
+          <label for="date11">Date of Birth: <span class="error-text"></span></label><br>
           <input id="date11" class="text" value="">
         </form>
       </td>
@@ -305,8 +310,11 @@ $('#btn-focus').click(function() {
     });
 
     $('#date11').datetextentry({
+        show_errors: false,
         on_error : function(msg) {
-            $('label[for=date11]').toggleClass('error', msg !== '');
+            $('label[for=date11]')
+              .toggleClass('error', msg !== '')
+              .find('.error-text').text(msg);
         }
     });
 

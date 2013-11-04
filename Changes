@@ -4,6 +4,11 @@ For full commit history see:
 
     https://github.com/grantm/jquery-udraggable/commits/master
 
+2.0.3  2013-11-03
+    * fix auto-advance not working when digits keyed via numeric keypad
+    * add 'show_errors' boolean option for better custom error handling
+    * add 'on_blur' callback option to track when widget loses focus
+
 2.0.2  2013-10-31
     * fix 'clear' api call not clearing underlying input element
     * disable word-wrapping of sub-fields
