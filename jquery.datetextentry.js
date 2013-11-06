@@ -132,6 +132,17 @@
             this.set_date('');
         }
 
+        ,destroy: function() {
+            this.$element.show();
+            this.$element.css('display', '');
+            this.wrapper.find('span').remove();
+            this.$element.unwrap();
+            this.$element.removeData('datetextentry');
+            delete this.inner;
+            delete this.wrapper;
+            delete this.$element;
+        }
+
         ,after_paste: function(target, event) {
             if(this.parse_date( $(target).val() ) ) {
                 this.set_date( $(target).val() );
