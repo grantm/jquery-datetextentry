@@ -202,18 +202,41 @@ $('#btn-focus').click(function() {
 
     <tr>
       <td>
-        <p><a name="on-change"></a>Supply a callback function to be run when a valid date is entered.</p>
-        <pre class="code">$('#date10').datetextentry({
-    on_change : function(date_str) {
-        $('#valid-date10').text(date_str);
-    }
+        <p><a name="init-destroy"></a>Dynamically add/remove datetextentry
+        functionality.</p>
+        <pre class="code">$('#btn-init').click(function(e) {
+    $('#date10').datetextentry();
+});
+
+$('#btn-destroy').click(function(e) {
+    $('#date10').datetextentry('destroy');
 });</pre>
       </td>
       <td>
         <form>
           <input id="date10" class="text" value="">
+          <div>
+            <button id="btn-init" type="button">Init</button>
+            <button id="btn-destroy" type="button">Destroy</button>
+          </div>
         </form>
-        <div>Validated date: <span id="valid-date10"></span></div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p><a name="on-change"></a>Supply a callback function to be run when a valid date is entered.</p>
+        <pre class="code">$('#date11').datetextentry({
+    on_change : function(date_str) {
+        $('#valid-date11').text(date_str);
+    }
+});</pre>
+      </td>
+      <td>
+        <form>
+          <input id="date11" class="text" value="">
+        </form>
+        <div>Validated date: <span id="valid-date11"></span></div>
       </td>
     </tr>
 
@@ -222,10 +245,10 @@ $('#btn-focus').click(function() {
         <p><a name="on-error"></a>Supply a callback function to be run when the error status changes -
         in this case used to put the field label in 'error' mode and override
         the default display of error messages.</p>
-        <pre class="code">$('#date11').datetextentry({
+        <pre class="code">$('#date12').datetextentry({
     show_errors: false,
     on_error : function(msg) {
-        $('label[for=date11]')
+        $('label[for=date12]')
           .toggleClass('error', msg !== '')
           .find('.error-text').text(msg);
     }
@@ -234,8 +257,8 @@ $('#btn-focus').click(function() {
       </td>
       <td>
         <form id="custom-errors">
-          <label for="date11">Date of Birth: <span class="error-text"></span></label><br>
-          <input id="date11" class="text" value="">
+          <label for="date12">Date of Birth: <span class="error-text"></span></label><br>
+          <input id="date12" class="text" value="">
         </form>
       </td>
     </tr>
@@ -293,25 +316,35 @@ $('#btn-focus').click(function() {
     $('#launch-dates li').click(function() {
         $('#date9').datetextentry('set_date', $(this).data('date'));
     });
-    $('#btn-clear').click(function() {
+    $('#btn-clear').click(function(e) {
         $('#date9').datetextentry('clear');
-        return false;
+        e.preventDefault();
     });
-    $('#btn-focus').click(function() {
+    $('#btn-focus').click(function(e) {
         $('#date9').datetextentry('focus');
-        return false;
+        e.preventDefault();
     });
 
-    $('#date10').datetextentry({
-        on_change : function(date_str) {
-            $('#valid-date10').text(date_str);
-        }
+    $('#btn-init').click(function(e) {
+        $('#date10').datetextentry();
+        e.preventDefault();
+    });
+
+    $('#btn-destroy').click(function(e) {
+        $('#date10').datetextentry('destroy');
+        e.preventDefault();
     });
 
     $('#date11').datetextentry({
+        on_change : function(date_str) {
+            $('#valid-date11').text(date_str);
+        }
+    });
+
+    $('#date12').datetextentry({
         show_errors: false,
         on_error : function(msg) {
-            $('label[for=date11]')
+            $('label[for=date12]')
               .toggleClass('error', msg !== '')
               .find('.error-text').text(msg);
         }
