@@ -37,6 +37,9 @@
         this.proxy_label_clicks();
     };
 
+    function pad2(n) { return ('00'   + (n || 0)).substr(-2); }
+    function pad4(n) { return ('0000' + (n || 0)).substr(-4); }
+
     DateTextEntry.prototype = {
 
         constructor: DateTextEntry
@@ -168,9 +171,9 @@
         ,get_today : function() {
             var today = new Date();
             return {
-                day:   ('0' + today.getDate()).substr(-2),
-                month: ('0' + (today.getMonth() + 1)).substr(-2),
-                year:  '' + today.getFullYear()
+                day:   pad2(today.getDate()),
+                month: pad2(today.getMonth() + 1),
+                year:  pad4(today.getFullYear())
             };
         }
 
@@ -179,11 +182,11 @@
         }
 
         ,iso_format_date : function(date) {
-            return [date.year, date.month, date.day].join('-');
+            return [ pad4(date.year), pad2(date.month), pad2(date.day) ].join('-');
         }
 
         ,human_format_date: function(date) {
-            return [date.day, date.month, date.year].join('/');
+            return [ pad2(date.day), pad2(date.month), pad4(date.year) ].join('/');
         }
 
         ,add_century: function (year) {
