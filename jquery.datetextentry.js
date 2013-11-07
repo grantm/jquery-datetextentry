@@ -417,11 +417,13 @@
             var date_obj = this.get_date();
             var date_iso = this.iso_format_date( date_obj );
 
-            var max_date = opt.max_date
-                ? typeof opt.max_date === 'function'
-                    ? opt.max_date.call(this)
-                    : this.parse_date( opt.max_date )
-                : null;
+            var max_date = opt.max_date;
+            if(typeof max_date === 'function') {
+                max_date = max_date.call(this);
+            }
+            if(typeof max_date === 'string') {
+                max_date = this.parse_date(max_date);
+            }
             if(max_date) {
                 if( date_iso > this.iso_format_date( max_date ) ) {
                     var msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
@@ -431,11 +433,13 @@
                 }
             }
 
-            var min_date = opt.min_date
-                ? typeof opt.min_date === 'function'
-                    ? opt.min_date.call(this)
-                    : this.parse_date( opt.min_date )
-                : null;
+            var min_date = opt.min_date;
+            if(typeof min_date === 'function') {
+                min_date = min_date.call(this);
+            }
+            if(typeof min_date === 'string') {
+                min_date = this.parse_date(min_date);
+            }
             if(min_date) {
                 if( date_iso < this.iso_format_date( min_date ) ) {
                     var msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
