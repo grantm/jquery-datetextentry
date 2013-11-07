@@ -1,5 +1,5 @@
 /*
- * jQuery datetextentry v2.0.3
+ * jQuery datetextentry v2.0.4
  * Copyright (c) 2010-2013 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
@@ -36,6 +36,9 @@
         this.set_date( this.$element.attr('value') );
         this.proxy_label_clicks();
     };
+
+    function pad2(n) { return ('00'   + (n || 0)).substr(-2); }
+    function pad4(n) { return ('0000' + (n || 0)).substr(-4); }
 
     DateTextEntry.prototype = {
 
@@ -132,6 +135,17 @@
             this.set_date('');
         }
 
+        ,destroy: function() {
+            this.$element.show();
+            this.$element.css('display', '');
+            this.wrapper.find('span').remove();
+            this.$element.unwrap();
+            this.$element.removeData('datetextentry');
+            delete this.inner;
+            delete this.wrapper;
+            delete this.$element;
+        }
+
         ,after_paste: function(target, event) {
             if(this.parse_date( $(target).val() ) ) {
                 this.set_date( $(target).val() );
@@ -157,9 +171,9 @@
         ,get_today : function() {
             var today = new Date();
             return {
-                day:   ('0' + today.getDate()).substr(-2),
-                month: ('0' + (today.getMonth() + 1)).substr(-2),
-                year:  '' + today.getFullYear()
+                day:   pad2(today.getDate()),
+                month: pad2(today.getMonth() + 1),
+                year:  pad4(today.getFullYear())
             };
         }
 
@@ -168,11 +182,11 @@
         }
 
         ,iso_format_date : function(date) {
-            return [date.year, date.month, date.day].join('-');
+            return [ pad4(date.year), pad2(date.month), pad2(date.day) ].join('-');
         }
 
         ,human_format_date: function(date) {
-            return [date.day, date.month, date.year].join('/');
+            return [ pad2(date.day), pad2(date.month), pad4(date.year) ].join('/');
         }
 
         ,add_century: function (year) {
@@ -403,11 +417,13 @@
             var date_obj = this.get_date();
             var date_iso = this.iso_format_date( date_obj );
 
-            var max_date = opt.max_date
-                ? typeof opt.max_date === 'function'
-                    ? opt.max_date.call(this)
-                    : this.parse_date( opt.max_date )
-                : null;
+            var max_date = opt.max_date;
+            if(typeof max_date === 'function') {
+                max_date = max_date.call(this);
+            }
+            if(typeof max_date === 'string') {
+                max_date = this.parse_date(max_date);
+            }
             if(max_date) {
                 if( date_iso > this.iso_format_date( max_date ) ) {
                     var msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
@@ -417,11 +433,13 @@
                 }
             }
 
-            var min_date = opt.min_date
-                ? typeof opt.min_date === 'function'
-                    ? opt.min_date.call(this)
-                    : this.parse_date( opt.min_date )
-                : null;
+            var min_date = opt.min_date;
+            if(typeof min_date === 'function') {
+                min_date = min_date.call(this);
+            }
+            if(typeof min_date === 'string') {
+                min_date = this.parse_date(min_date);
+            }
             if(min_date) {
                 if( date_iso < this.iso_format_date( min_date ) ) {
                     var msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
