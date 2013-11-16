@@ -1,5 +1,5 @@
 /*
- * jQuery datetextentry v2.0.4
+ * jQuery datetextentry v2.0.5
  * Copyright (c) 2010-2013 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
@@ -109,6 +109,9 @@
         ,set_date: function(new_date) {
             var dte = this;
             new_date = this.parse_date(new_date);
+            delete this.day_value;
+            delete this.month_value;
+            delete this.year_value;
             this.input_day.set(  new_date ? new_date.day   : '');
             this.input_month.set(new_date ? new_date.month : '');
             this.input_year.set( new_date ? new_date.year  : '');
@@ -256,6 +259,7 @@
             }
             if(error_text === '') {
                 this.errorbox.hide();
+                this.errorbox.text('');
             }
             else {
                 var x_offset = (this.inner.outerWidth() + opt.errorbox_x) + 'px';
