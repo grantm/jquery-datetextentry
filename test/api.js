@@ -225,6 +225,157 @@
 
     });
 
+    describe("Re-invoking the plugin with no initial value", function() {
+
+        runs(function() {
+            $date2.datetextentry('destroy');
+            $date2.val('').attr('value', '');
+            $date2.datetextentry({});
+            $dd   = $( $date2.next().find('input')[0] );
+            $mm   = $( $date2.next().find('input')[1] );
+            $yyyy = $( $date2.next().find('input')[2] );
+            $errorbox = $date2.parent().find('.jq-dte-errorbox');
+        });
+
+        it("initialised sub-fields to DD/MM/YYYY hint values", function() {
+            expect( widget_content('#date2') ).toBe('DD/MM/YYYY');
+        });
+
+        it("did not trigger error", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+        });
+
+        runs(function() {
+            $dd.val('3');
+            add_char($dd, '3');
+        });
+        waits(10);
+
+        it("accepts injected '33' into DD field", function() {
+            expect( $dd.val() ).toBe('33');
+        });
+
+        it("which triggers error", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe('Day must be 1-31');
+        });
+
+        runs(function() {
+            $dd.val('2');
+            add_char($dd, '9');
+        });
+        waits(10);
+
+        it("accepts injected '29' into DD field", function() {
+            expect( $dd.val() ).toBe('29');
+        });
+
+        it("which clears error", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+        });
+
+        runs(function() {
+            $mm.val('0');
+            add_char($mm, '2');
+        });
+        waits(10);
+
+        it("accepts injected '02' into MM field", function() {
+            expect( $mm.val() ).toBe('02');
+        });
+
+        it("which does not trigger error yet (because year is blank)", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+        });
+
+        runs(function() {
+            $yyyy.val('197');
+            add_char($yyyy, '7');
+        });
+        waits(10);
+
+        it("accepts injected '1977' into YYYY field", function() {
+            expect( $yyyy.val() ).toBe('1977');
+        });
+
+        it("which does  trigger an error", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe('Only 28 days in February 1977');
+            expect( $date2.val() ).toBe('');
+        });
+
+        runs(function() {
+            $dd.val('2');
+            add_char($dd, '8');
+        });
+        waits(10);
+
+        it("accepts injected '28' into DD field", function() {
+            expect( $dd.val() ).toBe('28');
+        });
+
+        it("which clears error", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+        });
+
+        it("and sets a value in the underlying input element", function() {
+            expect( $date2.val() ).toBe('1977-02-28');
+        });
+
+        it("accepts the method call: clear()", function() {
+            $mm.blur();
+            $date2.datetextentry('clear');
+            expect( widget_content('#date2') ).toBe('DD/MM/YYYY');
+            expect( $date2.val() ).toBe('');
+        });
+
+        runs(function() {
+            $dd.val('2');
+            add_char($dd, '9');
+        });
+        waits(10);
+
+        it("accepts injected '29' into DD field", function() {
+            expect( $dd.val() ).toBe('29');
+        });
+
+        it("which does not trigger error", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+            expect( $errorbox.text() ).toBe('');
+        });
+
+        runs(function() {
+            $mm.val('0');
+            add_char($mm, '2');
+        });
+        waits(10);
+
+        it("accepts injected '02' into MM field", function() {
+            expect( $mm.val() ).toBe('02');
+            expect( $errorbox.text() ).toBe('');
+        });
+
+        it("which still does not trigger error (because year is blank)", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+        });
+
+        runs(function() {
+            $yyyy.val('197');
+            add_char($yyyy, '6');
+        });
+        waits(10);
+
+        it("accepts injected '1976' into YYYY field", function() {
+            expect( $yyyy.val() ).toBe('1976');
+        });
+
+        it("and validates successfully", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+            expect( $date2.val() ).toBe('1976-02-29');
+        });
+
+    });
+
     describe("Final clean-up", function() {
 
         runs(function() {

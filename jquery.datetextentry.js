@@ -109,6 +109,9 @@
         ,set_date: function(new_date) {
             var dte = this;
             new_date = this.parse_date(new_date);
+            delete this.day_value;
+            delete this.month_value;
+            delete this.year_value;
             this.input_day.set(  new_date ? new_date.day   : '');
             this.input_month.set(new_date ? new_date.month : '');
             this.input_year.set( new_date ? new_date.year  : '');
