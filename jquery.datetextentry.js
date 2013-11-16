@@ -256,6 +256,7 @@
             }
             if(error_text === '') {
                 this.errorbox.hide();
+                this.errorbox.text('');
             }
             else {
                 var x_offset = (this.inner.outerWidth() + opt.errorbox_x) + 'px';
