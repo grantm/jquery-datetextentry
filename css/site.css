@@ -38,6 +38,10 @@ p.example-link {
 
 /* Date format customisations for default boostrap theme */
 
+span.jq-dte input {
+  box-shadow: none;
+}
+
 span.jq-dte input:focus {
   border: none;
   outline-none;
