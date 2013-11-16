@@ -4,6 +4,9 @@ For full commit history see:
 
     https://github.com/grantm/jquery-udraggable/commits/master
 
+2.0.5  2013-11-17
+    * more fixes for 'clear' api call not clearing all internal state
+
 2.0.4  2013-11-07
     * add a 'destroy' method to remove date widget functionality
     * apply zero padding more consistently
