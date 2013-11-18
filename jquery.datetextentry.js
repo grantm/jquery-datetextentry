@@ -240,17 +240,7 @@
 
         ,show_error: function() {
             var opt = this.options;
-            var error_text = '';
-            $.each(this.fields, function(i, input) {
-                if(input.error_text) {
-                    if(input.has_focus  ||  error_text === '') {
-                        error_text = input.error_text
-                    }
-                }
-            });
-            if(error_text === ''  &&  this.error_text) {
-                error_text = this.error_text;
-            }
+            var error_text = this.widget_error_text();
             if(this.on_error) {
                 this.on_error(error_text);
             }
@@ -268,6 +258,21 @@
                 this.errorbox.text(error_text);
                 this.errorbox.show();
             }
+        }
+
+        ,widget_error_text: function() {
+            var error_text = '';
+            $.each(this.fields, function(i, input) {
+                if(input.error_text) {
+                    if(input.has_focus  ||  error_text === '') {
+                        error_text = input.error_text
+                    }
+                }
+            });
+            if(error_text === ''  &&  this.error_text) {
+                error_text = this.error_text;
+            }
+            return error_text;
         }
 
         ,focus: function() {

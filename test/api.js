@@ -376,6 +376,63 @@
 
     });
 
+    describe("Re-invoking the plugin to test on_blur callback", function() {
+        var on_blur_error = '';
+
+        runs(function() {
+            $date2.datetextentry('destroy');
+            $date2.val('').attr('value', '');
+            $date2.datetextentry({
+                on_blur: function() {
+                    on_blur_error = this.widget_error_text();
+                }
+            });
+            $dd   = $( $date2.next().find('input')[0] );
+            $mm   = $( $date2.next().find('input')[1] );
+            $yyyy = $( $date2.next().find('input')[2] );
+            $errorbox = $date2.parent().find('.jq-dte-errorbox');
+        });
+
+        it("initialised sub-fields to DD/MM/YYYY hint values", function() {
+            expect( widget_content('#date2') ).toBe('DD/MM/YYYY');
+        });
+
+        it("did not trigger error", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+            expect( on_blur_error ).toBe('');
+        });
+
+        runs(function() {
+            $dd.val('3');
+            add_char($dd, '3');
+        });
+        waits(10);
+
+        it("accepts injected '33' into DD field", function() {
+            expect( $dd.val() ).toBe('33');
+        });
+
+        it("which triggers error", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe('Day must be 1-31');
+        });
+
+        it("but does not propagate through callback yet", function() {
+            expect( on_blur_error ).toBe('');
+        });
+
+        runs(function() {
+            $dd.blur();  // would happen automatically in real life
+            $('#text1').focus();
+        });
+        waits(20);
+
+        it("error is propagated after focus lost", function() {
+            expect( on_blur_error ).toBe('Day must be 1-31');
+        });
+
+    });
+
     describe("Final clean-up", function() {
 
         runs(function() {
