@@ -1,5 +1,5 @@
 /*
- * jQuery datetextentry v2.0.6
+ * jQuery datetextentry v2.0.7
  * Copyright (c) 2010-2013 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
@@ -37,8 +37,9 @@
         this.proxy_label_clicks();
     };
 
-    function pad2(n) { return ('00'   + (n || 0)).substr(-2); }
-    function pad4(n) { return ('0000' + (n || 0)).substr(-4); }
+    function str_right(str, n) { return str.substr(str.length - n); }
+    function pad2(n) { return str_right('00'   + (n || 0), 2); }
+    function pad4(n) { return str_right('0000' + (n || 0), 4); }
 
     DateTextEntry.prototype = {
 
