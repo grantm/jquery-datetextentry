@@ -388,7 +388,10 @@
                 <td><a name="on_blur"></a><code>on_blur</code></td>
                 <td>
                   <p>If you supply a callback function, it will be called when
-                  the input focus leaves the date widget.</p>
+                  the input focus leaves the date widget.  Within your callback
+                  function you can call <code>this.widget_error_text()</code>
+                  to determine if the date entry has outstanding validation
+                  errors - an empty string will be returned for no errors.</p>
                   <p><em>Note: this function uses a delay to filter out the
                   noise of focus-out from one date sub-field and focus-in to
                   the next. Therefore the 'on_blur' callback will usually be
