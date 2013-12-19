@@ -4,6 +4,9 @@ For full commit history see:
 
     https://github.com/grantm/jquery-udraggable/commits/master
 
+2.0.7  2013-12-19
+    * work around IE8 not understanding negative offset to substr
+
 2.0.6  2013-11-18
     * add the (as-yet-undocumented) widget_error_text() method
 
