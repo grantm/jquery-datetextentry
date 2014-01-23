@@ -2,7 +2,7 @@ Change log for jquery.datetextentry plugin.
 
 For full commit history see:
 
-    https://github.com/grantm/jquery-udraggable/commits/master
+    https://github.com/grantm/jquery-datetextentry/commits/master
 
 2.0.7  2013-12-19
     * work around IE8 not understanding negative offset to substr
