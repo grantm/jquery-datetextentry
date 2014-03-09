@@ -1,6 +1,6 @@
 /*
- * jQuery datetextentry v2.0.7
- * Copyright (c) 2010-2013 Grant McLean (grant@mclean.net.nz)
+ * jQuery datetextentry v2.0.8
+ * Copyright (c) 2010-2014 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
  *
@@ -237,6 +237,21 @@
         ,clear_error: function() {
             delete this.error_text;
             this.show_error();
+        }
+
+        ,set_readonly: function(mode) {
+            if(mode === undefined) {
+                mode = true;
+            }
+            this.input_day.set_readonly(mode);
+            this.input_month.set_readonly(mode);
+            this.input_year.set_readonly(mode);
+            if(mode) {
+                this.wrapper.addClass('readonly');
+            }
+            else {
+                this.wrapper.removeClass('readonly');
+            }
         }
 
         ,show_error: function() {
@@ -548,6 +563,10 @@
         ,clear_error: function() {
             delete this.error_text;
             this.$input.removeClass('error');
+        }
+
+        ,set_readonly: function(mode) {
+            this.$input.prop('readonly', mode);
         }
 
         ,focus: function(e) {

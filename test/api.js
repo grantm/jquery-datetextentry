@@ -440,6 +440,77 @@
 
     });
 
+    describe("Re-invoking the plugin to test set_readonly callback", function() {
+        var on_blur_error = '';
+
+        runs(function() {
+            $date2.datetextentry('destroy');
+            $date2.val('').attr('value', '1900-11-22');
+            $date2.datetextentry({
+                on_blur: function() {
+                    on_blur_error = this.widget_error_text();
+                }
+            });
+            $dd   = $( $date2.next().find('input')[0] );
+            $mm   = $( $date2.next().find('input')[1] );
+            $yyyy = $( $date2.next().find('input')[2] );
+            $errorbox = $date2.parent().find('.jq-dte-errorbox');
+        });
+
+        it("initialised sub-fields to expected values", function() {
+            expect( widget_content('#date2') ).toBe('22/11/1900');
+        });
+
+        it("did not make subfields readonly", function() {
+            expect( $dd.prop('readonly') ).toBe(false);
+            expect( $mm.prop('readonly') ).toBe(false);
+            expect( $yyyy.prop('readonly') ).toBe(false);
+        });
+
+        it("accepts the method call: set_readonly(true)", function() {
+            var try_set_readonly = function() {
+                return $date2.datetextentry('set_readonly', true);
+            };
+            expect( try_set_readonly ).not.toThrow();
+        });
+
+        it("which did make subfields readonly", function() {
+            expect( $dd.prop('readonly') ).toBe(true);
+            expect( $mm.prop('readonly') ).toBe(true);
+            expect( $yyyy.prop('readonly') ).toBe(true);
+        });
+
+        it("and did not mess with the underlying ISO date value", function() {
+            expect( $date2.val() ).toBe('1900-11-22');
+        });
+
+        it("and added the 'readonly' class to the wrapper element", function() {
+            expect( $date2.closest('.jq-dte').is('.readonly') ).toBe(true);
+        });
+
+        it("accepts the method call: set_readonly(false)", function() {
+            var try_set_readonly = function() {
+                return $date2.datetextentry('set_readonly', false);
+            };
+            expect( try_set_readonly ).not.toThrow();
+        });
+
+        it("which did make subfields readonly", function() {
+            expect( $dd.prop('readonly') ).toBe(false);
+            expect( $mm.prop('readonly') ).toBe(false);
+            expect( $yyyy.prop('readonly') ).toBe(false);
+        });
+
+        it("and did not mess with the underlying ISO date value", function() {
+            expect( $date2.val() ).toBe('1900-11-22');
+        });
+
+        it("and removed the 'readonly' class from the wrapper element", function() {
+            expect( $date2.closest('.jq-dte').is('.readonly') ).toBe(false);
+        });
+
+    });
+
     describe("Final clean-up", function() {
 
         runs(function() {
