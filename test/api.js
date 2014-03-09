@@ -146,6 +146,13 @@
             expect( visibility_check($errorbox) ).toBe('hidden');
         });
 
+        it("rejects call to non-existant 'set_color' method", function() {
+            var try_set_color = function() {
+                return $date2.datetextentry('set_color', 'red');
+            };
+            expect( try_set_color ).toThrow("jquery.datetextentry has no 'set_color' method");
+        });
+
     });
 
     describe("Calling the 'destroy' method", function() {

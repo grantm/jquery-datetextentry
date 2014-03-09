@@ -617,6 +617,9 @@
                 $this.data('datetextentry', data);
             }
             if(typeof option === 'string') {  // option is a method - call it
+                if(typeof data[option] !== 'function') {
+                    throw "jquery.datetextentry has no '" + option + "' method";
+                }
                 data[option].apply(data, args);
             }
         })
