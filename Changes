@@ -4,6 +4,10 @@ For full commit history see:
 
     https://github.com/grantm/jquery-datetextentry/commits/master
 
+2.0.8  2014-03-10
+    * added set_readonly method to make date field non-editable
+    * throw a better error if call is made to non-existent method
+
 2.0.7  2013-12-19
     * work around IE8 not understanding negative offset to substr
 
