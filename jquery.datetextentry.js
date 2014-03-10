@@ -570,6 +570,9 @@
         }
 
         ,focus: function(e) {
+            if( this.$input.prop('readonly') ) {
+                return;
+            }
             this.has_focus = true;
             this.dte.focus_in();
             if( this.$input.hasClass('hint') ) {
