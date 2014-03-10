@@ -31,6 +31,13 @@ span.jq-dte input.error {
   color: #000000;
 }
 
+span.jq-dte.readonly,
+span.jq-dte.readonly span.jq-dte-inner,
+span.jq-dte.readonly input {
+  background-color: #f2f2f2;
+  color: #666666;
+}
+
 span.jq-dte input.hint {
   color: #999999;
 }

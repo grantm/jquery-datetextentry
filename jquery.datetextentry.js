@@ -1,6 +1,6 @@
 /*
- * jQuery datetextentry v2.0.5
- * Copyright (c) 2010-2013 Grant McLean (grant@mclean.net.nz)
+ * jQuery datetextentry v2.0.8
+ * Copyright (c) 2010-2014 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
  *
@@ -37,8 +37,9 @@
         this.proxy_label_clicks();
     };
 
-    function pad2(n) { return ('00'   + (n || 0)).substr(-2); }
-    function pad4(n) { return ('0000' + (n || 0)).substr(-4); }
+    function str_right(str, n) { return str.substr(str.length - n); }
+    function pad2(n) { return str_right('00'   + (n || 0), 2); }
+    function pad4(n) { return str_right('0000' + (n || 0), 4); }
 
     DateTextEntry.prototype = {
 
@@ -238,19 +239,24 @@
             this.show_error();
         }
 
+        ,set_readonly: function(mode) {
+            if(mode === undefined) {
+                mode = true;
+            }
+            this.input_day.set_readonly(mode);
+            this.input_month.set_readonly(mode);
+            this.input_year.set_readonly(mode);
+            if(mode) {
+                this.wrapper.addClass('readonly');
+            }
+            else {
+                this.wrapper.removeClass('readonly');
+            }
+        }
+
         ,show_error: function() {
             var opt = this.options;
-            var error_text = '';
-            $.each(this.fields, function(i, input) {
-                if(input.error_text) {
-                    if(input.has_focus  ||  error_text === '') {
-                        error_text = input.error_text
-                    }
-                }
-            });
-            if(error_text === ''  &&  this.error_text) {
-                error_text = this.error_text;
-            }
+            var error_text = this.widget_error_text();
             if(this.on_error) {
                 this.on_error(error_text);
             }
@@ -268,6 +274,21 @@
                 this.errorbox.text(error_text);
                 this.errorbox.show();
             }
+        }
+
+        ,widget_error_text: function() {
+            var error_text = '';
+            $.each(this.fields, function(i, input) {
+                if(input.error_text) {
+                    if(input.has_focus  ||  error_text === '') {
+                        error_text = input.error_text
+                    }
+                }
+            });
+            if(error_text === ''  &&  this.error_text) {
+                error_text = this.error_text;
+            }
+            return error_text;
         }
 
         ,focus: function() {
@@ -544,7 +565,14 @@
             this.$input.removeClass('error');
         }
 
+        ,set_readonly: function(mode) {
+            this.$input.prop('readonly', mode);
+        }
+
         ,focus: function(e) {
+            if( this.$input.prop('readonly') ) {
+                return;
+            }
             this.has_focus = true;
             this.dte.focus_in();
             if( this.$input.hasClass('hint') ) {
@@ -611,6 +639,9 @@
                 $this.data('datetextentry', data);
             }
             if(typeof option === 'string') {  // option is a method - call it
+                if(typeof data[option] !== 'function') {
+                    throw "jquery.datetextentry has no '" + option + "' method";
+                }
                 data[option].apply(data, args);
             }
         })

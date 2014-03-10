@@ -263,6 +263,31 @@ $('#btn-destroy').click(function(e) {
       </td>
     </tr>
 
+    <tr>
+      <td>
+        <p><a name="readonly"></a>Switch date widget into read-only mode or
+        back to read/write mode.</p>
+        <pre class="code">$('#date13').datetextentry({});
+
+$('#btn-readonly').click(function(e) {
+    $('#date13').datetextentry('set_readonly', true);
+});
+
+$('#btn-readwrite').click(function(e) {
+    $('#date13').datetextentry('set_readonly', false);
+});</pre>
+      </td>
+      <td>
+        <form>
+          <input id="date13" class="text" value="1949-05-09">
+          <div>
+            <label><input type="radio" name="read-write" id="btn-readwrite" value="1" checked> Read/write</label><br>
+            <label><input type="radio" name="read-write" id="btn-readonly" value="0"> Read-only</label>
+          </div>
+        </form>
+      </td>
+    </tr>
+
   </table>
 
   <script type="text/javascript">
@@ -348,6 +373,16 @@ $('#btn-destroy').click(function(e) {
               .toggleClass('error', msg !== '')
               .find('.error-text').text(msg);
         }
+    });
+
+    $('#date13').datetextentry({});
+
+    $('#btn-readonly').click(function(e) {
+        $('#date13').datetextentry('set_readonly', true);
+    });
+
+    $('#btn-readwrite').click(function(e) {
+        $('#date13').datetextentry('set_readonly', false);
     });
 
   </script>
