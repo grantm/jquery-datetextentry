@@ -505,6 +505,7 @@
             .attr('aria-label', dte.options['field_tip_text_' + this.name])
             .focus( $.proxy(input, 'focus') )
             .blur(  $.proxy(input, 'blur' ) )
+            .keydown( function(e) { setTimeout(function () { input.keydown(e); }, 2) } )
             .keyup( function(e) { setTimeout(function () { input.keyup(e); }, 2) } );
     };
 
@@ -571,6 +572,7 @@
         }
 
         ,focus: function(e) {
+            this.key_is_down = false;
             if( this.$input.prop('readonly') ) {
                 return;
             }
@@ -591,7 +593,15 @@
             this.dte.validate(this);
         }
 
+        ,keydown: function(e) {
+            // Ignore keyup events that arrive after focus moved to next field
+            this.key_is_down = true;
+        }
+
         ,keyup: function(e) {
+            if(!this.key_is_down) {
+                return;
+            }
             // Handle Backspace - shifting focus to previous field if required
             var keycode = e.which;
             if(keycode === key.BACKSPACE  &&  this.empty) {
