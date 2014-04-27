@@ -501,7 +501,7 @@
         this.has_focus = false;
         this.empty = true;
         this.$input = $('<input type="text" value="" />')
-            .addClass( 'jq-dte-' + name )
+            .addClass( 'jq-dte-' + this.name )
             .focus( $.proxy(input, 'focus') )
             .blur(  $.proxy(input, 'blur' ) )
             .keyup( function(e) { setTimeout(function () { input.keyup(e); }, 2) } );
