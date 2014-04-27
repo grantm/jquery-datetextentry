@@ -100,6 +100,14 @@
             expect( $dd.is('.hint') ).toBe(true);
         });
 
+        it("has 'jq-dte-day' class", function() {
+            expect( $dd.is('.jq-dte-day') ).toBe(true);
+        });
+
+        it("has 'aria-label'='Day'", function() {
+            expect( $dd.attr('aria-label') ).toBe('Day');
+        });
+
         runs(function() {
             $dd.focus();
         });
@@ -142,6 +150,14 @@
             expect( $mm.is('.hint') ).toBe(true);
         });
 
+        it("has 'jq-dte-month' class", function() {
+            expect( $mm.is('.jq-dte-month') ).toBe(true);
+        });
+
+        it("has 'aria-label'='Month'", function() {
+            expect( $mm.attr('aria-label') ).toBe('Month');
+        });
+
         runs(function() {
             $mm.focus();
         });
@@ -182,6 +198,14 @@
 
         it("has 'hint' class", function() {
             expect( $yyyy.is('.hint') ).toBe(true);
+        });
+
+        it("has 'jq-dte-year' class", function() {
+            expect( $yyyy.is('.jq-dte-year') ).toBe(true);
+        });
+
+        it("has 'aria-label'='Year'", function() {
+            expect( $yyyy.attr('aria-label') ).toBe('Year');
         });
 
         runs(function() {
