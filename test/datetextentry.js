@@ -767,5 +767,67 @@
 
     });
 
+    describe("Date widget '#date1' DD & MM sub-fields", function() {
+
+        runs(function() {
+            $mm.val('').blur();
+            $yyyy.val('')
+            $dd.val('3').focus();
+            add_char($dd, '1');
+        });
+
+        waits(50);
+
+        it("after resetting, and entering '31' in DD, focus moves to MM", function() {
+            expect( $mm.is(':focus') ).toBe(true);
+        });
+
+        it("leaving no 'error' class on DD", function() {
+            expect( $dd.is('.error') ).toBe(false);
+        });
+
+        it("leaving no 'error' class on MM", function() {
+            expect( $mm.is('.error') ).toBe(false);
+        });
+
+        it("leaving no 'error' class on YYYY", function() {
+            expect( $yyyy.is('.error') ).toBe(false);
+        });
+
+        runs(function() {
+            $mm.val('0')
+            add_char($mm, '4');
+        });
+
+        waits(50);
+
+        it("after entering '04', focus remains on MM", function() {
+            expect( $mm.is(':focus') ).toBe(true);
+        });
+
+        it("which now has 'error' class", function() {
+            expect( $mm.is('.error') ).toBe(false);
+        });
+
+        it("and errorbox element is revealed", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+        });
+
+        it("with error message about days in April", function() {
+            expect( $errorbox.text() ).toBe('Only 30 days in April');
+        });
+
+        runs(function() {
+            $dd.val('').blur();
+        });
+
+        waits(50);
+
+        it("after clearing day field, errorbox element is hidden", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+        });
+
+    });
+
 })(jQuery);
 

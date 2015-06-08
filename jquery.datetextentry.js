@@ -321,11 +321,11 @@
                     return false;
                 }
             }
-            if(this.day_value && this.month_value && this.year_value) {
+            if(this.day_value && this.month_value) {
                 this.clear_error();
                 try {
                     this.validate_days_in_month();
-                    if(this.year_value.length === 4) {
+                    if(this.year_value && this.year_value.length === 4) {
                         this.validate_complete_date();
                         var date_obj = this.get_date();
                         var date_str = this.format_date( date_obj );
@@ -337,7 +337,11 @@
                 }
                 catch(e) {
                     this.set_error(e);
+                    return false;
                 }
+            }
+            else {
+                this.clear_error();
             }
             return true;
         }
