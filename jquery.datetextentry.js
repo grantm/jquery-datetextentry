@@ -298,6 +298,7 @@
         ,focus_field_before: function(input) {
             var index = input.index;
             if(index < 1) { return };
+            this.fields[index].yield_focus();
             var next = this.fields[index - 1];
             var val = next.get();
             next.set_focus(false);
@@ -306,6 +307,7 @@
         ,focus_field_after: function(input) {
             var index = input.index;
             if(index > 1) { return };
+            this.fields[index].yield_focus();
             this.fields[index + 1].set_focus(true);
         }
 
@@ -546,6 +548,10 @@
                 this.$input.val( this.hint_text ).addClass('hint');
             }
             return this;
+        }
+
+        ,yield_focus: function() {
+            this.$input.blur();
         }
 
         ,set_focus: function(select_all) {
