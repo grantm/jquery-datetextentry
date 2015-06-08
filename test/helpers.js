@@ -23,6 +23,7 @@ function widget_content(selector) {
 function add_char($input, character) {
     var val = '' + $input.val() + character;
     $input.val(val);
+    $input.trigger({ type: 'keydown', which: character.charCodeAt(0) });
     $input.trigger({ type: 'keyup', which: character.charCodeAt(0) });
 }
 
