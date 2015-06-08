@@ -1,6 +1,6 @@
 /*
- * jQuery datetextentry v2.0.8
- * Copyright (c) 2010-2014 Grant McLean (grant@mclean.net.nz)
+ * jQuery datetextentry v2.0.10
+ * Copyright (c) 2010-2015 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
  *
@@ -321,11 +321,11 @@
                     return false;
                 }
             }
-            if(this.day_value && this.month_value && this.year_value) {
+            if(this.day_value && this.month_value) {
                 this.clear_error();
                 try {
                     this.validate_days_in_month();
-                    if(this.year_value.length === 4) {
+                    if(this.year_value && this.year_value.length === 4) {
                         this.validate_complete_date();
                         var date_obj = this.get_date();
                         var date_str = this.format_date( date_obj );
@@ -337,7 +337,11 @@
                 }
                 catch(e) {
                     this.set_error(e);
+                    return false;
                 }
+            }
+            else {
+                this.clear_error();
             }
             return true;
         }
@@ -501,9 +505,11 @@
         this.has_focus = false;
         this.empty = true;
         this.$input = $('<input type="text" value="" />')
-            .addClass( 'jq-dte-' + name )
+            .addClass( 'jq-dte-' + this.name )
+            .attr('aria-label', dte.options['field_tip_text_' + this.name])
             .focus( $.proxy(input, 'focus') )
             .blur(  $.proxy(input, 'blur' ) )
+            .keydown( function(e) { setTimeout(function () { input.keydown(e); }, 2) } )
             .keyup( function(e) { setTimeout(function () { input.keyup(e); }, 2) } );
     };
 
@@ -570,6 +576,7 @@
         }
 
         ,focus: function(e) {
+            this.key_is_down = false;
             if( this.$input.prop('readonly') ) {
                 return;
             }
@@ -590,7 +597,15 @@
             this.dte.validate(this);
         }
 
+        ,keydown: function(e) {
+            // Ignore keyup events that arrive after focus moved to next field
+            this.key_is_down = true;
+        }
+
         ,keyup: function(e) {
+            if(!this.key_is_down) {
+                return;
+            }
             // Handle Backspace - shifting focus to previous field if required
             var keycode = e.which;
             if(keycode === key.BACKSPACE  &&  this.empty) {
