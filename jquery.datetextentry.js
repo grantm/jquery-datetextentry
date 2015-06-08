@@ -1,5 +1,5 @@
 /*
- * jQuery datetextentry v2.0.10
+ * jQuery datetextentry v2.0.11
  * Copyright (c) 2010-2015 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
