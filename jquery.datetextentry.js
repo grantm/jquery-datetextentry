@@ -508,7 +508,7 @@
         this.empty = true;
         this.$input = $('<input type="text" value="" />')
             .addClass( 'jq-dte-' + this.name )
-            .attr('aria-label', dte.options['field_tip_text_' + this.name])
+            .attr('aria-label', this.tip_text + " (" + this.hint_text + ")" )
             .focus( $.proxy(input, 'focus') )
             .blur(  $.proxy(input, 'blur' ) )
             .keydown( function(e) { setTimeout(function () { input.keydown(e); }, 2) } )
