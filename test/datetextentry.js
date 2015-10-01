@@ -104,8 +104,8 @@
             expect( $dd.is('.jq-dte-day') ).toBe(true);
         });
 
-        it("has 'aria-label'='Day'", function() {
-            expect( $dd.attr('aria-label') ).toBe('Day');
+        it("has 'aria-label'='Day (DD)'", function() {
+            expect( $dd.attr('aria-label') ).toBe('Day (DD)');
         });
 
         runs(function() {
@@ -154,8 +154,8 @@
             expect( $mm.is('.jq-dte-month') ).toBe(true);
         });
 
-        it("has 'aria-label'='Month'", function() {
-            expect( $mm.attr('aria-label') ).toBe('Month');
+        it("has 'aria-label'='Month (MM)'", function() {
+            expect( $mm.attr('aria-label') ).toBe('Month (MM)');
         });
 
         runs(function() {
@@ -204,8 +204,8 @@
             expect( $yyyy.is('.jq-dte-year') ).toBe(true);
         });
 
-        it("has 'aria-label'='Year'", function() {
-            expect( $yyyy.attr('aria-label') ).toBe('Year');
+        it("has 'aria-label'='Year (YYYY)'", function() {
+            expect( $yyyy.attr('aria-label') ).toBe('Year (YYYY)');
         });
 
         runs(function() {
