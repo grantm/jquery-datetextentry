@@ -1,0 +1,64 @@
+
+body {
+  margin-top: 30px;
+}
+
+div.hero-unit h1 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+div.hero-unit p {
+  font-height: 18px;
+  line-height: 27px;
+}
+
+body h1 {
+  margin-top: 40px;
+}
+
+body h2 {
+  margin-top: 30px;
+}
+
+div.row-fluid #demo-titles {
+  float: right;
+}
+
+dl dd {
+  margin: 0 0 12px 36px;
+}
+
+p.example-link {
+  margin: 0 0 0 0;
+  float: right;
+  font-size: 90%;
+  line-height: 1;
+}
+
+/* Date format customisations for default boostrap theme */
+
+span.jq-dte input {
+  box-shadow: none;
+}
+
+span.jq-dte input:focus {
+  border: none;
+  outline-none;
+  box-shadow: none;
+}
+
+body span.jq-dte {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  padding: 4px 2px 3px 2px;
+}
+
+body span.jq-dte.focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+  outline: 0 none;
+}
+

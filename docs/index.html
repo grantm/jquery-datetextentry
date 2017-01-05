@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>jQuery datetextentry Plugin</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/site.css">
+  <link rel="stylesheet" type="text/css" href="jquery.datetextentry.css">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span8 offset2">
+
+        <div class="hero-unit">
+          <h1>jquery.datetextentry.js</h1>
+          <p>This plugin provides a widget for date entry and validation.
+          Unlike a 'date picker' the widget is well suited to keyboard-only
+          data entry tasks.</p>
+          <div class="btn-group">
+            <a class="btn btn-info" title="Download a Zip file of source and examples" href="https://github.com/grantm/jquery-datetextentry/zipball/master">Zip</a>
+            <a class="btn btn-info" title="Download a Tar file of source and examples" href="https://github.com/grantm/jquery-datetextentry/tarball/master">Tar</a>
+            <a class="btn btn-info" title="Fork this project on GitHub" href="https://github.com/grantm/jquery-datetextentry/">Git</a>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="span12">
+            <ul>
+              <li><a href="#introduction">Introduction</a></li>
+              <li><a href="#reference">Reference Documentation</a></li>
+              <ul>
+                <li><a href="#options">Options</a></li>
+                <li><a href="#messages">Messages</a></li>
+                <li><a href="#methods">Methods</a></li>
+              </ul>
+              <li><a href="#examples">Examples</a></li>
+            </ul>
+
+            <h1 id="introduction">Introduction</h1>
+
+            <p>The <code>datetextentry</code> widget provides for reliable date
+            entry without the need for a date-picker.  While convenient for
+            selecting dates close to 'today' (e.g.: setting up an appointment
+            for next Tuesday), date-pickers are not suitable for all date entry
+            tasks.  For example, when entering your date of birth, a
+            date-picker requires you to page through months and years of dates
+            - the older you are, the more times you'll have to click.  This can
+            be very frustrating since you <em>know</em> your date of birth -
+            you just want to type it in.  The <code>datetextentry</code>
+            widget allows you to do exactly that, while removing any
+            ambiguity about expected field order and separators.</p>
+
+            <p>You provide a plain <code>&lt;input type="text"&gt;</code> form
+            element and the plugin will replace it with a 3-field widget. When
+            the form is submitted, a single value will be posted to the
+            backend.  Dates are translated to and from ISO standard YYYY-MM-DD
+            format.  The order of the input fields can be customised for your
+            local conventions.</p>
+
+            <p>A typical text entry box might look like this:</p>
+
+            <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="dob1">Date of Birth</label>
+                <div class="controls">
+                  <input type="text" id="dob1" style="width: 9em;">
+                </div>
+              </div>
+            </form>
+
+            <p>With the <code>datetextentry</code> plugin applied, it might
+            look like this:</p>
+
+            <form class="form-horizontal">
+              <div class="control-group">
+                <label id="lbl2" class="control-label" for="dob2">Date of Birth</label>
+                <div class="controls">
+                  <input type="text" id="dob2" style="width: 9em;">
+                </div>
+              </div>
+            </form>
+
+            <p>The widget provides the following functionality (try out the example above):</p>
+
+            <ul>
+              <li>Separate fields for day, month and year (configurable order)</li>
+              <li>Tooltips and hint text to guide the user through each field</li>
+              <li>Auto-advance when a field is 'full'</li>
+              <li>Backspacing through an empty field to the preceding field</li>
+              <li>Custom handling for mapping 2-digit years to 4 digits</li>
+              <li>Immediate feedback for invalid data (e.g.: day 32 or month 13)</li>
+              <li>More advanced validation on complete dates (e.g.: to reject February 29th in a non-leap year)</li>
+              <li>Custom validation for application-specific date range checking</li>
+              <li>Linking the input field with its label (e.g.: click label to focus)</li>
+            </ul>
+
+            <p>The <a href="#examples">examples</a> directory includes some demos to get you started.</p>
+
+            <p>The plugin is dual-licensed under the MIT and GPL licences.</p>
+
+            <h1 id="reference">Reference Documentation</h1>
+
+            <div class="row-fluid">
+
+              <div class="span3">
+                <h3>Options</h3>
+                <ul>
+                  <li><a href="#add_century">add_century</a></li>
+                  <li><a href="#custom_validation">custom_validation</a></li>
+                  <li><a href="#errorbox_x">errorbox_x</a></li>
+                  <li><a href="#errorbox_y">errorbox_y</a></li>
+                  <li><a href="#field_hint_text_day">field_hint_text_day</a></li>
+                  <li><a href="#field_hint_text_month">field_hint_text_month</a></li>
+                  <li><a href="#field_hint_text_year">field_hint_text_year</a></li>
+                  <li><a href="#field_order">field_order</a></li>
+                  <li><a href="#field_tip_text_day">field_tip_text_day</a></li>
+                  <li><a href="#field_tip_text_month">field_tip_text_month</a></li>
+                  <li><a href="#field_tip_text_year">field_tip_text_year</a></li>
+                  <li><a href="#field_width_day">field_width_day</a></li>
+                  <li><a href="#field_width_month">field_width_month</a></li>
+                  <li><a href="#field_width_sep">field_width_sep</a></li>
+                  <li><a href="#field_width_year">field_width_year</a></li>
+                  <li><a href="#format_date">format_date</a></li>
+                  <li><a href="#human_format_date">human_format_date</a></li>
+                  <li><a href="#max_date">max_date</a></li>
+                  <li><a href="#max_year">max_year</a></li>
+                  <li><a href="#min_date">min_date</a></li>
+                  <li><a href="#min_year">min_year</a></li>
+                  <li><a href="#on_blur">on_blur</a></li>
+                  <li><a href="#on_change">on_change</a></li>
+                  <li><a href="#on_error">on_error</a></li>
+                  <li><a href="#parse_date">parse_date</a></li>
+                  <li><a href="#separator">separator</a></li>
+                  <li><a href="#show_errors">show_errors</a></li>
+                  <li><a href="#show_hints">show_hints</a></li>
+                  <li><a href="#show_tooltips">show_tooltips</a></li>
+                  <li><a href="#tooltip_x">tooltip_x</a></li>
+                  <li><a href="#tooltip_y">tooltip_y</a></li>
+                </ul>
+              </div>
+
+              <div class="span4">
+                <h3>Messages</h3>
+                <ul>
+                  <li><a href="#e_bad_day_for_month">E_BAD_DAY_FOR_MONTH</a></li>
+                  <li><a href="#e_day_nan">E_DAY_NAN</a></li>
+                  <li><a href="#e_day_too_big">E_DAY_TOO_BIG</a></li>
+                  <li><a href="#e_day_too_small">E_DAY_TOO_SMALL</a></li>
+                  <li><a href="#e_max_date">E_MAX_DATE</a></li>
+                  <li><a href="#e_min_date">E_MIN_DATE</a></li>
+                  <li><a href="#e_month_nan">E_MONTH_NAN</a></li>
+                  <li><a href="#e_month_too_big">E_MONTH_TOO_BIG</a></li>
+                  <li><a href="#e_month_too_small">E_MONTH_TOO_SMALL</a></li>
+                  <li><a href="#e_year_length">E_YEAR_LENGTH</a></li>
+                  <li><a href="#e_year_nan">E_YEAR_NAN</a></li>
+                  <li><a href="#e_year_too_big">E_YEAR_TOO_BIG</a></li>
+                  <li><a href="#e_year_too_small">E_YEAR_TOO_SMALL</a></li>
+                </ul>
+              </div>
+
+              <div class="span3">
+                <h3>Methods</h3>
+                <ul>
+                  <li><a href="#clear">clear</a></li>
+                  <li><a href="#destroy">destroy</a></li>
+                  <li><a href="#focus">focus</a></li>
+                  <li><a href="#set_date">set_date</a></li>
+                  <li><a href="#set_readonly">set_readonly</a></li>
+                </ul>
+              </div>
+
+            </div>
+
+            <h2><a name="options"></a>Options</h2>
+
+            <p>When the <code>datetextentry</code> function is called, you can
+            provide option name/value pairs as an object literal like this:</p>
+
+            <pre>$(selector).datetextentry({opt1: value1, opt2: value2});</pre>
+
+            <table class="table bordered">
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><a name="add_century"></a><code>add_century</code></td>
+                <td>
+                  When a 2-digit year is entered the <code>add_century</code>
+                  function upgrades it to 4 digits by simply adding 2000.  You
+                  can use this option to provide an alternative function, that
+                  takes a number in the range 10-99 and returns a number in the
+                  range 1000-9999.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="custom_validation"></a><code>custom_validation</code></td>
+                <td>
+                  <p>Use this option to supply a function for applying arbitrary
+                  validation rules.  The function will be passed an object literal
+                  with <code>year</code>, <code>month</code>, <code>day</code> and
+                  <code>date</code> properties.  If the date is deemed to be invalid,
+                  the function should <code>throw</code> an appropriate error message,
+                  which will be displayed to the user.</p>
+                  <p class="example-link"><a href="examples/10-options.html#custom-validation">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="errorbox_x"></a><code>errorbox_x</code></td>
+                <td>
+                  <p>When an invalid value is entered, a message will be displayed
+                  in an 'error box' to the right of the widget.  Use the
+                  <code>errorbox_x</code> and <code>errorbox_y</code> options to
+                  specify an alternative position for the error box, relative to
+                  the top right corner of the widget.</p>
+                  <p class="example-link"><a href="examples/10-options.html#errorbox">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="errorbox_y"></a><code>errorbox_y</code></td>
+                <td>
+                  See <a href="#errorbox_x">errorbox_x</a>.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_hint_text_day"></a><code>field_hint_text_day</code></td>
+                <td>
+                  Hint text to display in an empty day field. Default: 'DD'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_hint_text_month"></a><code>field_hint_text_month</code></td>
+                <td>
+                  Hint text to display in an empty month field. Default: 'MM'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_hint_text_year"></a><code>field_hint_text_year</code></td>
+                <td>
+                  Hint text to display in an empty year field. Default: 'YYYY'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_order"></a><code>field_order</code></td>
+                <td>
+                  <p>A string comprising the letter 'D', 'M' and 'Y' in the order
+                  you wish the day, month and year fields to be displayed.</p>
+                  <p class="example-link"><a href="examples/10-options.html#order-sep">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_tip_text_day"></a><code>field_tip_text_day</code></td>
+                <td>
+                  Tooltip text to display beneath the day field when it has the
+                  focus. Default: 'Day'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_tip_text_month"></a><code>field_tip_text_month</code></td>
+                <td>
+                  Tooltip text to display beneath the month field when it has the
+                  focus. Default: 'Month'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_tip_text_year"></a><code>field_tip_text_year</code></td>
+                <td>
+                  Tooltip text to display beneath the year field when it has the
+                  focus. Default: 'Year'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_day"></a><code>field_width_day</code></td>
+                <td>
+                  <p>Proportion of the overall width of the widget that should be
+                  used for the day field.  Default: 40.</p>
+                  <p>The values specified are not absolute pixel values.  Instead,
+                  the widget size is organised to take up the same space as the
+                  input box it replaces.  Inside the widget, the field sizes are
+                  allocated based on the relative proportions specified.</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_month"></a><code>field_width_month</code></td>
+                <td>
+                  Proportion of the overall width of the widget that should be
+                  used for the month field.  Default: 40.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_sep"></a><code>field_width_sep</code></td>
+                <td>
+                  Proportion of the overall width of the widget that should be
+                  used for each of the separators.  Default: 4.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_width_year"></a><code>field_width_year</code></td>
+                <td>
+                  Proportion of the overall width of the widget that should be
+                  used for the year field.  Default: 60.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="format_date"></a><code>format_date</code></td>
+                <td>
+                  <p>When a valid date is entered into the three fields, a formatted
+                  date string will be saved in the original text field, to be
+                  submitted to the backend server.  By default the date will be
+                  in ISO-standard YYYY-MM-DD format.</p>
+                  <p>Using this option, you can provide a function that accepts
+                  an object of the form <code>{ day: '02', month: '06', year: '2012' }</code>
+                  and returns a string.</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="human_format_date"></a><code>human_format_date</code></td>
+                <td>
+                  This option is similar to <a href="#format_date">format_date</a>
+                  but allows you to override the default format (DD/MM/YYYY) used
+                  to display dates in the error box (for example in <em>"Date
+                  must not be earlier than 01/01/1970</em>").
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="max_date"></a><code>max_date</code></td>
+                <td>
+                  <p>If this option is provided, a date greater than the
+                  supplied value will be rejected.<p>
+                  <p>The value can be supplied as an ISO date string (which
+                  will be parsed using the <a href="#parse_date">parse_date</a>
+                  function; or as a function which returns an object literal
+                  of the form expected by <a href="#format_date">format_date</a>.</p>
+                  <p class="example-link"><a href="examples/10-options.html#minmax-date">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="max_year"></a><code>max_year</code></td>
+                <td>
+                  If this option is provided, a year value greater than the
+                  supplied value will be rejected.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="min_date"></a><code>min_date</code></td>
+                <td>
+                  <p>If this option is provided, a date less than the
+                  supplied value will be rejected.<p>
+                  <p>The value can be supplied as an ISO date string (which
+                  will be parsed using the <a href="#parse_date">parse_date</a>
+                  function); or as a function which returns an object literal
+                  of the form expected by <a href="#format_date">format_date</a>.</p>
+                  <p class="example-link"><a href="examples/10-options.html#minmax-date">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="min_year"></a><code>min_year</code></td>
+                <td>
+                  <p>If this option is provided, a year value less than the
+                  supplied value will be rejected.</p>
+                  <p class="example-link"><a href="examples/10-options.html#min-year">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="on_blur"></a><code>on_blur</code></td>
+                <td>
+                  <p>If you supply a callback function, it will be called when
+                  the input focus leaves the date widget.  Within your callback
+                  function you can call <code>this.widget_error_text()</code>
+                  to determine if the date entry has outstanding validation
+                  errors - an empty string will be returned for no errors.</p>
+                  <p><em>Note: this function uses a delay to filter out the
+                  noise of focus-out from one date sub-field and focus-in to
+                  the next. Therefore the 'on_blur' callback will usually be
+                  called <strong>after</strong> the 'focus' event fires on the
+                  next form element.</em></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="on_change"></a><code>on_change</code></td>
+                <td>
+                  <p>If you supply a callback function, it will be called when the
+                  contents of the date entry boxes pass validation.  The function
+                  will be passed a single argument - a date string from
+                  <code>format_date</code>.</p>
+                  <p><em>Note: this is quite a 'noisy' function - it will be called
+                  for every keypress when a valid date results.  Also note, it will
+                  not be called when the date is changed to an invalid value.</em></p>
+                  <p class="example-link"><a href="examples/10-options.html#on-change">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="on_error"></a><code>on_error</code></td>
+                <td>
+                  <p>If you supply a callback function, it will be called when the
+                  error box is updated.  A single argument will be passed to the
+                  function.  The empty string if the error condition is cleared or
+                  the text of the error otherwise.</p>
+                  <p class="example-link"><a href="examples/10-options.html#on-error">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="parse_date"></a><code>parse_date</code></td>
+                <td>
+                  You can override the default date parsing function which is
+                  used to parse the default value in the base <code>&lt;input&gt;</code>
+                  element's <code>value</code> attribute.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="separator"></a><code>separator</code></td>
+                <td>
+                  <p>The character which should be displayed in the widget between the
+                  input fields,  Default: '/'.</p>
+                  <p class="example-link"><a href="examples/10-options.html#order-sep">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="show_errors"></a><code>show_errors</code></td>
+                <td>
+                  <p>A boolean value controlling whether error text will be
+                  displayed next to the date widget when invalid input is
+                  detected.  This option would typically be set to false when
+                  the <a href="#on_error">on_error</a> option is used
+                  for customised error message presentation.  Default: true.</p>
+                  <p class="example-link"><a href="examples/10-options.html#on-error">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="show_hints"></a><code>show_hints</code></td>
+                <td>
+                  <p>A boolean value controlling whether hint text will be displayed
+                  in empty fields which do not have the input focus.  Default: true.</p>
+                  <p class="example-link"><a href="examples/10-options.html#no-hints">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="show_tooltips"></a><code>show_tooltips</code></td>
+                <td>
+                  <p>A boolean value controlling whether a field name tooltip will
+                  be displayed beneath the fields with the current input focus.
+                  Default: true.</p>
+                  <p class="example-link"><a href="examples/10-options.html#no-tooltips">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tooltip_x"></a><code>tooltip_x</code></td>
+                <td>
+                  Horizontal offset in pixels for the tooltip relative to the
+                  current input field.
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="tooltip_y"></a><code>tooltip_y</code></td>
+                <td>
+                  Vertical offset in pixels for the tooltip relative to the
+                  current input field.
+                </td>
+              </tr>
+
+            </table>
+
+            <h2><a name="messages"></a>Messages</h2>
+
+            <p>The text of the error messages can be customised by providing
+            alternative message text as options.</p>
+
+            <table class="table bordered">
+
+              <tr>
+                <th>Name</th>
+                <th>Default message</th>
+              </tr>
+
+              <tr>
+                <td><a name="e_bad_day_for_month"></a><code>E_BAD_DAY_FOR_MONTH</code></td>
+                <td>Only %d days in %m %y</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_day_nan"></a><code>E_DAY_NAN</code></td>
+                <td>Day must be a number</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_day_too_big"></a><code>E_DAY_TOO_BIG</code></td>
+                <td>Day must be 1-31</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_day_too_small"></a><code>E_DAY_TOO_SMALL</code></td>
+                <td>Day must be 1-31</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_max_date"></a><code>E_MAX_DATE</code></td>
+                <td>Date must not be later than %DATE</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_min_date"></a><code>E_MIN_DATE</code></td>
+                <td>Date must not be earlier than %DATE</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_month_nan"></a><code>E_MONTH_NAN</code></td>
+                <td>Month must be a number</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_month_too_big"></a><code>E_MONTH_TOO_BIG</code></td>
+                <td>Month must be 1-12</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_month_too_small"></a><code>E_MONTH_TOO_SMALL</code></td>
+                <td>Month must be 1-12</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_year_length"></a><code>E_YEAR_LENGTH</code></td>
+                <td>Year must be 4 digits</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_year_nan"></a><code>E_YEAR_NAN</code></td>
+                <td>Year must be a number</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_year_too_big"></a><code>E_YEAR_TOO_BIG</code></td>
+                <td>Year must not be after %y</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_year_too_small"></a><code>E_YEAR_TOO_SMALL</code></td>
+                <td>Year must not be before %y</td>
+              </tr>
+
+            </table>
+
+            <h2><a name="methods"></a>Methods</h2>
+
+            <p>After the widget has been initialised, you can reference it
+            again using the same selector and call a method like this:</p>
+
+            <pre>$(selector).datetextentry('method-name', args);</pre>
+
+            <table class="table bordered">
+
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+
+              <tr>
+                <td><a name="clear"></a><code>clear</code></td>
+                <td>
+                  <p>Discard the current contents of all the fields, e.g.:</p>
+                  <pre>$(selector).datetextentry('clear');</pre>
+                  <p class="example-link"><a href="examples/10-options.html#methods">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="destroy"></a><code>destroy</code></td>
+                <td>
+                  <p>Removes the datetextentry functionality and returns the
+                  element back to its original state, e.g.:</p>
+                  <pre>$(selector).datetextentry('destroy');</pre>
+                  <p class="example-link"><a href="examples/10-options.html#init-destroy">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="focus"></a><code>focus</code></td>
+                <td>
+                  <p>Move the input focus to the first field, e.g.:</p>
+                  <pre>$(selector).datetextentry('focus');</pre>
+                  <p class="example-link"><a href="examples/10-options.html#methods">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="set_date"></a><code>set_date</code></td>
+                <td>
+                  <p>Provide a new date value, which will be parsed by
+                  <a href="#parse_date">parse_date</a> and used to populate
+                  the three date entry fields, e.g.:</p>
+                  <pre>$(selector).datetextentry('set_date', '2005-12-31');</pre>
+                  <p class="example-link"><a href="examples/10-options.html#methods">See example</a></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="set_readonly"></a><code>set_readonly</code></td>
+                <td>
+                  <p>Set the date entry widget to read-only mode or back to
+                  normal read/write mode, e.g.:</p>
+                  <pre>$(selector).datetextentry('set_readonly', true);</pre>
+                  <p class="example-link"><a href="examples/10-options.html#readonly">See example</a></p>
+                </td>
+              </tr>
+
+            </table>
+
+
+            <h1 id="examples">Examples</h1>
+
+            <dl>
+
+              <dt><a href="examples/01-defaults.html">Example 1 - Defaults</a></dt>
+
+              <dd>A minimal example demonstrating the default widget behaviour.</dd>
+
+              <dt><a href="examples/02-field-order.html">Example 2 - Field Order</a></dt>
+
+              <dd>Override the default field order for USA-style Month, Day,
+              Year.</dd>
+
+              <dt><a href="examples/10-options.html">Example 3 - Options</a></dt>
+
+              <dd>Various examples demonstrating a range of different option
+              settings to change separators, hints, tooltips, date ranges and
+              custom validation.  Also a demo of interacting with the widget
+              programatically after initialisation.</dd>
+
+            </dl>
+
+
+            <hr>
+
+            <p>Copyright &copy; 2010-2017 Grant McLean</p>
+
+          </div><!--/span-->
+        </div><!--/row-->
+
+      </div><!--/span-->
+    </div><!--/row-->
+
+  </div><!--/.fluid-container-->
+
+  <script src="examples/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="jquery.datetextentry.js"></script>
+  <script src="examples/intro-demo.js"></script>
+</body>
+</html>

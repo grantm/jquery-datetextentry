@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>jQuery.datetextentry: Field Order</title>
+  <link rel="stylesheet" type="text/css" href="../jquery.datetextentry.css">
+  <link rel="stylesheet" type="text/css" href="examples.css">
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="../jquery.datetextentry.js"></script>
+</head>
+<body>
+
+  <h1>jQuery.datetextentry: Field Order</h1>
+
+  <p>This example uses an option to override the default field order from the
+  international-style DD-MM-YYYY to the USA-style MM-DD-YYYY.  This example
+  also demonstrates how default values in the HTML can be used to populate
+  the fields of the datetextentry widget.</p>
+
+  <form>
+
+    <p>
+      <label for="name">Name:</label>
+      <input id="name" name="name" class="text" value="Janis Joplin">
+    </p>
+
+    <p>
+      <label for="dob">Date of Birth:</label>
+      <input id="dob" name="dob" class="text" value="1943-01-19">
+    </p>
+
+  </form>
+
+  <script type="text/javascript">
+
+    $('#dob').datetextentry({ field_order: 'MDY' });
+
+  </script>
+
+  <p>The Javascript is the same as the <a href="01-defaults.html">previous
+  example</a> except that the <code>field_order</code> option is specified:</p>
+
+  <pre class="code">$('#dob').datetextentry({ field_order: 'MDY' });</pre>
+
+  <p>See also: examples of <a href="10-options.html">other options</a>.</p>
+
+</body>
+</html>
