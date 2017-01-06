@@ -33,8 +33,8 @@
 
         it("has plausible initial width", function() {
             initial_width = $date1.outerWidth();
-            expect( initial_width > 160 ).toBe(true);
-            expect( initial_width < 170 ).toBe(true);
+            expect( initial_width > 150 ).toBe(true);
+            expect( initial_width < 180 ).toBe(true);
         });
 
         it("is the child of a p.p1 element", function() {
