@@ -1,6 +1,6 @@
 /*
  * jQuery datetextentry v2.0.12
- * Copyright (c) 2010-2015 Grant McLean (grant@mclean.net.nz)
+ * Copyright (c) 2010-2017 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
  *
@@ -297,7 +297,7 @@
 
         ,focus_field_before: function(input) {
             var index = input.index;
-            if(index < 1) { return };
+            if(index < 1) { return }
             this.fields[index].yield_focus();
             var next = this.fields[index - 1];
             var val = next.get();
@@ -306,7 +306,7 @@
 
         ,focus_field_after: function(input) {
             var index = input.index;
-            if(index > 1) { return };
+            if(index > 1) { return }
             this.fields[index].yield_focus();
             this.fields[index + 1].set_focus(true);
         }
@@ -403,15 +403,15 @@
                 }
             }
             else {
-                if(text.length == 2) {
+                if(text.length === 2) {
                     text = '' + this.add_century(parseInt(text, 10));
                     this.input_year.set(text);
                 }
-                if(text.length != 4) {
+                if(text.length !== 4) {
                     throw(opt.E_YEAR_LENGTH);
                 }
             }
-            if(text.length == 4) {
+            if(text.length === 4) {
                 var num = parseInt(text, 10);
                 if(opt.min_year  &&  num < opt.min_year) {
                     throw(opt.E_YEAR_TOO_SMALL.replace(/%y/, opt.min_year));
@@ -431,7 +431,7 @@
             if(day < 1  ||  month < 1) { return; }
             var max = days_in_month[month - 1];
             var msg = opt.E_BAD_DAY_FOR_MONTH;
-            if(month == 2  &&  ('' + year).length == 4) {
+            if(month === 2  &&  ('' + year).length === 4) {
                 max = year % 4 ? 28 : year % 100 ? 29 : year % 400 ? 28 : 29;
                 msg = msg.replace(/%y/, year);
             }
@@ -447,6 +447,7 @@
             var opt = this.options;
             var date_obj = this.get_date();
             var date_iso = this.iso_format_date( date_obj );
+            var msg = null;
 
             var max_date = opt.max_date;
             if(typeof max_date === 'function') {
@@ -457,7 +458,7 @@
             }
             if(max_date) {
                 if( date_iso > this.iso_format_date( max_date ) ) {
-                    var msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
+                    msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
                     if(msg) {
                         throw(msg.replace(/%DATE/, this.human_format_date( max_date )));
                     }
@@ -473,7 +474,7 @@
             }
             if(min_date) {
                 if( date_iso < this.iso_format_date( min_date ) ) {
-                    var msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
+                    msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
                     if(msg) {
                         throw(msg.replace(/%DATE/, this.human_format_date( min_date )));
                     }
@@ -632,7 +633,7 @@
             // Advance focus if this field is both valid and full
             if( this.dte.validate(this) ) {
                 var want = this.name === 'year' ? 4 : 2;
-                if(this.is_digit_key(e) && text.length == want) {
+                if(this.is_digit_key(e) && text.length === want) {
                         this.dte.focus_field_after(this);
                 }
             }
