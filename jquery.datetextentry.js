@@ -494,7 +494,7 @@
                     parseInt(date_obj.year,  10),
                     parseInt(date_obj.month, 10) - 1,
                     parseInt(date_obj.day,   10)
-);
+                );
                 this.custom_validation(date_obj);
             }
         }
