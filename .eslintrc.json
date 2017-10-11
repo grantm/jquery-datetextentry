@@ -1,0 +1,77 @@
+{
+    "env": {
+        "browser": true,
+        "jquery": true
+    },
+    "parserOptions": { "ecmaVersion": 5 },
+    "extends": "eslint:recommended",
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            { "avoidEscape": true }
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "eqeqeq": [
+            "error"
+        ],
+        "block-scoped-var": [
+            "error"
+        ],
+        "curly": [
+            "error",
+            "multi-line"
+        ],
+        "dot-location": [
+            "error",
+            "property"
+        ],
+        "dot-notation": [
+            "error"
+        ],
+        "guard-for-in": [
+            "error"
+        ],
+        "no-alert": [
+            "error"
+        ],
+        "no-caller": [
+            "error"
+        ],
+        "no-eval": [
+            "error",
+            {"allowIndirect": true}
+        ],
+        "no-implied-eval": [
+            "error"
+        ],
+        // "no-throw-literal": [
+        //     "error"
+        // ],
+        "no-useless-call": [
+            "error"
+        ],
+        "radix": [
+            "error",
+            "always"
+        ],
+        "complexity": [
+            "error",
+            { "max": 20 }
+        ],
+        "no-array-constructor": [
+            "error"
+        ]
+    }
+}

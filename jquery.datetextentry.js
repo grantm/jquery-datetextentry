@@ -1,4 +1,3 @@
-/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, unused:true, curly:true, browser:true, jquery:true, indent:4, laxbreak:true, maxerr:500 */
 /*
  * jQuery datetextentry v2.0.13
  * Copyright (c) 2010-2017 Grant McLean (grant@mclean.net.nz)
@@ -13,7 +12,7 @@
 
 (function ($) {
 
-    "use strict";
+    'use strict';
 
 
     /* DATETEXTENTRY CLASS DEFINITION
@@ -171,13 +170,13 @@
         parse_iso_date: function (text) {
             return text && text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/)
                 ? { day: RegExp.$3, month: RegExp.$2, year: RegExp.$1 }
-            : null;
+                : null;
         },
 
         get_date : function () {
             return (this.day_value && this.month_value && this.year_value)
-                ?  { day: this.day_value, month: this.month_value, year: this.year_value }
-            : null;
+                ? { day: this.day_value, month: this.month_value, year: this.year_value }
+                : null;
         },
 
         get_today : function () {
@@ -515,7 +514,7 @@
         this.empty     = true;
         this.$input = $('<input type="text" value="" />')
             .addClass('jq-dte-' + this.name)
-            .attr('aria-label', this.tip_text + " (" + this.hint_text + ")")
+            .attr('aria-label', this.tip_text + ' (' + this.hint_text + ')')
             .focus($.proxy(input, 'focus'))
             .blur($.proxy(input, 'blur'))
             .keydown(function (e) { setTimeout(function () { input.keydown(e); }, 2); })
@@ -628,8 +627,8 @@
             this.empty = text === '';
 
             // Trap and discard separator characters - advancing focus if required
-            if (text.match(/[\/\\. \-]/)) {
-                text = text.replace(/[\/\\. \-]/, '');
+            if (text.match(/[/\\. -]/)) {
+                text = text.replace(/[/\\. -]/, '');
                 this.set(text);
                 if (!this.empty && this.index < 2) {
                     this.dte.focus_field_after(this);
