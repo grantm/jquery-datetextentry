@@ -56,9 +56,9 @@
         "no-implied-eval": [
             "error"
         ],
-        // "no-throw-literal": [
-        //     "error"
-        // ],
+        "no-throw-literal": [
+            "error"
+        ],
         "no-useless-call": [
             "error"
         ],
