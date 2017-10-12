@@ -1,6 +1,6 @@
 /*
- * jQuery datetextentry v2.0.12
- * Copyright (c) 2010-2015 Grant McLean (grant@mclean.net.nz)
+ * jQuery datetextentry v2.0.13
+ * Copyright (c) 2010-2017 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
  *
@@ -10,9 +10,9 @@
  *
  */
 
-(function($){
+(function ($) {
 
-    "use strict";
+    'use strict';
 
 
     /* DATETEXTENTRY CLASS DEFINITION
@@ -22,18 +22,18 @@
     var key = { BACKSPACE : 8 };
 
     var DateTextEntry = function (element, options) {
-        this.$element = $(element);
-        this.options = $.extend({}, $.fn.datetextentry.defaults, options)
-        this.add_century = this.options.add_century || this.add_century;
-        this.parse_date = this.options.parse_date || this.parse_date;
-        this.format_date = this.options.format_date || this.format_date;
+        this.$element          = $(element);
+        this.options           = $.extend({}, $.fn.datetextentry.defaults, options);
+        this.add_century       = this.options.add_century       || this.add_century;
+        this.parse_date        = this.options.parse_date        || this.parse_date;
+        this.format_date       = this.options.format_date       || this.format_date;
         this.human_format_date = this.options.human_format_date || this.human_format_date;
-        this.on_blur = this.options.on_blur;
-        this.on_change = this.options.on_change;
-        this.on_error = this.options.on_error;
+        this.on_blur           = this.options.on_blur;
+        this.on_change         = this.options.on_change;
+        this.on_error          = this.options.on_error;
         this.custom_validation = this.options.custom_validation;
         this.build_ui();
-        this.set_date( this.$element.attr('value') );
+        this.set_date(this.$element.attr('value'));
         this.proxy_label_clicks();
     };
 
@@ -43,41 +43,47 @@
 
     DateTextEntry.prototype = {
 
-        constructor: DateTextEntry
+        constructor: DateTextEntry,
 
-        ,build_ui: function() {
+        build_ui: function () {
             var dte = this;
-            this.wrapper = $( this.$element.wrap('<span class="jq-dte" />').parent()[0] );
+            this.wrapper = $(this.$element.wrap('<span class="jq-dte" />').parent()[0]);
             this.inner   = $('<span class="jq-dte-inner" />');
             this.add_entry_fields();
-            this.tooltip = $('<span class="jq-dte-tooltip" />').hide();
+            this.tooltip  = $('<span class="jq-dte-tooltip" />').hide();
             this.errorbox = $('<span class="jq-dte-errorbox" />').hide();
-            this.inner.on('paste', 'input', function(e) {
+            this.inner.on('paste', 'input', function (e) {
                 var input = this;
-                setTimeout(function() { dte.after_paste(input, e);}, 2);
+                setTimeout(function () { dte.after_paste(input, e); }, 2);
             });
-            this.wrapper.append( this.inner, this.tooltip, this.errorbox );
+            this.wrapper.append(this.inner, this.tooltip, this.errorbox);
             this.set_field_widths();
             this.$element.hide();
-        }
+        },
 
-        ,add_entry_fields: function() {
+        add_entry_fields: function () {
             var dte = this;
             dte.fields = [];
-            $.each(this.options.field_order.split(''), function(i, field) {
-                switch(field) {
-                    case 'D': dte.build_field('day',   i); break;
-                    case 'M': dte.build_field('month', i); break;
-                    case 'Y': dte.build_field('year',  i); break;
-                    default :
-                        throw "Unexpected field order '" + field + "' expected D, M or Y";
-                };
+            $.each(this.options.field_order.split(''), function (i, field) {
+                switch (field) {
+                case 'D':
+                    dte.build_field('day',   i);
+                    break;
+                case 'M':
+                    dte.build_field('month', i);
+                    break;
+                case 'Y':
+                    dte.build_field('year',  i);
+                    break;
+                default :
+                    throw new Error("Unexpected field order '" + field + "' expected D, M or Y");
+                }
             });
-        }
+        },
 
-        ,build_field: function(name, index) {
-            var dte = this;
-            var opt = this.options;
+        build_field: function (name, index) {
+            var dte   = this;
+            var opt   = this.options;
             var input = new DateTextInput({
                 name      : name,
                 dte       : dte,
@@ -88,58 +94,58 @@
             this.inner.append(input.$input);
             this['input_' + name] = input;
 
-            if(index < 2) {
-                this.inner.append( $('<span class="separator" />').text(opt.separator));
+            if (index < 2) {
+                this.inner.append($('<span class="separator" />').text(opt.separator));
             }
 
             this.fields[index] = input;
             this[name] = input;
-        }
+        },
 
-        ,set_field_widths: function() {
-            var opt = this.options;
+        set_field_widths: function () {
+            var opt       = this.options;
             var available = this.$element.width() - 2;
-            var total = opt.field_width_year + opt.field_width_sep + opt.field_width_month +
-                        opt.field_width_sep + opt.field_width_day;
-            this.input_day.set_width  ( Math.floor(opt.field_width_day   * available / total) );
-            this.input_month.set_width( Math.floor(opt.field_width_month * available / total) );
-            this.input_year.set_width ( Math.floor(opt.field_width_year  * available / total) );
+            var total     = opt.field_width_year + opt.field_width_sep + opt.field_width_month +
+                opt.field_width_sep + opt.field_width_day;
+            this.input_day.set_width(Math.floor(opt.field_width_day     * available / total));
+            this.input_month.set_width(Math.floor(opt.field_width_month * available / total));
+            this.input_year.set_width(Math.floor(opt.field_width_year   * available / total));
 
-        }
+        },
 
-        ,set_date: function(new_date) {
+        set_date: function (new_date) {
             var dte = this;
             new_date = this.parse_date(new_date);
             delete this.day_value;
             delete this.month_value;
             delete this.year_value;
-            this.input_day.set(  new_date ? new_date.day   : '');
+            this.input_day.set(new_date   ? new_date.day   : '');
             this.input_month.set(new_date ? new_date.month : '');
-            this.input_year.set( new_date ? new_date.year  : '');
+            this.input_year.set(new_date  ? new_date.year  : '');
             this.clear_error();
             this.$element.val(new_date);
-            if(new_date) {
-                $.each(this.fields, function(i, input) {
+            if (new_date) {
+                $.each(this.fields, function (i, input) {
                     dte.validate(input);
                 });
             }
-        }
+        },
 
-        ,proxy_label_clicks: function() {
+        proxy_label_clicks: function () {
             var dte = this;
-            var id = this.$element.attr('id');
-            if(!id) { return; } 
-            $('label[for=' + id + ']').click(function() {
+            var id  = this.$element.attr('id');
+            if (!id) { return; }
+            $('label[for=' + id + ']').click(function () {
                 dte.focus();
             });
-        }
+        },
 
-        ,clear: function() {
+        clear: function () {
             this.clear_error('');
             this.set_date('');
-        }
+        },
 
-        ,destroy: function() {
+        destroy: function () {
             this.$element.show();
             this.$element.css('display', '');
             this.wrapper.find('span').remove();
@@ -148,122 +154,123 @@
             delete this.inner;
             delete this.wrapper;
             delete this.$element;
-        }
+        },
 
-        ,after_paste: function(target, event) {
-            if(this.parse_date( $(target).val() ) ) {
-                this.set_date( $(target).val() );
+        after_paste: function (target) {
+            var date = $(target).val();
+            if (this.parse_date(date)) {
+                this.set_date(date);
             }
-        }
+        },
 
-        ,parse_date: function(text) {
+        parse_date: function (text) {
             return this.parse_iso_date(text);
-        }
+        },
 
-        ,parse_iso_date: function(text) {
+        parse_iso_date: function (text) {
             return text && text.match(/^(\d\d\d\d)-(\d\d)-(\d\d)/)
                 ? { day: RegExp.$3, month: RegExp.$2, year: RegExp.$1 }
                 : null;
-        }
+        },
 
-        ,get_date : function() {
-            return (this.day_value  &&  this.month_value  &&  this.year_value)
-                ?  { day: this.day_value, month: this.month_value, year: this.year_value }
+        get_date : function () {
+            return (this.day_value && this.month_value && this.year_value)
+                ? { day: this.day_value, month: this.month_value, year: this.year_value }
                 : null;
-        }
+        },
 
-        ,get_today : function() {
+        get_today : function () {
             var today = new Date();
             return {
                 day:   pad2(today.getDate()),
                 month: pad2(today.getMonth() + 1),
                 year:  pad4(today.getFullYear())
             };
-        }
+        },
 
-        ,format_date : function(date) {
+        format_date : function (date) {
             return this.iso_format_date(date);
-        }
+        },
 
-        ,iso_format_date : function(date) {
+        iso_format_date : function (date) {
             return [ pad4(date.year), pad2(date.month), pad2(date.day) ].join('-');
-        }
+        },
 
-        ,human_format_date: function(date) {
+        human_format_date: function (date) {
             return [ pad2(date.day), pad2(date.month), pad4(date.year) ].join('/');
-        }
+        },
 
-        ,add_century: function (year) {
+        add_century: function (year) {
             return 2000 + year;
-        }
+        },
 
-        ,focus_in: function() {
+        focus_in: function () {
             this.wrapper.addClass('focus');
-        }
+        },
 
-        ,focus_out: function() {
-            if(this.on_blur) {
+        focus_out: function () {
+            if (this.on_blur) {
                 var self = this;
-                setTimeout(function() { self.widget_focus_lost(); }, 2);
+                setTimeout(function () { self.widget_focus_lost(); }, 2);
             }
             this.wrapper.removeClass('focus');
-        }
+        },
 
-        ,widget_focus_lost: function() {
-            if(this.on_blur && !this.wrapper.is('.focus')) {
+        widget_focus_lost: function () {
+            if (this.on_blur && !this.wrapper.is('.focus')) {
                 this.on_blur();
             }
-        }
+        },
 
-        ,show_input_tip: function(input) {
+        show_input_tip: function (input) {
             var opt = this.options;
-            if(!opt.show_tooltips) { return; }
+            if (!opt.show_tooltips) { return; }
             var x_offset = (input.left() + opt.tooltip_x) + 'px';
             var y_offset = (this.wrapper.height() + opt.tooltip_y) + 'px';
             this.tooltip.css({position: 'absolute', top: y_offset, left: x_offset})
                 .text(input.tip_text)
                 .show();
-        }
+        },
 
-        ,hide_input_tip: function() {
+        hide_input_tip: function () {
             this.tooltip.hide();
-        }
+        },
 
-        ,set_error: function(error_text) {
+        set_error: function (error_text) {
             this.error_text = error_text;
             this.show_error();
-        }
+        },
 
-        ,clear_error: function() {
+        clear_error: function () {
             delete this.error_text;
             this.show_error();
-        }
+        },
 
-        ,set_readonly: function(mode) {
-            if(mode === undefined) {
+        set_readonly: function (mode) {
+            if (mode === undefined) {
                 mode = true;
             }
             this.input_day.set_readonly(mode);
             this.input_month.set_readonly(mode);
             this.input_year.set_readonly(mode);
-            if(mode) {
+            if (mode) {
                 this.wrapper.addClass('readonly');
             }
             else {
                 this.wrapper.removeClass('readonly');
             }
-        }
+        },
 
-        ,show_error: function() {
+        show_error: function () {
             var opt = this.options;
             var error_text = this.widget_error_text();
-            if(this.on_error) {
+            if (this.on_error) {
                 this.on_error(error_text);
             }
-            if(!opt.show_errors) {
+            if (!opt.show_errors) {
                 return;
             }
-            if(error_text === '') {
+            if (error_text === '') {
                 this.errorbox.hide();
                 this.errorbox.text('');
             }
@@ -274,71 +281,71 @@
                 this.errorbox.text(error_text);
                 this.errorbox.show();
             }
-        }
+        },
 
-        ,widget_error_text: function() {
+        widget_error_text: function () {
             var error_text = '';
-            $.each(this.fields, function(i, input) {
-                if(input.error_text) {
-                    if(input.has_focus  ||  error_text === '') {
-                        error_text = input.error_text
+            $.each(this.fields, function (i, input) {
+                if (input.error_text) {
+                    if (input.has_focus || error_text === '') {
+                        error_text = input.error_text;
                     }
                 }
             });
-            if(error_text === ''  &&  this.error_text) {
+            if (error_text === '' && this.error_text) {
                 error_text = this.error_text;
             }
             return error_text;
-        }
+        },
 
-        ,focus: function() {
+        focus: function () {
             this.fields[0].set_focus(true);
-        }
+        },
 
-        ,focus_field_before: function(input) {
+        focus_field_before: function (input) {
             var index = input.index;
-            if(index < 1) { return };
+            if (index < 1) { return; }
             this.fields[index].yield_focus();
             var next = this.fields[index - 1];
-            var val = next.get();
+            next.get();
             next.set_focus(false);
-        }
+        },
 
-        ,focus_field_after: function(input) {
+        focus_field_after: function (input) {
             var index = input.index;
-            if(index > 1) { return };
+            if (index > 1) { return; }
             this.fields[index].yield_focus();
             this.fields[index + 1].set_focus(true);
-        }
+        },
 
-        ,validate: function( current_input ) {
+        validate: function (current_input) {
             this.$element.val('');
-            if(current_input) {
+            if (current_input) {
                 try {
                     this['validate_' + current_input.name]();
                     current_input.clear_error();
                 }
-                catch(e) {
-                    current_input.set_error(e);
+                catch (e) {
+                    current_input.set_error(e.message || e);
                     return false;
                 }
             }
-            if(this.day_value && this.month_value) {
+            if (this.day_value && this.month_value) {
                 this.clear_error();
                 try {
                     this.validate_days_in_month();
-                    if(this.year_value && this.year_value.length === 4) {
+                    if (this.year_value && this.year_value.length === 4) {
                         this.validate_complete_date();
                         var date_obj = this.get_date();
-                        var date_str = this.format_date( date_obj );
-                        this.$element.val( date_str );
-                        if(this.on_change) {
-                            this.on_change( date_str );
+                        var date_str = this.format_date(date_obj);
+                        this.$element.val(date_str);
+                        if (this.on_change) {
+                            this.on_change(date_str);
                         }
                     }
                 }
-                catch(e) {
-                    this.set_error(e);
+                catch (e) {
+                    this.set_error(e.message || e);
                     return false;
                 }
             }
@@ -346,150 +353,150 @@
                 this.clear_error();
             }
             return true;
-        }
+        },
 
-        ,validate_day: function() {
+        validate_day: function () {
             var opt = this.options;
             var input = this.input_day;
             this.day_value = undefined;
             var text = input.get();
-            if(text === ''  ||  (text === '0'  &&  input.has_focus)) {
+            if (text === '' || (text === '0' && input.has_focus)) {
                 return;
             }
-            if(text.match(/\D/)) {
-                throw(opt.E_DAY_NAN);
+            if (text.match(/\D/)) {
+                throw new Error(opt.E_DAY_NAN);
             }
             var num = parseInt(text, 10);
-            if(num < 1)  { throw(opt.E_DAY_TOO_SMALL); }
-            if(num > 31) { throw(opt.E_DAY_TOO_BIG);   }
+            if (num < 1)  { throw new Error(opt.E_DAY_TOO_SMALL); }
+            if (num > 31) { throw new Error(opt.E_DAY_TOO_BIG);   }
             text = num < 10 ? '0' + num : '' + num;
-            if(!input.has_focus) { input.set(text); }
+            if (!input.has_focus) { input.set(text); }
             this.day_value = text;
-        }
+        },
 
-        ,validate_month: function() {
+        validate_month: function () {
             var opt = this.options;
             var input = this.input_month;
             this.month_value = undefined;
             var text = input.get();
-            if(text === ''  ||  (text === '0'  &&  input.has_focus)) {
+            if (text === '' || (text === '0' && input.has_focus)) {
                 return;
             }
-            if(text.match(/\D/)) {
-                throw(opt.E_MONTH_NAN);
+            if (text.match(/\D/)) {
+                throw new Error(opt.E_MONTH_NAN);
             }
             var num = parseInt(text, 10);
-            if(num < 1)  { throw(opt.E_MONTH_TOO_SMALL); }
-            if(num > 12) { throw(opt.E_MONTH_TOO_BIG);   }
+            if (num < 1)  { throw new Error(opt.E_MONTH_TOO_SMALL); }
+            if (num > 12) { throw new Error(opt.E_MONTH_TOO_BIG);   }
             text = num < 10 ? '0' + num : '' + num;
-            if(!input.has_focus) { input.set(text); }
+            if (!input.has_focus) { input.set(text); }
             this.month_value = text;
-        }
+        },
 
-        ,validate_year: function() {
+        validate_year: function () {
             var opt = this.options;
             var input = this.input_year;
             this.year_value = undefined;
             var text = input.get();
-            if(text === ''  ||  (text === '0'  &&  input.has_focus)) {
+            if (text === '' || (text === '0' && input.has_focus)) {
                 return;
             }
-            if(text.match(/\D/)) {
-                throw(opt.E_YEAR_NAN);
+            if (text.match(/\D/)) {
+                throw new Error(opt.E_YEAR_NAN);
             }
-            if(input.has_focus) {
-                if(text.length > 4) {
-                    throw(opt.E_YEAR_LENGTH);
+            if (input.has_focus) {
+                if (text.length > 4) {
+                    throw new Error(opt.E_YEAR_LENGTH);
                 }
             }
             else {
-                if(text.length == 2) {
+                if (text.length === 2) {
                     text = '' + this.add_century(parseInt(text, 10));
                     this.input_year.set(text);
                 }
-                if(text.length != 4) {
-                    throw(opt.E_YEAR_LENGTH);
+                if (text.length !== 4) {
+                    throw new Error(opt.E_YEAR_LENGTH);
                 }
             }
-            if(text.length == 4) {
+            if (text.length === 4) {
                 var num = parseInt(text, 10);
-                if(opt.min_year  &&  num < opt.min_year) {
-                    throw(opt.E_YEAR_TOO_SMALL.replace(/%y/, opt.min_year));
+                if (opt.min_year && num < opt.min_year) {
+                    throw new Error(opt.E_YEAR_TOO_SMALL.replace(/%y/, opt.min_year));
                 }
-                if(opt.max_year  &&  num > opt.max_year) {
-                    throw(opt.E_YEAR_TOO_BIG.replace(/%y/, opt.max_year));
+                if (opt.max_year && num > opt.max_year) {
+                    throw new Error(opt.E_YEAR_TOO_BIG.replace(/%y/, opt.max_year));
                 }
             }
             this.year_value = text;
-        }
+        },
 
-        ,validate_days_in_month: function() {
+        validate_days_in_month: function () {
             var opt = this.options;
             var day   = parseInt(this.day_value,   10);
             var month = parseInt(this.month_value, 10);
             var year  = parseInt(this.year_value,  10);
-            if(day < 1  ||  month < 1) { return; }
+            if (day < 1 || month < 1) { return; }
             var max = days_in_month[month - 1];
             var msg = opt.E_BAD_DAY_FOR_MONTH;
-            if(month == 2  &&  ('' + year).length == 4) {
+            if (month === 2 && ('' + year).length === 4) {
                 max = year % 4 ? 28 : year % 100 ? 29 : year % 400 ? 28 : 29;
                 msg = msg.replace(/%y/, year);
             }
             else {
                 msg = msg.replace(/ *%y/, '');
             }
-            if(day > max) {
-                throw(msg.replace(/%d/, max).replace(/%m/, opt.month_name[month - 1]));
+            if (day > max) {
+                throw new Error(msg.replace(/%d/, max).replace(/%m/, opt.month_name[month - 1]));
             }
-        }
+        },
 
-        ,validate_complete_date: function() {
+        validate_complete_date: function () {
             var opt = this.options;
             var date_obj = this.get_date();
-            var date_iso = this.iso_format_date( date_obj );
+            var date_iso = this.iso_format_date(date_obj);
+            var msg = null;
 
             var max_date = opt.max_date;
-            if(typeof max_date === 'function') {
+            if (typeof max_date === 'function') {
                 max_date = max_date.call(this);
             }
-            if(typeof max_date === 'string') {
+            if (typeof max_date === 'string') {
                 max_date = this.parse_date(max_date);
             }
-            if(max_date) {
-                if( date_iso > this.iso_format_date( max_date ) ) {
-                    var msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
-                    if(msg) {
-                        throw(msg.replace(/%DATE/, this.human_format_date( max_date )));
+            if (max_date) {
+                if (date_iso > this.iso_format_date(max_date)) {
+                    msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
+                    if (msg) {
+                        throw new Error(msg.replace(/%DATE/, this.human_format_date(max_date)));
                     }
                 }
             }
 
             var min_date = opt.min_date;
-            if(typeof min_date === 'function') {
+            if (typeof min_date === 'function') {
                 min_date = min_date.call(this);
             }
-            if(typeof min_date === 'string') {
+            if (typeof min_date === 'string') {
                 min_date = this.parse_date(min_date);
             }
-            if(min_date) {
-                if( date_iso < this.iso_format_date( min_date ) ) {
-                    var msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
-                    if(msg) {
-                        throw(msg.replace(/%DATE/, this.human_format_date( min_date )));
+            if (min_date) {
+                if (date_iso < this.iso_format_date(min_date)) {
+                    msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
+                    if (msg) {
+                        throw new Error(msg.replace(/%DATE/, this.human_format_date(min_date)));
                     }
                 }
             }
 
-            if(this.custom_validation) {
+            if (this.custom_validation) {
                 date_obj.date = new Date(
-                    parseInt(date_obj.year, 10),
+                    parseInt(date_obj.year,  10),
                     parseInt(date_obj.month, 10) - 1,
-                    parseInt(date_obj.day, 10)
+                    parseInt(date_obj.day,   10)
                 );
                 this.custom_validation(date_obj);
             }
         }
-
     };
 
 
@@ -498,147 +505,146 @@
 
     var DateTextInput = function (options) {
         var input = this;
-        var dte = this.dte = options.dte
-        var opt = dte.options;
-        this.name = options.name;
-        this.index = options.index;
+        this.dte       = options.dte;
+        this.name      = options.name;
+        this.index     = options.index;
         this.hint_text = options.hint_text;
-        this.tip_text = options.tip_text;
+        this.tip_text  = options.tip_text;
         this.has_focus = false;
-        this.empty = true;
+        this.empty     = true;
         this.$input = $('<input type="text" value="" />')
-            .addClass( 'jq-dte-' + this.name )
-            .attr('aria-label', this.tip_text + " (" + this.hint_text + ")" )
-            .focus( $.proxy(input, 'focus') )
-            .blur(  $.proxy(input, 'blur' ) )
-            .keydown( function(e) { setTimeout(function () { input.keydown(e); }, 2) } )
-            .keyup( function(e) { setTimeout(function () { input.keyup(e); }, 2) } );
+            .addClass('jq-dte-' + this.name)
+            .attr('aria-label', this.tip_text + ' (' + this.hint_text + ')')
+            .focus($.proxy(input, 'focus'))
+            .blur($.proxy(input, 'blur'))
+            .keydown(function (e) { setTimeout(function () { input.keydown(e); }, 2); })
+            .keyup(function (e)   { setTimeout(function () { input.keyup(e);   }, 2); });
     };
 
     DateTextInput.prototype = {
 
-        constructor: DateTextInput
+        constructor: DateTextInput,
 
-        ,set: function(new_value) {
+        set: function (new_value) {
             this.$input.val(new_value).removeClass('hint');
-            if(!this.has_focus) {
+            if (!this.has_focus) {
                 this.show_hint();
             }
             this.empty = new_value === '';
             this.clear_error();
             return this;
-        }
+        },
 
-        ,get: function() {
+        get: function () {
             var val = this.$input.val();
             return val === this.hint_text ? '' : val;
-        }
+        },
 
-        ,left: function() {
+        left: function () {
             return this.$input.position().left;
-        }
+        },
 
-        ,set_width: function(new_width) {
+        set_width: function (new_width) {
             this.$input.width(new_width);
             return this;
-        }
+        },
 
-        ,show_hint: function() {
-            if(this.get() === ''  &&  typeof(this.hint_text) === 'string') {
-                this.$input.val( this.hint_text ).addClass('hint');
+        show_hint: function () {
+            if (this.get() === '' && typeof(this.hint_text) === 'string') {
+                this.$input.val(this.hint_text).addClass('hint');
             }
             return this;
-        }
+        },
 
-        ,yield_focus: function() {
+        yield_focus: function () {
             this.$input.blur();
-        }
+        },
 
-        ,set_focus: function(select_all) {
+        set_focus: function (select_all) {
             var $input = this.$input;
             $input.focus();
-            if(select_all) {
+            if (select_all) {
                 $input.select();
             }
             else {
-                $input.val( $input.val() );
+                $input.val($input.val());
             }
             return this;
-        }
+        },
 
-        ,set_error: function(text) {
+        set_error: function (text) {
             this.error_text = text;
             this.$input.addClass('error');
             this.dte.show_error();
-        }
+        },
 
-        ,clear_error: function() {
+        clear_error: function () {
             delete this.error_text;
             this.$input.removeClass('error');
-        }
+        },
 
-        ,set_readonly: function(mode) {
+        set_readonly: function (mode) {
             this.$input.prop('readonly', mode);
-        }
+        },
 
-        ,focus: function(e) {
+        focus: function () {
             this.key_is_down = false;
-            if( this.$input.prop('readonly') ) {
+            if (this.$input.prop('readonly')) {
                 return;
             }
             this.has_focus = true;
             this.dte.focus_in();
-            if( this.$input.hasClass('hint') ) {
+            if (this.$input.hasClass('hint')) {
                 this.$input.val('').removeClass('hint');
             }
             this.dte.show_input_tip(this);
             this.dte.show_error();
-        }
+        },
 
-        ,blur: function(e) {
+        blur: function () {
             this.has_focus = false;
             this.dte.focus_out();
             this.dte.hide_input_tip();
             this.show_hint();
             this.dte.validate(this);
-        }
+        },
 
-        ,keydown: function(e) {
+        keydown: function () {
             // Ignore keyup events that arrive after focus moved to next field
             this.key_is_down = true;
-        }
+        },
 
-        ,keyup: function(e) {
-            if(!this.key_is_down) {
+        keyup: function (e) {
+            if (!this.key_is_down) {
                 return;
             }
             // Handle Backspace - shifting focus to previous field if required
             var keycode = e.which;
-            if(keycode === key.BACKSPACE  &&  this.empty) {
+            if (keycode === key.BACKSPACE && this.empty) {
                 return this.dte.focus_field_before(this);
             }
             var text = this.get();
             this.empty = text === '';
 
             // Trap and discard separator characters - advancing focus if required
-            if(text.match(/[\/\\. -]/)) {
-                text = text.replace(/[\/\\. -]/, '');
+            if (text.match(/[/\\. -]/)) {
+                text = text.replace(/[/\\. -]/, '');
                 this.set(text);
-                if(!this.empty  &&  this.index < 2) {
+                if (!this.empty && this.index < 2) {
                     this.dte.focus_field_after(this);
                 }
             }
 
             // Advance focus if this field is both valid and full
-            if( this.dte.validate(this) ) {
+            if (this.dte.validate(this)) {
                 var want = this.name === 'year' ? 4 : 2;
-                if(this.is_digit_key(e) && text.length == want) {
-                        this.dte.focus_field_after(this);
+                if (this.is_digit_key(e) && text.length === want) {
+                    this.dte.focus_field_after(this);
                 }
             }
-        }
+        },
 
-        ,is_digit_key: function(e) {
+        is_digit_key: function (e) {
             var keycode = e.which;
             return keycode >= 48 && keycode <= 57 || keycode >= 96 && keycode <= 105;
         }
@@ -655,17 +661,17 @@
         return this.each(function () {
             var $this = $(this);
             var data = $this.data('datetextentry');
-            if(!data) {
+            if (!data) {
                 data = new DateTextEntry(this, option);
                 $this.data('datetextentry', data);
             }
-            if(typeof option === 'string') {  // option is a method - call it
-                if(typeof data[option] !== 'function') {
-                    throw "jquery.datetextentry has no '" + option + "' method";
+            if (typeof option === 'string') {  // option is a method - call it
+                if (typeof data[option] !== 'function') {
+                    throw new Error("jquery.datetextentry has no '" + option + "' method");
                 }
                 data[option].apply(data, args);
             }
-        })
+        });
     };
 
     $.fn.datetextentry.defaults = {
@@ -702,10 +708,10 @@
         E_MIN_DATE            : 'Date must not be earlier than %DATE',
         E_MAX_DATE            : 'Date must not be later than %DATE',
         month_name            : [
-                                  'January', 'February', 'March', 'April',
-                                  'May', 'June', 'July', 'August', 'September',
-                                  'October', 'November', 'December'
-                              ]
+            'January', 'February', 'March', 'April',
+            'May', 'June', 'July', 'August', 'September',
+            'October', 'November', 'December'
+        ]
     };
 
-})(window.jQuery);
+})(jQuery);
