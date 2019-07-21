@@ -511,6 +511,192 @@
 
     });
 
+    describe("Re-invoking the plugin to test 'required' property", function() {
+        var on_blur_error = '';
+        var default_error = 'This field is required';
+
+        runs(function() {
+            $date2.datetextentry('destroy');
+            $date2.val('').attr('value', '');
+            $date2.datetextentry({
+                is_required: true
+            });
+            $dd   = $( $date2.next().find('input')[0] );
+            $mm   = $( $date2.next().find('input')[1] );
+            $yyyy = $( $date2.next().find('input')[2] );
+            $errorbox = $date2.parent().find('.jq-dte-errorbox');
+        });
+
+        it("no error text is displayed", function() {
+            expect( widget_content('#date2') ).toBe('DD/MM/YYYY');
+            expect( $errorbox.text() ).toBe('');
+        });
+
+        it("widget accepts the focus", function() {
+            $date2.datetextentry('focus');
+            expect( $dd.is(':focus') ).toBe(true);
+            expect( $date2.parent().is('.focus') ).toBe(true);
+        });
+
+        it("focus moved away from widget", function() {
+            $('#text1').focus();
+            expect( $dd.is(':focus') ).toBe(false);
+        });
+
+        waitsFor(function() {
+            return $errorbox.text() === default_error;
+        }, "required field message", 10);
+
+        it("error text is displayed", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe(default_error);
+        });
+
+        it("focus moved back to widget", function() {
+            $dd.focus();
+            expect( $dd.is(':focus') ).toBe(true);
+        });
+
+        it("error text is still displayed", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe(default_error);
+        });
+
+        runs(function() {
+            $dd.val('0');
+            add_char($dd, '8');
+        });
+        waits(10);
+
+        it("accepts injected '08' into DD field", function() {
+            expect( $dd.val() ).toBe('08');
+        });
+
+        it("which does not clear error", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe(default_error);
+        });
+
+        runs(function() {
+            $mm.val('0');
+            add_char($mm, '9');
+        });
+        waits(10);
+
+        it("accepts injected '09' into MM field", function() {
+            expect( $mm.val() ).toBe('09');
+        });
+
+        it("which also does not clear error", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe(default_error);
+        });
+
+        runs(function() {
+            $yyyy.val('198');
+            add_char($yyyy, '9');
+        });
+        waits(10);
+
+        it("accepts injected '1989' into YYYY field", function() {
+            expect( $yyyy.val() ).toBe('1989');
+        });
+
+        it("which does clear error", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+            expect( $errorbox.text() ).toBe('');
+        });
+
+        runs(function() {
+            $yyyy.val('');
+            $mm.focus();
+        });
+
+        it("accepts injected '' into YYYY field", function() {
+            expect( $yyyy.val() ).toBe('YYYY');
+        });
+
+        it("error remains cleared", function() {
+            expect( visibility_check($errorbox) ).toBe('hidden');
+            expect( $errorbox.text() ).toBe('');
+        });
+
+        it("focus moved away from widget", function() {
+            $('#text1').focus();
+            expect( $dd.is(':focus') ).toBe(false);
+        });
+
+        waitsFor(function() {
+            return $errorbox.text() === default_error;
+        }, "required field message", 10);
+
+        it("error text is displayed", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe(default_error);
+        });
+
+        it("widget accepts the focus", function() {
+            $date2.datetextentry('focus');
+            expect( $dd.is(':focus') ).toBe(true);
+            expect( $date2.parent().is('.focus') ).toBe(true);
+        });
+
+    });
+
+    describe("Testing 'required' property with custom message", function() {
+        var on_blur_error = '';
+        var custom_error = 'Please enter a date';
+
+        runs(function() {
+            $date2.datetextentry('destroy');
+            $date2.val('').attr('value', '');
+            $date2.datetextentry({
+                is_required: true,
+                E_REQUIRED_FIELD: custom_error
+            });
+            $dd   = $( $date2.next().find('input')[0] );
+            $mm   = $( $date2.next().find('input')[1] );
+            $yyyy = $( $date2.next().find('input')[2] );
+            $errorbox = $date2.parent().find('.jq-dte-errorbox');
+        });
+
+        it("no error text is displayed", function() {
+            expect( widget_content('#date2') ).toBe('DD/MM/YYYY');
+            expect( $errorbox.text() ).toBe('');
+        });
+
+        it("widget accepts the focus", function() {
+            $date2.datetextentry('focus');
+            expect( $dd.is(':focus') ).toBe(true);
+            expect( $date2.parent().is('.focus') ).toBe(true);
+        });
+
+        it("focus moved away from widget", function() {
+            $('#text1').focus();
+            expect( $dd.is(':focus') ).toBe(false);
+        });
+
+        waitsFor(function() {
+            return $errorbox.text() === custom_error;
+        }, "required field message", 10);
+
+        it("error text is displayed", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe(custom_error);
+        });
+
+        it("focus moved back to widget", function() {
+            $dd.focus();
+            expect( $dd.is(':focus') ).toBe(true);
+        });
+
+        it("error text is still displayed", function() {
+            expect( visibility_check($errorbox) ).toBe('visible');
+            expect( $errorbox.text() ).toBe(custom_error);
+        });
+
+    });
+
     describe("Final clean-up", function() {
 
         runs(function() {

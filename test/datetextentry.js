@@ -818,13 +818,15 @@
         });
 
         runs(function() {
-            $dd.val('').blur();
+            $dd.val('')
+            add_char($dd, '');
         });
 
         waits(50);
 
         it("after clearing day field, errorbox element is hidden", function() {
             expect( visibility_check($errorbox) ).toBe('hidden');
+            expect( $errorbox.text() ).toBe('');
         });
 
     });

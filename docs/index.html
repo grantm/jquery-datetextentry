@@ -124,6 +124,7 @@
                   <li><a href="#field_width_year">field_width_year</a></li>
                   <li><a href="#format_date">format_date</a></li>
                   <li><a href="#human_format_date">human_format_date</a></li>
+                  <li><a href="#is_required">is_required</a></li>
                   <li><a href="#max_date">max_date</a></li>
                   <li><a href="#max_year">max_year</a></li>
                   <li><a href="#min_date">min_date</a></li>
@@ -339,6 +340,17 @@
                   but allows you to override the default format (DD/MM/YYYY) used
                   to display dates in the error box (for example in <em>"Date
                   must not be earlier than 01/01/1970</em>").
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="is_required"></a><code>is_required</code></td>
+                <td>
+                  <p>A boolean value indicating whether this is a required field.
+                  If this option is true, moving focus away from the widget
+                  without entering a complete and valid date will trigger a
+                  validation error.
+                  <p class="example-link"><a href="examples/10-options.html#is-required">See example</a></p>
                 </td>
               </tr>
 

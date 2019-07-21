@@ -220,15 +220,24 @@
         },
 
         focus_out: function () {
-            if (this.on_blur) {
+            if (this.on_blur || this.options.is_required) {
                 var self = this;
-                setTimeout(function () { self.widget_focus_lost(); }, 2);
+                setTimeout(function () { self.check_widget_focus_lost(); }, 2);
             }
             this.wrapper.removeClass('focus');
         },
 
-        widget_focus_lost: function () {
-            if (this.on_blur && !this.wrapper.is('.focus')) {
+        check_widget_focus_lost: function () {
+            var opt = this.options;
+            if (this.wrapper.is('.focus')) {
+                return;
+            }
+            if (opt.is_required) {
+                if (!this.get_date()) {
+                    this.set_error(opt.E_REQUIRED_FIELD);
+                }
+            }
+            if (this.on_blur) {
                 this.on_blur();
             }
         },
@@ -343,11 +352,11 @@
                 }
             }
             if (this.day_value && this.month_value) {
-                this.clear_error();
                 try {
                     this.validate_days_in_month();
                     if (this.year_value && this.year_value.length === 4) {
                         this.validate_complete_date();
+                        this.clear_error();
                         var date_obj = this.get_date();
                         var date_str = this.format_date(date_obj);
                         this.$element.val(date_str);
@@ -361,7 +370,8 @@
                     return false;
                 }
             }
-            else {
+            var error_source = this.error_source_input;
+            if (error_source && !error_source.error_text) {
                 this.clear_error();
             }
             return true;
@@ -740,6 +750,7 @@
         E_YEAR_TOO_BIG        : 'Year must not be after %y',
         E_MIN_DATE            : 'Date must not be earlier than %DATE',
         E_MAX_DATE            : 'Date must not be later than %DATE',
+        E_REQUIRED_FIELD      : 'This field is required',
         month_name            : [
             'January', 'February', 'March', 'April',
             'May', 'June', 'July', 'August', 'September',

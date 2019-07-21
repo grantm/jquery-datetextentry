@@ -97,12 +97,10 @@
 
     <tr>
       <td>
-        <p><a name="minmax-date"></a>Specify allowable date range using maximum and minimum dates.</p>
+        <p><a name="is-required"></a>Mark field as required, with optional custom message.</p>
         <pre class="code">$('#date6').datetextentry({
-    min_date         : '1970-01-01',
-    min_date_message : 'Please select a date in the 1970s',
-    max_date         : '1979-31-12',
-    max_date_message : 'Please select a date in the 1970s',
+    is_required      : true,
+    E_REQUIRED_FIELD : 'Please enter a date'
 });</pre>
       </td>
       <td>
@@ -114,10 +112,27 @@
 
     <tr>
       <td>
+        <p><a name="minmax-date"></a>Specify allowable date range using maximum and minimum dates.</p>
+        <pre class="code">$('#date7').datetextentry({
+    min_date         : '1970-01-01',
+    min_date_message : 'Please select a date in the 1970s',
+    max_date         : '1979-31-12',
+    max_date_message : 'Please select a date in the 1970s',
+});</pre>
+      </td>
+      <td>
+        <form>
+          <input id="date7" class="text" value="">
+        </form>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
         <p><a name="min-year"></a>Specify allowable date range using a minimum <em>year</em> - with
         the default message; and using a function to calculate the maximum
         date.</p>
-        <pre class="code">$('#date7').datetextentry({
+        <pre class="code">$('#date8').datetextentry({
     min_year         : '2000',
     max_date         : function() { return this.get_today(); },
     max_date_message : 'Date must not be in the future'
@@ -131,7 +146,7 @@
       </td>
       <td>
         <form>
-          <input id="date7" class="text" value="">
+          <input id="date8" class="text" value="">
         </form>
       </td>
     </tr>
@@ -139,7 +154,7 @@
     <tr>
       <td>
         <p><a name="custom-validation"></a>Use a custom validation function to apply arbitrary rules.</p>
-        <pre class="code">$('#date8').datetextentry({
+        <pre class="code">$('#date9').datetextentry({
     custom_validation : function(valid) {
         if(valid.year === '1983'  &amp;&amp;  valid.date.getDay() === 2) {
             return;
@@ -150,7 +165,7 @@
       </td>
       <td>
         <form>
-          <input id="date8" class="text" value="">
+          <input id="date9" class="text" value="">
         </form>
       </td>
     </tr>
@@ -160,23 +175,23 @@
         <p><a name="methods"></a>Your code can interact with the <code>datetextentry</code> widget
         after it has been initialised.  You can set and clear the date value
         as well as moving focus to the widget's first field:</p>
-        <pre class="code">$('#date9').datetextentry();
+        <pre class="code">$('#date10').datetextentry();
 
 $('#launch-dates li').click(function() {
-    $('#date9').datetextentry('set_date', $(this).data('date'));
+    $('#date10').datetextentry('set_date', $(this).data('date'));
 });
 
 $('#btn-clear').click(function() {
-    $('#date9').datetextentry('clear');
+    $('#date10').datetextentry('clear');
 });
 
 $('#btn-focus').click(function() {
-    $('#date9').datetextentry('focus');
+    $('#date10').datetextentry('focus');
 });</pre>
       </td>
       <td>
         <form>
-          <div><input id="date9" class="text" value=""></div>
+          <div><input id="date10" class="text" value=""></div>
           <p>Select a launch date:</p>
           <ul id="launch-dates">
             <li data-date="1967-02-21">Apollo 1</li>
@@ -205,16 +220,16 @@ $('#btn-focus').click(function() {
         <p><a name="init-destroy"></a>Dynamically add/remove datetextentry
         functionality.</p>
         <pre class="code">$('#btn-init').click(function(e) {
-    $('#date10').datetextentry();
+    $('#date11').datetextentry();
 });
 
 $('#btn-destroy').click(function(e) {
-    $('#date10').datetextentry('destroy');
+    $('#date11').datetextentry('destroy');
 });</pre>
       </td>
       <td>
         <form>
-          <input id="date10" class="text" value="">
+          <input id="date11" class="text" value="">
           <div>
             <button id="btn-init" type="button">Init</button>
             <button id="btn-destroy" type="button">Destroy</button>
@@ -226,17 +241,17 @@ $('#btn-destroy').click(function(e) {
     <tr>
       <td>
         <p><a name="on-change"></a>Supply a callback function to be run when a valid date is entered.</p>
-        <pre class="code">$('#date11').datetextentry({
+        <pre class="code">$('#date12').datetextentry({
     on_change : function(date_str) {
-        $('#valid-date11').text(date_str);
+        $('#valid-date12').text(date_str);
     }
 });</pre>
       </td>
       <td>
         <form>
-          <input id="date11" class="text" value="">
+          <input id="date12" class="text" value="">
         </form>
-        <div>Validated date: <span id="valid-date11"></span></div>
+        <div>Validated date: <span id="valid-date12"></span></div>
       </td>
     </tr>
 
@@ -245,10 +260,10 @@ $('#btn-destroy').click(function(e) {
         <p><a name="on-error"></a>Supply a callback function to be run when the error status changes -
         in this case used to put the field label in 'error' mode and override
         the default display of error messages.</p>
-        <pre class="code">$('#date12').datetextentry({
+        <pre class="code">$('#date13').datetextentry({
     show_errors: false,
     on_error : function(msg) {
-        $('label[for=date12]')
+        $('label[for=date13]')
           .toggleClass('error', msg !== '')
           .find('.error-text').text(msg);
     }
@@ -257,8 +272,8 @@ $('#btn-destroy').click(function(e) {
       </td>
       <td>
         <form id="custom-errors">
-          <label for="date12">Date of Birth: <span class="error-text"></span></label><br>
-          <input id="date12" class="text" value="">
+          <label for="date13">Date of Birth: <span class="error-text"></span></label><br>
+          <input id="date13" class="text" value="">
         </form>
       </td>
     </tr>
@@ -267,19 +282,19 @@ $('#btn-destroy').click(function(e) {
       <td>
         <p><a name="readonly"></a>Switch date widget into read-only mode or
         back to read/write mode.</p>
-        <pre class="code">$('#date13').datetextentry({});
+        <pre class="code">$('#date14').datetextentry({});
 
 $('#btn-readonly').click(function(e) {
-    $('#date13').datetextentry('set_readonly', true);
+    $('#date14').datetextentry('set_readonly', true);
 });
 
 $('#btn-readwrite').click(function(e) {
-    $('#date13').datetextentry('set_readonly', false);
+    $('#date14').datetextentry('set_readonly', false);
 });</pre>
       </td>
       <td>
         <form>
-          <input id="date13" class="text" value="1949-05-09">
+          <input id="date14" class="text" value="1949-05-09">
           <div>
             <label><input type="radio" name="read-write" id="btn-readwrite" value="1" checked> Read/write</label><br>
             <label><input type="radio" name="read-write" id="btn-readonly" value="0"> Read-only</label>
@@ -316,19 +331,24 @@ $('#btn-readwrite').click(function(e) {
     });
 
     $('#date6').datetextentry({
+        is_required      : true,
+        E_REQUIRED_FIELD : 'Please enter a date'
+    });
+
+    $('#date7').datetextentry({
         min_date         : '1970-01-01',
         min_date_message : 'Please select a date in the 1970s',
         max_date         : '1979-31-12',
         max_date_message : 'Please select a date in the 1970s',
     });
 
-    $('#date7').datetextentry({
+    $('#date8').datetextentry({
         min_year         : '2000',
         max_date         : function() { return this.get_today(); },
         max_date_message : 'Date must not be in the future'
     });
 
-    $('#date8').datetextentry({
+    $('#date9').datetextentry({
         custom_validation : function(valid) {
             if(valid.year === '1983' && valid.date.getDay() === 2) {
                 return;
@@ -337,52 +357,52 @@ $('#btn-readwrite').click(function(e) {
         }
     });
 
-    $('#date9').datetextentry();
+    $('#date10').datetextentry();
     $('#launch-dates li').click(function() {
-        $('#date9').datetextentry('set_date', $(this).data('date'));
+        $('#date10').datetextentry('set_date', $(this).data('date'));
     });
     $('#btn-clear').click(function(e) {
-        $('#date9').datetextentry('clear');
+        $('#date10').datetextentry('clear');
         e.preventDefault();
     });
     $('#btn-focus').click(function(e) {
-        $('#date9').datetextentry('focus');
+        $('#date10').datetextentry('focus');
         e.preventDefault();
     });
 
     $('#btn-init').click(function(e) {
-        $('#date10').datetextentry();
+        $('#date11').datetextentry();
         e.preventDefault();
     });
 
     $('#btn-destroy').click(function(e) {
-        $('#date10').datetextentry('destroy');
+        $('#date11').datetextentry('destroy');
         e.preventDefault();
     });
 
-    $('#date11').datetextentry({
+    $('#date12').datetextentry({
         on_change : function(date_str) {
-            $('#valid-date11').text(date_str);
+            $('#valid-date12').text(date_str);
         }
     });
 
-    $('#date12').datetextentry({
+    $('#date13').datetextentry({
         show_errors: false,
         on_error : function(msg) {
-            $('label[for=date12]')
+            $('label[for=date13]')
               .toggleClass('error', msg !== '')
               .find('.error-text').text(msg);
         }
     });
 
-    $('#date13').datetextentry({});
+    $('#date14').datetextentry({});
 
     $('#btn-readonly').click(function(e) {
-        $('#date13').datetextentry('set_readonly', true);
+        $('#date14').datetextentry('set_readonly', true);
     });
 
     $('#btn-readwrite').click(function(e) {
-        $('#date13').datetextentry('set_readonly', false);
+        $('#date14').datetextentry('set_readonly', false);
     });
 
   </script>
