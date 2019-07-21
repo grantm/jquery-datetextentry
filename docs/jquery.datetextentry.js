@@ -21,7 +21,7 @@
     var DateValidationError = function (message, source_input) {
         this.message = message;
         this.source_input = source_input;  // Might be undefined
-    }
+    };
 
     DateValidationError.prototype = Error.prototype;
 
