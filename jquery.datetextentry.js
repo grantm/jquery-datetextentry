@@ -15,6 +15,17 @@
     'use strict';
 
 
+    /* CUSTOM ERROR CLASS
+     * ================== */
+
+    var DateValidationError = function (message, source_input) {
+        this.message = message;
+        this.source_input = source_input;  // Might be undefined
+    }
+
+    DateValidationError.prototype = Error.prototype;
+
+
     /* DATETEXTENTRY CLASS DEFINITION
      * ============================== */
 
@@ -236,8 +247,9 @@
             this.tooltip.hide();
         },
 
-        set_error: function (error_text) {
+        set_error: function (error_text, source_input) {
             this.error_text = error_text;
+            this.error_source_input = source_input;
             this.show_error();
         },
 
@@ -345,7 +357,7 @@
                     }
                 }
                 catch (e) {
-                    this.set_error(e.message || e);
+                    this.set_error(e.message || e, e.source_input);
                     return false;
                 }
             }
@@ -364,11 +376,15 @@
                 return;
             }
             if (text.match(/\D/)) {
-                throw new Error(opt.E_DAY_NAN);
+                throw new DateValidationError(opt.E_DAY_NAN, input);
             }
             var num = parseInt(text, 10);
-            if (num < 1)  { throw new Error(opt.E_DAY_TOO_SMALL); }
-            if (num > 31) { throw new Error(opt.E_DAY_TOO_BIG);   }
+            if (num < 1) {
+                throw new DateValidationError(opt.E_DAY_TOO_SMALL, input);
+            }
+            if (num > 31) {
+                throw new DateValidationError(opt.E_DAY_TOO_BIG, input);
+            }
             text = num < 10 ? '0' + num : '' + num;
             if (!input.has_focus) { input.set(text); }
             this.day_value = text;
@@ -383,11 +399,15 @@
                 return;
             }
             if (text.match(/\D/)) {
-                throw new Error(opt.E_MONTH_NAN);
+                throw new DateValidationError(opt.E_MONTH_NAN, input);
             }
             var num = parseInt(text, 10);
-            if (num < 1)  { throw new Error(opt.E_MONTH_TOO_SMALL); }
-            if (num > 12) { throw new Error(opt.E_MONTH_TOO_BIG);   }
+            if (num < 1) {
+                throw new DateValidationError(opt.E_MONTH_TOO_SMALL, input);
+            }
+            if (num > 12) {
+                throw new DateValidationError(opt.E_MONTH_TOO_BIG, input);
+            }
             text = num < 10 ? '0' + num : '' + num;
             if (!input.has_focus) { input.set(text); }
             this.month_value = text;
@@ -402,11 +422,11 @@
                 return;
             }
             if (text.match(/\D/)) {
-                throw new Error(opt.E_YEAR_NAN);
+                throw new DateValidationError(opt.E_YEAR_NAN, input);
             }
             if (input.has_focus) {
                 if (text.length > 4) {
-                    throw new Error(opt.E_YEAR_LENGTH);
+                    throw new DateValidationError(opt.E_YEAR_LENGTH, input);
                 }
             }
             else {
@@ -415,16 +435,22 @@
                     this.input_year.set(text);
                 }
                 if (text.length !== 4) {
-                    throw new Error(opt.E_YEAR_LENGTH);
+                    throw new DateValidationError(opt.E_YEAR_LENGTH, input);
                 }
             }
             if (text.length === 4) {
                 var num = parseInt(text, 10);
                 if (opt.min_year && num < opt.min_year) {
-                    throw new Error(opt.E_YEAR_TOO_SMALL.replace(/%y/, opt.min_year));
+                    throw new DateValidationError(
+                        opt.E_YEAR_TOO_SMALL.replace(/%y/, opt.min_year),
+                        input
+                    );
                 }
                 if (opt.max_year && num > opt.max_year) {
-                    throw new Error(opt.E_YEAR_TOO_BIG.replace(/%y/, opt.max_year));
+                    throw new DateValidationError(
+                        opt.E_YEAR_TOO_BIG.replace(/%y/, opt.max_year),
+                        input
+                    );
                 }
             }
             this.year_value = text;
@@ -446,7 +472,10 @@
                 msg = msg.replace(/ *%y/, '');
             }
             if (day > max) {
-                throw new Error(msg.replace(/%d/, max).replace(/%m/, opt.month_name[month - 1]));
+                throw new DateValidationError(
+                    msg.replace(/%d/, max).replace(/%m/, opt.month_name[month - 1]),
+                    this.input_day
+                );
             }
         },
 
@@ -467,7 +496,9 @@
                 if (date_iso > this.iso_format_date(max_date)) {
                     msg = opt.max_date_message ? opt.max_date_message : opt.E_MAX_DATE;
                     if (msg) {
-                        throw new Error(msg.replace(/%DATE/, this.human_format_date(max_date)));
+                        throw new DateValidationError(
+                            msg.replace(/%DATE/, this.human_format_date(max_date))
+                        );
                     }
                 }
             }
@@ -483,7 +514,9 @@
                 if (date_iso < this.iso_format_date(min_date)) {
                     msg = opt.min_date_message ? opt.min_date_message : opt.E_MIN_DATE;
                     if (msg) {
-                        throw new Error(msg.replace(/%DATE/, this.human_format_date(min_date)));
+                        throw new DateValidationError(
+                            msg.replace(/%DATE/, this.human_format_date(min_date))
+                        );
                     }
                 }
             }
