@@ -154,6 +154,7 @@
                   <li><a href="#e_month_nan">E_MONTH_NAN</a></li>
                   <li><a href="#e_month_too_big">E_MONTH_TOO_BIG</a></li>
                   <li><a href="#e_month_too_small">E_MONTH_TOO_SMALL</a></li>
+                  <li><a href="#e_required_field">E_REQUIRED_FIELD</a></li>
                   <li><a href="#e_year_length">E_YEAR_LENGTH</a></li>
                   <li><a href="#e_year_nan">E_YEAR_NAN</a></li>
                   <li><a href="#e_year_too_big">E_YEAR_TOO_BIG</a></li>
@@ -349,7 +350,10 @@
                   <p>A boolean value indicating whether this is a required field.
                   If this option is true, moving focus away from the widget
                   without entering a complete and valid date will trigger a
-                  validation error.
+                  validation error.<p>
+                  <p>You can override the default message text for the 'required
+                  field' error by supplying a value for <a
+                  href="#e_required_field">E_REQUIRED_FIELD</a>.</p>
                   <p class="example-link"><a href="examples/10-options.html#is-required">See example</a></p>
                 </td>
               </tr>
@@ -560,6 +564,11 @@
               <tr>
                 <td><a name="e_month_too_small"></a><code>E_MONTH_TOO_SMALL</code></td>
                 <td>Month must be 1-12</td>
+              </tr>
+
+              <tr>
+                <td><a name="e_required_field"></a><code>E_REQUIRED_FIELD</code></td>
+                <td>This field is required</td>
               </tr>
 
               <tr>
