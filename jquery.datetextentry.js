@@ -558,6 +558,7 @@
         this.$input = $('<input type="text" value="" />')
             .addClass('jq-dte-' + this.name)
             .attr('aria-label', this.tip_text + ' (' + this.hint_text + ')')
+            .attr('inputmode', 'numeric')
             .focus($.proxy(input, 'focus'))
             .blur($.proxy(input, 'blur'))
             .keydown(function (e) { setTimeout(function () { input.keydown(e); }, 2); })
