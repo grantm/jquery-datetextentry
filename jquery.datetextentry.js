@@ -690,7 +690,7 @@
 
         is_digit_key: function (e) {
             var keycode = e.which;
-            return keycode >= 48 && keycode <= 57 || keycode >= 96 && keycode <= 105;
+            return keycode >= 48 && keycode <= 57 || keycode >= 96 && keycode <= 105 || keycode === 229;
         }
 
 
