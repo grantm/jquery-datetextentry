@@ -1,5 +1,5 @@
 /*
- * jQuery datetextentry v2.0.14
+ * jQuery datetextentry v2.0.15
  * Copyright (c) 2010-2019 Grant McLean (grant@mclean.net.nz)
  *
  * Source repo: https://github.com/grantm/jquery-datetextentry
@@ -558,6 +558,7 @@
         this.$input = $('<input type="text" value="" />')
             .addClass('jq-dte-' + this.name)
             .attr('aria-label', this.tip_text + ' (' + this.hint_text + ')')
+            .attr('inputmode', 'numeric')
             .focus($.proxy(input, 'focus'))
             .blur($.proxy(input, 'blur'))
             .keydown(function (e) { setTimeout(function () { input.keydown(e); }, 2); })
@@ -689,7 +690,7 @@
 
         is_digit_key: function (e) {
             var keycode = e.which;
-            return keycode >= 48 && keycode <= 57 || keycode >= 96 && keycode <= 105;
+            return keycode >= 48 && keycode <= 57 || keycode >= 96 && keycode <= 105 || keycode === 229;
         }
 
 
