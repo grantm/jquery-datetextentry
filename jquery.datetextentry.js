@@ -96,11 +96,12 @@
             var dte   = this;
             var opt   = this.options;
             var input = new DateTextInput({
-                name      : name,
-                dte       : dte,
-                index     : index,
-                hint_text : opt.show_hints ? opt['field_hint_text_' + name] : null,
-                tip_text  : opt['field_tip_text_'  + name]
+                name            : name,
+                dte             : dte,
+                index           : index,
+                hint_text       : opt.show_hints ? opt['field_hint_text_' + name] : null,
+                tip_text        : opt['field_tip_text_'  + name],
+                auto_focus_text : opt['field_auto_focus_' + name]
             });
             this.inner.append(input.$input);
             this['input_' + name] = input;
@@ -329,14 +330,14 @@
             this.fields[index].yield_focus();
             var next = this.fields[index - 1];
             next.get();
-            next.set_focus(false);
+            next.set_aria_auto_focus_label().set_focus(false);
         },
 
         focus_field_after: function (input) {
             var index = input.index;
             if (index > 1) { return; }
             this.fields[index].yield_focus();
-            this.fields[index + 1].set_focus(true);
+            this.fields[index + 1].set_aria_auto_focus_label().set_focus(true);
         },
 
         validate: function (current_input) {
@@ -548,16 +549,18 @@
 
     var DateTextInput = function (options) {
         var input = this;
-        this.dte       = options.dte;
-        this.name      = options.name;
-        this.index     = options.index;
-        this.hint_text = options.hint_text;
-        this.tip_text  = options.tip_text;
-        this.has_focus = false;
-        this.empty     = true;
+        this.dte                   = options.dte;
+        this.name                  = options.name;
+        this.index                 = options.index;
+        this.hint_text             = options.hint_text;
+        this.tip_text              = options.tip_text;
+        this.aria_label            = this.tip_text + ' (' + this.hint_text + ')';
+        this.aria_auto_focus_label = options.auto_focus_text + ' (' + this.hint_text + ')';
+        this.has_focus             = false;
+        this.empty                 = true;
         this.$input = $('<input type="text" value="" />')
             .addClass('jq-dte-' + this.name)
-            .attr('aria-label', this.tip_text + ' (' + this.hint_text + ')')
+            .attr('aria-label', this.aria_label)
             .attr('inputmode', 'numeric')
             .focus($.proxy(input, 'focus'))
             .blur($.proxy(input, 'blur'))
@@ -616,6 +619,24 @@
             return this;
         },
 
+        set_aria_auto_focus_label: function () {
+            var input  = this;
+            var $input = input.$input;
+            if (input.aria_auto_focus_label) {
+                $input.attr('aria-label', input.aria_auto_focus_label);
+            }
+            return this;
+        },
+
+        restore_aria_label: function () {
+            var input  = this;
+            var $input = input.$input;
+            if (input.aria_auto_focus_label) {
+                $input.attr('aria-label', input.aria_label);
+            }
+            return this;
+        },
+
         set_error: function (text) {
             this.error_text = text;
             this.$input.addClass('error');
@@ -651,6 +672,7 @@
             this.dte.hide_input_tip();
             this.show_hint();
             this.dte.validate(this);
+            this.restore_aria_label();
         },
 
         keydown: function () {
@@ -719,40 +741,43 @@
     };
 
     $.fn.datetextentry.defaults = {
-        field_order           : 'DMY',
-        separator             : '/',
-        show_tooltips         : true,
-        show_hints            : true,
-        show_errors           : true,
-        field_width_day       : 40,
-        field_width_month     : 40,
-        field_width_year      : 60,
-        field_width_sep       : 4,
-        errorbox_x            : 8,
-        errorbox_y            : 3,
-        tooltip_x             : 0,
-        tooltip_y             : 6,
-        field_tip_text_day    : 'Day',
-        field_tip_text_month  : 'Month',
-        field_tip_text_year   : 'Year',
-        field_hint_text_day   : 'DD',
-        field_hint_text_month : 'MM',
-        field_hint_text_year  : 'YYYY',
-        E_DAY_NAN             : 'Day must be a number',
-        E_DAY_TOO_BIG         : 'Day must be 1-31',
-        E_DAY_TOO_SMALL       : 'Day must be 1-31',
-        E_BAD_DAY_FOR_MONTH   : 'Only %d days in %m %y',
-        E_MONTH_NAN           : 'Month must be a number',
-        E_MONTH_TOO_BIG       : 'Month must be 1-12',
-        E_MONTH_TOO_SMALL     : 'Month must be 1-12',
-        E_YEAR_NAN            : 'Year must be a number',
-        E_YEAR_LENGTH         : 'Year must be 4 digits',
-        E_YEAR_TOO_SMALL      : 'Year must not be before %y',
-        E_YEAR_TOO_BIG        : 'Year must not be after %y',
-        E_MIN_DATE            : 'Date must not be earlier than %DATE',
-        E_MAX_DATE            : 'Date must not be later than %DATE',
-        E_REQUIRED_FIELD      : 'This field is required',
-        month_name            : [
+        field_order            : 'DMY',
+        separator              : '/',
+        show_tooltips          : true,
+        show_hints             : true,
+        show_errors            : true,
+        field_width_day        : 40,
+        field_width_month      : 40,
+        field_width_year       : 60,
+        field_width_sep        : 4,
+        errorbox_x             : 8,
+        errorbox_y             : 3,
+        tooltip_x              : 0,
+        tooltip_y              : 6,
+        field_tip_text_day     : 'Day',
+        field_tip_text_month   : 'Month',
+        field_tip_text_year    : 'Year',
+        field_hint_text_day    : 'DD',
+        field_hint_text_month  : 'MM',
+        field_hint_text_year   : 'YYYY',
+        field_auto_focus_day   : 'Focus has moved to day',
+        field_auto_focus_month : 'Focus has moved to month',
+        field_auto_focus_year  : 'Focus has moved to year',
+        E_DAY_NAN              : 'Day must be a number',
+        E_DAY_TOO_BIG          : 'Day must be 1-31',
+        E_DAY_TOO_SMALL        : 'Day must be 1-31',
+        E_BAD_DAY_FOR_MONTH    : 'Only %d days in %m %y',
+        E_MONTH_NAN            : 'Month must be a number',
+        E_MONTH_TOO_BIG        : 'Month must be 1-12',
+        E_MONTH_TOO_SMALL      : 'Month must be 1-12',
+        E_YEAR_NAN             : 'Year must be a number',
+        E_YEAR_LENGTH          : 'Year must be 4 digits',
+        E_YEAR_TOO_SMALL       : 'Year must not be before %y',
+        E_YEAR_TOO_BIG         : 'Year must not be after %y',
+        E_MIN_DATE             : 'Date must not be earlier than %DATE',
+        E_MAX_DATE             : 'Date must not be later than %DATE',
+        E_REQUIRED_FIELD       : 'This field is required',
+        month_name             : [
             'January', 'February', 'March', 'April',
             'May', 'June', 'July', 'August', 'September',
             'October', 'November', 'December'

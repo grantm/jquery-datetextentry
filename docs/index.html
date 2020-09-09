@@ -89,6 +89,7 @@
               <li>Tooltips and hint text to guide the user through each field</li>
               <li>Auto-advance when a field is 'full'</li>
               <li>Backspacing through an empty field to the preceding field</li>
+              <li>More descriptive labels for screen reader users when focus automatically shifts between fields</li>
               <li>Custom handling for mapping 2-digit years to 4 digits</li>
               <li>Immediate feedback for invalid data (e.g.: day 32 or month 13)</li>
               <li>More advanced validation on complete dates (e.g.: to reject February 29th in a non-leap year)</li>
@@ -118,6 +119,9 @@
                   <li><a href="#field_tip_text_day">field_tip_text_day</a></li>
                   <li><a href="#field_tip_text_month">field_tip_text_month</a></li>
                   <li><a href="#field_tip_text_year">field_tip_text_year</a></li>
+                  <li><a href="#field_auto_focus_day">field_auto_focus_day</a></li>
+                  <li><a href="#field_auto_focus_month">field_auto_focus_month</a></li>
+                  <li><a href="#field_auto_focus_year">field_auto_focus_year</a></li>
                   <li><a href="#field_width_day">field_width_day</a></li>
                   <li><a href="#field_width_month">field_width_month</a></li>
                   <li><a href="#field_width_sep">field_width_sep</a></li>
@@ -282,6 +286,33 @@
                 <td>
                   Tooltip text to display beneath the year field when it has the
                   focus. Default: 'Year'
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_auto_focus_day"></a><code>field_auto_focus_day</code></td>
+                <td>
+                  <p>Descriptive text substituted into aria-label when focus is automatically
+                  shifted to a field to assist screen reader users in understanding what
+                  occurred. Default: 'Focus has moved to day'</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_auto_focus_month"></a><code>field_auto_focus_month</code></td>
+                <td>
+                  <p>Descriptive text substituted into aria-label when focus is automatically
+                  shifted to a field to assist screen reader users in understanding what
+                  occurred. Default: 'Focus has moved to month'</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td><a name="field_auto_focus_year"></a><code>field_auto_focus_year</code></td>
+                <td>
+                  <p>Descriptive text substituted into aria-label when focus is automatically
+                  shifted to a field to assist screen reader users in understanding what
+                  occurred. Default: 'Focus has moved to year'</p>
                 </td>
               </tr>
 
