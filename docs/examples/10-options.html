@@ -304,6 +304,46 @@ $('#btn-readwrite').click(function(e) {
       </td>
     </tr>
 
+    <tr>
+      <td>
+        <p><a name="form_validation"></a>Validate fields and set custom error message</p>
+        <pre class="code">$('#date15a').datetextentry({is_required: true});
+$('#date15b').datetextentry({is_required: true});
+
+$('#date15-form').submit(function(e) {
+    var all_valid = true;
+    var start_date =  $('#date15a').val();
+    if(start_date === '') {
+        $('#date15a').datetextentry('set_error', 'Start date is required');
+        all_valid = false;
+    }
+    var end_date =  $('#date15b').val();
+    if(end_date === '') {
+        $('#date15b').datetextentry('set_error', 'End date is required');
+        all_valid = false;
+    }
+    if(all_valid &amp;&amp; start_date &gt;= end_date) {
+        $('#date15b').datetextentry('set_error', 'End date must be after start date');
+        all_valid = false;
+    }
+    if(!all_valid) {
+        e.preventDefault();
+    }
+});</pre>
+      </td>
+      <td>
+        <form method="GET" action="#form_validation" id="date15-form">
+          <p><label><span>Start date:</span>
+          <input id="date15a" class="text" name="start_date" value=""></label></p>
+          <p><label><span>End date:</span>
+          <input id="date15b" class="text" name="end_date" value=""></label></p>
+          <div>
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+      </td>
+    </tr>
+
   </table>
 
   <script type="text/javascript">
@@ -404,6 +444,31 @@ $('#btn-readwrite').click(function(e) {
 
     $('#btn-readwrite').click(function(e) {
         $('#date14').datetextentry('set_readonly', false);
+    });
+
+
+    $('#date15a').datetextentry({is_required: true});
+    $('#date15b').datetextentry({is_required: true});
+
+    $('#date15-form').submit(function(e) {
+        var all_valid = true;
+        var start_date =  $('#date15a').val();
+        if(start_date === '') {
+            $('#date15a').datetextentry('set_error', 'Start date is required');
+            all_valid = false;
+        }
+        var end_date =  $('#date15b').val();
+        if(end_date === '') {
+            $('#date15b').datetextentry('set_error', 'End date is required');
+            all_valid = false;
+        }
+        if(all_valid && start_date >= end_date) {
+            $('#date15b').datetextentry('set_error', 'End date must be after start date');
+            all_valid = false;
+        }
+        if(!all_valid) {
+            e.preventDefault();
+        }
     });
 
   </script>
