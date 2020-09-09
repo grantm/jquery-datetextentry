@@ -425,6 +425,10 @@
             expect( $tooltip.text() ).toBe('Month');
         });
 
+        it("has updated aria-label for auto-advanced focus", function() {
+            expect( $mm.attr('aria-label') ).toBe('Focus has moved to month (MM)');
+        });
+
         it("still keeps errorbox element hidden", function() {
             expect( visibility_check($errorbox) ).toBe('hidden');
         });
@@ -471,6 +475,10 @@
             expect( $mm.is(':focus') ).toBe(false);
         });
 
+        it("has aria-label restored to default", function() {
+            expect( $mm.attr('aria-label') ).toBe('Month (MM)');
+        });
+
         it("loses 'error' class", function() {
             expect( $mm.is('.error') ).toBe(false);
         });
@@ -513,6 +521,10 @@
 
         it("with tooltip text 'Year'", function() {
             expect( $tooltip.text() ).toBe('Year');
+        });
+
+        it("has updated aria-label for auto-advanced focus", function() {
+            expect( $yyyy.attr('aria-label') ).toBe('Focus has moved to year (YYYY)');
         });
 
         it("still keeps errorbox element hidden", function() {
