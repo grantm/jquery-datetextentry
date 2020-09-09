@@ -4,8 +4,31 @@ For full commit history see:
 
     https://github.com/grantm/jquery-datetextentry/commits/master
 
-2.0.10 2020-09-09
+2.0.16 2020-09-09
     * make aria-label more descriptive when focus moves fields automatically
+
+2.0.15 2019-09-26
+    * add inputmode="numeric" to date input fields
+    * whitelist keyCode 229 in keyUp events when assessing whether to advance
+
+2.0.14 2019-07-21
+    * add the 'is_required' option
+    * update all calls to 'throw' to use a custom Error object rather than a
+      string, with error object tracking which subfield triggered the error
+    * Switch linting to ESLint
+
+2.0.13 2017-09-25
+    * reorganise documentation & example files to remove duplication
+    * fix issues raised by JSHint
+
+2.0.12 2015-10-01
+    * alter ARIA label to include the format suggestion
+
+2.0.11 2020-06-08
+    * revise focus handling so that blur event happens before focus event
+
+2.0.10 2015-06-08
+    * fix validation of DD + MM (without YYYY) - broken by previous commit
 
 2.0.9  2014-04-27
     * fix #1 where focus advanced 2 fields instead of 1
